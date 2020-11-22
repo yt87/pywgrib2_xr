@@ -1,0 +1,9 @@
+include LICENCE
+include README.rst
+include pywgrib2_xr/*.pyx
+include pywgrib2_xr/*.h
+include data/*.grib2
+include data/*.text
+recursive-include doc *
+prune doc/_build
+prune doc/generated

@@ -1,0 +1,5 @@
+Web page: https://nbsphinx.readthedocs.io/en/0.7.1/
+
+To create HTML files:
+
+python3 -m sphinx <source-dir> <build-dir> -j<number-of-processes>
