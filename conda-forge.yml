@@ -1,0 +1,13 @@
+recipe_dir: recipe
+skip_render:
+  - README.md
+  - README.rst
+  - LICENSE.txt
+  - .gitattributes
+  - .gitignore
+  - build-locally.py
+  - LICENCE
+  - .github/CONTRIBUTING.md
+  - .github/ISSUE_TEMPLATE.md
+  - .github/PULL_REQUEST_TEMPLATE.md
+  - .github/workflows
