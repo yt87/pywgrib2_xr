@@ -52,3 +52,18 @@ def test_write_data(tmpdir):
 
     assert np.allclose(array, data, rtol=1e-2, atol=5e-1)
     assert inv[0].varname == "RH"
+
+
+def test_roundtrip(tmpdir):
+    infile = path_to('gfs_tsoil.grib2')
+    outfile = os.path.join(tmpdir, "t_soil.grib2")
+
+    inv = make_inventory(infile)
+    array = decode_msg(infile, inv[0]).copy()   # make it writable
+    write_msg(outfile, infile, 1, array, var="TSOIL", grib_type="same", bin_prec=10)
+    inv2 = make_inventory(outfile)
+    array2 = decode_msg(outfile, inv2[0])
+
+    assert np.allclose(array, array2, rtol=1e-2, atol=1e-1)
+
+

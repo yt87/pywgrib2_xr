@@ -34,11 +34,10 @@ def organs(func):
         with pipes(stdout=None, stderr=_err):
             try:
                 ret = func(*args, **kwargs)
-            except _WgribError:
+            except _WgribError as e:
                 import time
-
                 time.sleep(0.2)  # Wurlitzer.flush_interval
-                raise WgribError(_err.getvalue())
+                raise WgribError(_err.getvalue()) from e
         err = _err.getvalue()
         if err:
             warnings.warn("\n" + err, stacklevel=2)
@@ -257,7 +256,7 @@ class RPNRegister:
         ----------
         arr : array-like
         """
-        arr = np.ascontiguousarray(arr, dtype=np.float32)
+        arr = np.ascontiguousarray(arr, dtype=np.float32).ravel()
         ret = _wgrib2.set_reg_data(self._n, arr)
         if ret:
             raise WgribError("wgrib2_set_reg (malloc) failed")
@@ -303,7 +302,7 @@ def wgrib(*args):
     """Mimics `wgrib2` executable.
 
     `wgrib2` output is captured. If it exits with non-zero status,
-    the output is passed to :py:exc:`~pywgrib2_lite.WgribError`,
+    the output is passed to :py:exc:`~pywgrib2_xr.WgribError`,
     else a warning is emmited.
 
     Parameters

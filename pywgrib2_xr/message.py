@@ -3,7 +3,7 @@ import logging
 
 import numpy as np
 
-from . import WgribError
+from . import WgribError, UNDEFINED
 from .wgrib2 import MemoryBuffer, RPNRegister, wgrib, free_files
 
 logger = logging.getLogger(__name__)
@@ -84,8 +84,6 @@ def decode_msg(gribfile, meta):
             "/dev/null",
             "-d",
             offset,
-            "-order",
-            "raw",
             "-no_header",
             "-bin",
             buf,
@@ -125,7 +123,7 @@ def write_msg(gribfile, tmplfile, num_or_meta, data=None, append=False, **kwargs
         - var : variable name
         - lev : level
         - grib_type : compression = {'jpeg', 'simple', 'complex[1|2|3]', 'aec', 'same'}
-        - grib_bin_prec : precision, in bits <= 24
+        - bin_prec : precision ECMWF style, in bits <= 24
 
     Raises
     ------
@@ -152,42 +150,54 @@ def write_msg(gribfile, tmplfile, num_or_meta, data=None, append=False, **kwargs
         ["metadata", "date", "var", "lev", "ftime", "grib_type", "bin_prec"]
     )
     out = "-grib" if data is None else "-grib_out"
+    # metadata is first source, var, lev are applied afterwards
     if "metadata" in kwargs:
         v = kwargs.pop("metadata")
-        args.extend(["set_metadata_str", v])
-    for k, v in kwargs.items():
-        if k in valid_args:
-            if k == "grib_type":
-                out = "-grib_out"
-            else:
-                if k == "grib_bin_prec":
-                    args.extend(["-set_grib_max_bits", 24])
-                elif k == "date":
-                    if isinstance(v, str):
-                        v = datetime.fromisoformat(v)
-                    v = v.strftime("%Y%m%d%H%M%S")
-                args.extend(["-set_" + k, v])
-        else:
-            logger.warning("{!r} is not a valid argument, skipping".format(k))
+        args.extend(["-set_metadata_str", v])
+    if "date" in kwargs:
+        v = kwargs.pop("date")
+        if isinstance(v, str):
+            v = datetime.fromisoformat(v)
+        v = v.strftime("%Y%m%d%H%M%S")
+        args.extend(["-set_date", v])
+    if "var" in kwargs:
+        v = kwargs.pop("var")
+        args.extend(["-set_var", v])
+    if "lev" in kwargs:
+        v = kwargs.pop("lev")
+        args.extend(["-set_lev", v])
+    if "ftime" in kwargs:
+        v = kwargs.pop("ftime")
+        args.extend(["-set_ftime", v])
+    if "grib_type" in kwargs:
+        v = kwargs.pop("grib_type")
+        args.extend(["-set_grib_type", v])
+        out = "-grib_out"
 
-    def _write():
-        try:
-            wgrib(*args)
-        except WgribError:
-            raise
-        finally:
-            free_files(tmplfile, gribfile)
-
-    if data is None:
-        if append:
-            args.extend("-append")
-        args.extend([out, gribfile])
-        _write()
-    else:
-        with RPNRegister() as reg:
-            reg.set(np.ascontiguousarray(data, dtype=np.float32).ravel())
+    try:
+        # set grid point data
+        # -rpn will clear scaling parameters, so set grid point data first
+        if data is not None:
+            reg = RPNRegister()
+            data = np.asarray(data)
+            data[np.isnan(data)] = UNDEFINED
+            reg.set(data)
             args.extend(["-rpn_rcl", reg])
-            if append:
-                args.extend("-append")
-            args.extend([out, gribfile])
-            _write()
+        else:
+            reg = None
+        if "bin_prec" in kwargs:
+            args.extend(["-set_grib_max_bits", 24])
+            v = kwargs.pop("bin_prec")
+            args.extend(["-set_bin_prec", v])
+        if append:
+            args.append("-append")
+        args.extend([out, gribfile])
+        wgrib(*args)
+    except WgribError:
+        raise
+    finally:
+        free_files(tmplfile, gribfile)
+        if reg is not None:
+            reg.close()
+        
+
