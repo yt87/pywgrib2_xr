@@ -6,7 +6,9 @@ from urllib.error import URLError
 from urllib.request import urlretrieve
 
 logger = logging.getLogger(__name__)
-DATADIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
+# Allow user to specify directory when pywgrib2_xr is installed by conda
+DATADIR = os.environ.get('DATADIR',
+	os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data")))
 DEFAULT_CACHE = os.path.join(os.environ["HOME"], ".cache", "pywgrib2")
 URL = "https://ftpprd.ncep.noaa.gov/data/nccf/com"
 
