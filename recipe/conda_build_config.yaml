@@ -1,0 +1,10 @@
+numpy: 1.17
+libwgrib2: 3.0.0
+python:
+  - 3.9
+pin_run_as_build:
+  python:
+    min_pin: x.x
+    max_pin: x.x
+  libwgrib2:
+    max_pin: x.x
