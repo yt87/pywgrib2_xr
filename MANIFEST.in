@@ -7,3 +7,5 @@ include data/*.text
 recursive-include doc *
 prune doc/_build
 prune doc/generated
+include versioneer.py
+include pywgrib2_xr/_version.py

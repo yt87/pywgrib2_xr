@@ -3,12 +3,14 @@
 from typing import Any, Dict, NamedTuple, Sequence
 import numpy as np
 
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
+
 try:
     from numpy.typing import ArrayLike
 except ImportError:
     ArrayLike = Any
-
-from .version import version as __version__
 
 UNDEFINED = float(np.float32(9.999e20))
 """Missing data value used by `wgrib2`"""
