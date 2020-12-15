@@ -313,14 +313,16 @@ commands = {
 
 def main(argv: Optional[List[str]] = None):
     if not argv:
+        # Allow to call main() with arguments
         argv = sys.argv[1:]
-    if argv[0] == "-h":
-        print(USAGE)
-        raise SystemExit
-    # if (f := commands.get(argv[1])):
-    f = commands.get(argv[0])
-    if f:
-        f(argv[1:])
+    if argv:
+        if argv[0] == "-h":
+            print(USAGE)
+            raise SystemExit
+        # if (f := commands.get(argv[1])):
+        f = commands.get(argv[0])
+        if f:
+            f(argv[1:])
     else:
         wgrib(*argv)
 
