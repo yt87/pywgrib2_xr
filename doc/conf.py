@@ -13,14 +13,14 @@
 import datetime
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
+#sys.path.insert(0, os.path.abspath('..'))
 
 import pywgrib2_xr as pywgrib2
 
 # -- Project information -----------------------------------------------------
 
 project = 'pywgrib2_xr'
-copyright = '2019-{:d}, George Trojan'.format(datetime.datetime.now().year)
+copyright = '2019-{:d}, wgrib2 developers'.format(datetime.datetime.now().year)
 author = 'George Trojan'
 
 # The full version, including alpha/beta/rc tags
@@ -49,6 +49,7 @@ extensions = [
     "IPython.sphinxext.ipython_directive",
     "IPython.sphinxext.ipython_console_highlighting",
     'sphinx.ext.viewcode',
+    'matplotlib.sphinxext.plot_directive',
     'sphinxcontrib.programoutput',
 #    "sphinx_gallery.gen_gallery",
 ]

@@ -68,8 +68,8 @@ This is a Python interface to NCEP Interpolation library
 Dataset
 =======
 
-Reading GRIB files
-------------------
+Reading GRIB2 files
+-------------------
 
 .. autosummary::
    :toctree: generated/

@@ -17,20 +17,23 @@ Low-level interface
 -------------------
 
 Suppose the task is to write grib file containing surface temperature and wind from
-a large grib file. This can be achieved with a **wgrib2** call::
+a large grib file. This can be achieved with a **wgrib2** call:
 
-  $ wgrib2 nam.t12z.awak3d18.tm00.grib2 -match ':(TMP:2 m above ground|[U|V]GRD:10 m above ground):' -out /tmp/subset.grib2
+.. code-block:: console
+
+    wgrib2 nam.t12z.awak3d18.tm00.grib2 -match \
+    ':(TMP:2 m above ground|[U|V]GRD:10 m above ground):' \
+    -out /tmp/subset.grib2
 
 The equivalent Python code:
 
 .. _example-1:
 
-.. ipython:: python
+.. code-block:: python
 
     import pywgrib2_xr as pywgrib2 
-    from pywgrib2_xr.utils import remotepath
 
-    in_file = remotepath('nam.t12z.awak3d18.tm00.grib2')
+    in_file = 'nam.t12z.awak3d18.tm00.grib2'
     out_file = '/tmp/subset.grib2'
 
     match_str = ':(TMP:2 m above ground|[U|V]GRD:10 m above ground):'
@@ -39,7 +42,7 @@ The equivalent Python code:
 
 We can check the output file contain requested data:
 
-.. ipython:: python
+.. code-block:: python
 
     with pywgrib2.MemoryBuffer() as buf:
         pywgrib2.wgrib(out_file, '-inv', buf)
@@ -92,7 +95,7 @@ The latter, the most flexible, requires user to partition input files into
 nested lists. This is not simple and may not be even possible when some
 of the files are missing. Consider the following example:
 
-.. ipython:: python
+.. code-block:: python
 
     import xarray as xr
     from pywgrib2_xr.utils import localpath
@@ -106,16 +109,39 @@ of the files are missing. Consider the following example:
                            concat_dim=['level', 'step'])
     ds
 
+.. parsed-literal::
+
+    <xarray.Dataset>
+    Dimensions:        (level: 2, step: 2, x: 247, y: 200)
+    Coordinates:
+        time           datetime64[ns] 2020-01-25
+    * step           (step) timedelta64[ns] 00:00:00 03:00:00
+        isobaricInhPa  (level) int64 1000 700
+        latitude       (y, x) float64 dask.array<chunksize=(200, 247), meta=np.ndarray>
+        longitude      (y, x) float64 dask.array<chunksize=(200, 247), meta=np.ndarray>
+        valid_time     (step) datetime64[ns] 2020-01-25 2020-01-25T03:00:00
+    Dimensions without coordinates: level, x, y
+    Data variables:
+        t              (step, level, y, x) float32 dask.array<chunksize=(1, 1, 200, 247), meta=np.ndarray>
+    Attributes:
+        GRIB_edition:            2
+        GRIB_centre:             cwao
+        GRIB_centreDescription:  Canadian Meteorological Service - Montreal 
+        GRIB_subCentre:          0
+        Conventions:             CF-1.7
+        institution:             Canadian Meteorological Service - Montreal 
+        history:                 2020-10-29T19:45:43 GRIB to CDM+CF via cfgrib-0....
+
 This works as expected. But if a file is missing, the above code will fail:
 
-.. ipython:: python
-    :okexcept:
+.. code-block:: python
   
-    try:
-        ds = xr.open_mfdataset([[f_10_0_00, f_10_3_00], [f_7_0_00]], engine='cfgrib',
-                               combine='nested', concat_dim=['level', 'step'])
-    except ValueError as e:
-        print(e)
+    ds = xr.open_mfdataset([[f_10_0_00, f_10_3_00], [f_7_0_00]], engine='cfgrib',
+                           combine='nested', concat_dim=['level', 'step'])
+
+.. parsed-literal::
+
+    The supplied objects do not form a hypercube because sub-lists do not have consistent lengths along dimension0
 
 
 **pywgrib2_xr** attempts to solve this problem by the concept of a template,
@@ -138,7 +164,7 @@ module of **xarray**.
 There is no need for ``open_mfdataset()``, the logic of combining input files
 is included in ``open_dataset()``:
 
-.. ipython:: python
+.. code-block:: python
 
     from datetime import timedelta
     import pywgrib2_xr as pywgrib2
@@ -158,9 +184,43 @@ is included in ``open_dataset()``:
     tmpl = pywgrib2.make_template(f_12Zrun, vertlevels='isobaric')
     ds = pywgrib2.open_dataset(f_all, tmpl)
     ds
+
+.. parsed-literal::
+
+    <xarray.Dataset>
+    Dimensions:              (isobaric1: 2, reftime: 2, time1: 2, x: 247, y: 200)
+    Coordinates:
+        longitude            (y, x) float64 dask.array<chunksize=(200, 247), meta=np.ndarray>
+        latitude             (y, x) float64 dask.array<chunksize=(200, 247), meta=np.ndarray>
+      * x                    (x) float64 -2.61e+06 -2.58e+06 ... 4.74e+06 4.77e+06
+      * y                    (y) float64 -5.97e+06 -5.94e+06 ... -3.022e+04 -216.1
+      * isobaric1            (isobaric1) int64 100000 70000
+      * time1                (time1) timedelta64[ns] 00:00:00 03:00:00
+      * reftime              (reftime) datetime64[ns] 2020-01-25 2020-01-25T12:00:00
+        polar_stereographic  int64 ...
+    Data variables:
+        TMP.isobaric         (reftime, time1, isobaric1, y, x) float32 dask.array<chunksize=(1, 2, 2, 200, 247), meta=np.ndarray>
+    Attributes:
+        Projection:             polar_stereographic
+        Originating centre:     54 - Canadian Meteorological Service - Montreal (...
+        Originating subcentre:  0
+        History:                Created by pywgrib2_xr-0.2.1
+
+.. code-block:: python
+
     ds['TMP.isobaric'].sel({'reftime': '2020-01-25T00:00:00',
                             'time1': timedelta(hours=3),
                             'isobaric1': 70000}).values
+
+.. parsed-literal::
+
+    array([[nan, nan, nan, ..., nan, nan, nan],
+           [nan, nan, nan, ..., nan, nan, nan],
+           [nan, nan, nan, ..., nan, nan, nan],
+           ...,
+           [nan, nan, nan, ..., nan, nan, nan],
+           [nan, nan, nan, ..., nan, nan, nan],
+           [nan, nan, nan, ..., nan, nan, nan]], dtype=float32)
 
 The decoder handles the following grids:
 
@@ -191,7 +251,7 @@ Remapping are implemented as methods of **xarray** data accessor
 :py:class:`~pywgrib2_xr.Wgrib2DatasetAccessor`, registered as an attribute ``wgrib2``.
 The next example shows how to remap dataset to a set of locations.
 
-.. ipython:: python
+.. code-block:: python
 
    lons = [-77.03, -150.02, -78.62] 
    lats = [38.85, 61.17, 43.57]
@@ -201,20 +261,66 @@ The next example shows how to remap dataset to a set of locations.
    tmp = ds2['TMP.isobaric'].compute()
    tmp.sel(airport='CYYZ')
 
-**iplib** supports all grids handled by the decoder with the exception of `Space View`.
+.. parsed-literal::
 
+    <xarray.DataArray 'TMP.isobaric' (reftime: 2, time1: 2, isobaric1: 2)>
+    array([[[279.4096 , 268.39636],
+            [280.62656,       nan]],
+
+           [[275.98114, 266.69205],
+            [275.85538, 264.9516 ]]], dtype=float32)
+    Coordinates:
+        points     int64 0
+        longitude  float64 -78.62
+        latitude   float64 43.57
+        airport    <U4 'CYYZ'
+      * reftime    (reftime) datetime64[ns] 2020-01-25 2020-01-25T12:00:00
+      * time1      (time1) timedelta64[ns] 00:00:00 03:00:00
+      * isobaric1  (isobaric1) int64 100000 70000
+    Attributes:
+        short_name:    TMP
+        long_name:     Temperature
+        units:         K
+        grid_mapping:  points
+
+**iplib** supports all grids handled by the decoder with the exception of `Space View`.
 
 CF support
 ----------
 
 **pywgrib2_xr** does not follow CF conventions at this time. Standard names are set
 only for coordinate variables, not data. Also, composite units are as provided by
-wgrib2 code.
+wgrib2 code. For example, speed units are ``m/s``, not ``m s-1``, as mandated
+`here <http://cfconventions.org/Data/cf-standard-names/current/build/cf-standard-name-table.html>`__.
 
-.. ipython:: python
+.. code-block:: python
 
    import cf_xarray
    ds.cf.describe()
+
+.. parsed-literal::
+
+    Axes:
+	X: ['x']
+	Y: ['y']
+	Z: ['isobaric1']
+	T: []
+
+    Coordinates:
+	    longitude: ['longitude']
+	    latitude: ['latitude']
+	    vertical: ['isobaric1']
+	    time: []
+
+    Cell Measures:
+	    area: unsupported
+	    volume: unsupported
+
+    Standard Names:
+	    forecast_period: ['time1']
+	    projection_x_coordinate: ['x']
+	    projection_y_coordinate: ['y']
+	    reference_time: ['reftime']
 
 
 .. _xarray: http://xarray.pydata.org/

@@ -4,8 +4,8 @@ Plotting Datasets
 
 Datasets opened by **pywgrib2_xr** can be plotted with **cartopy**:
 
-.. ipython:: python
-    :okwarning:
+.. plot::
+    :include-source: True
 
     import xarray as xr
     import cartopy.crs as ccrs
@@ -38,7 +38,6 @@ Datasets opened by **pywgrib2_xr** can be plotted with **cartopy**:
         _ = ax.add_feature(country_boundary, edgecolor='black')
         _ = ax.gridlines()
     fig.suptitle('Temperature at 700 hPa', fontsize=20)
-    @savefig temp_map.png width=12in
     plt.show()
 
 The plot on the left uses latitudes and longitudes, the one on the right in
@@ -52,8 +51,8 @@ The next example is adapted from
 `MetPy tutorial <https://unidata.github.io/MetPy/latest/tutorials/xarray_tutorial.html>`_.
 Dataset read by **pywgrib2_xr** is processed by **MetPy** function ``parse_cf()``.
 
-.. ipython:: python
-    :okwarning:
+.. plot::
+    :include-source: True
 
     import xarray as xr
     import cartopy.crs as ccrs
@@ -110,5 +109,4 @@ Dataset read by **pywgrib2_xr** is processed by **MetPy** function ``parse_cf()`
     _ = ax.set_title('500 hPa Heights (m), Temperature (\u00B0C), Humidity (%) at '
                      + vtime.dt.strftime('%Y-%m-%d %H:%MZ').item(),
                      fontsize=20)
-    @savefig weather_map.png width=10in
     plt.show()

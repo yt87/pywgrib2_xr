@@ -18,16 +18,21 @@ and is easier to use. The argument is a single string (unlike three passed to
 **wgrib2**) which specifies projection type and basic parameters. Additional,
 optional arguments allow to specify vector orientation and Earth shape.
 
-To obtain the neccessary values from a grid in a GRIB file, run **wgrib2**
-with the arguments ``-V -radius``::
+To obtain the neccessary values from a grid in a GRIB2 file, run **wgrib2**
+with the arguments ``-V -radius``:
 
-  $ wgrib2 data/CMC_glb_WIND_TGL_10_ps30km_2020012500_P000.grib2 -end -V -radius
-  1:0:vt=2020012500:10 m above ground:anl:UGRD U-Component of Wind [m/s]:
+.. code-block:: console
+
+    wgrib2 data/CMC_glb_WIND_TGL_10_ps30km_2020012500_P000.grib2 -end -V -radius
+
+.. parsed-literal::
+
+    1:0:vt=2020012500:10 m above ground:anl:UGRD U-Component of Wind [m/s]:
       ndata=49400:undef=0:mean=0.943856:min=-22.8:max=22.5
       grid_template=20:winds(grid):
           polar stereographic grid: (247 x 200) input WE:SN output WE:SN res 8
           North pole lat1 32.549114 lon1 225.385728 latD 60.000000 lonV 249.000000 dx 30000.000000 m dy 30000.0
-  :code3.2=6 sphere predefined radius=6371229.0 m
+    :code3.2=6 sphere predefined radius=6371229.0 m
 
 The format for polar stereographic grid is ``nps:lov:lad lon0:nx:dx lat0:ny:dy``.
 For the above grid the first argument would be
@@ -58,9 +63,14 @@ See also the **wgrib2** documentation on the argument
 `-new_grid <https://www.cpc.ncep.noaa.gov/products/wesley/wgrib2/new_grid_intro.html>`_.
 
 The following code extracts 3-hour accumulated precipitation, surface model elevation,
-ceiling and heights at pressure levels, within a smaller area.
+ceiling and heights at pressure levels, within a smaller area. The data variables are
+renamed before remapping.
 
-.. ipython:: python
+**pywgrib2** allows interpolation type to depend on variable. The specification
+is a dictionary: ``variable -> interpolation_type``. The ``default`` entry is for
+all remaining variables, in this case ``elev`` and ``height``.
+
+.. code-block:: python
 
     from datetime import timedelta
     import pywgrib2_xr as pywgrib2
@@ -82,37 +92,64 @@ ceiling and heights at pressure levels, within a smaller area.
     def height_pred(i):
         return i.varname == 'HGT' and i.level_code == 100
 
-After the dataset is created, **wgrib2**-style variable names are made more concise.
-
-.. ipython:: python
-
     template = pywgrib2.make_template(file, pcp_pred, elev_pred, ceil_pred,
                                       height_pred, vertlevels='isobaric')
-    template.var_names
-
     names = {'APCP.surface.3_hour_acc': '3h_pcp',
              'ACPCP.surface.3_hour_acc': '3h_cum_pcp',
              'HGT.surface': 'elev',
              'HGT.cloud_ceiling': 'ceil',
              'HGT.isobaric': 'height',
             }
-
-
-**pywgrib2** allows interpolation type to depend on variable. The specification
-is a dictionary: ``variable -> interpolation_type``. The ``default`` entry is for
-all remaining variables, in this case ``elev`` and ``height``.
-
-.. ipython:: python
-
     ds = pywgrib2.open_dataset(file, template).rename(names)
+
     iptype = {'3h_pcp': 'budget',
               '3h_conv_pcp': 'budget',
               'ceil': 'neighbour',
               'default': 'bilinear',
              }
     new_grid = pywgrib2.grid_fromstring(grid_desc)
-    ds.wgrib2.grid(new_grid, iptype=iptype)
+    ds_grd = ds.wgrib2.grid(new_grid, iptype=iptype)
+    ds_grd.coords['polar_stereographic'].attrs
 
+.. parsed-literal::
+
+    {'grid_mapping_name': 'polar_stereographic',
+     'straight_vertical_longitude_from_pole': 225.0,
+     'standard_parallel': 60.0,
+     'latitude_of_projection_origin': 90.0,
+     'shape': 'sphere',
+     'earth_radius': 6371229.0,
+     'code': 6,
+     'GRIB_gdtnum': <GDTNum.POLAR_STEREO: 20>,
+     'GRIB_gdtmpl': [6,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      553,
+      425,
+      30000000,
+      187000000,
+      56,
+      60000000,
+      225000000,
+      11250000,
+      11250000,
+      0,
+      64],
+     'GRIB_Npts': 235025,
+     'GRIB_Nx': 553,
+     'GRIB_Ny': 425,
+     'GRIB_La1': 30.0,
+     'GRIB_Lo1': 187.0,
+     'GRIB_LaD': 60.0,
+     'GRIB_LoV': 225.0,
+     'GRIB_winds': 'grid',
+     'GRIB_Dx': 11250.0,
+     'GRIB_Dy': 11250.0,
+     'GRIB_LaO': 90.0}
 
 Interpolation to points
 -----------------------
@@ -120,20 +157,12 @@ Interpolation to points
 The method :py:meth:`~pywgrib2_xr.Wgrib2DatasetAccessor.location` creates 
 a dataset with all data variables interpolated to an arbitrary sequence of
 locations within the original grid area (i.e. no extrapolation). Available
-interpolation type can be nearest neighbour, bilinear, bicubic and budget.
-
-.. note::
-
-   The budget interpolation currently does not work, due to a bug in **iplib**
-   distributed with **wgrib2**.
+interpolation type can be nearest neighbour, bilinear and bicubic.
 
 To specify point locations, use :py:class:`~pywgrib2_xr.Point`. The constructor
 accepts longitudes, latitudes and, optionally, coordinate labels.
 
-.. ipython:: python
-
-    def tmp_pred(i):
-        return i.varname == 'TMP' and i.level_str == '2 m above ground'
+.. code-block:: python
 
     # Coordinates from https://www.aviationweather.gov/docs/metar/stations.txt
     sites = ["PAFA", "PAJN", "PANC"]
@@ -147,4 +176,16 @@ accepts longitudes, latitudes and, optionally, coordinate labels.
               'default': 'bilinear',
              }
 
-    ds.wgrib2.location(locs, iptype=iptype)
+    ds_pts = ds.wgrib2.location(locs, iptype=iptype)
+    ds_pts.coords
+
+.. parsed-literal::
+
+    Coordinates:
+        points     int64 0
+        longitude  (stid) float64 212.1 225.4 210.0
+        latitude   (stid) float64 64.8 58.35 61.17
+      * stid       (stid) <U4 'PAFA' 'PAJN' 'PANC'
+      * isobaric1  (isobaric1) int64 100000 97500 95000 92500 ... 10000 7500 5000
+        reftime    datetime64[ns] 2020-09-07
+        time1      timedelta64[ns] 06:00:00

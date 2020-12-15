@@ -1,10 +1,7 @@
-Utility script
-==============
+Script pywgrib2
+===============
 
 .. _pywgrib2:
-
-pywgrib2
-^^^^^^^^
 
 .. The undocumented function is added to get [source] link to module's code
 .. automodule:: pywgrib2_xr.script

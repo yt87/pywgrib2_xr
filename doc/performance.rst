@@ -5,32 +5,46 @@ Performance
 **pywgrib2** uses **wgrib2** code. It is iteresting to compare performance of
 those two on common tasks.
 
-The first task is converting GRIB file to netCDF. The GRIB file is GDAS 2m temperature
+The first task is converting GRIB2 file to netCDF. The GRIB2 file is GDAS 2m temperature
 data for whole month that can be obtained
 `here <ftp://ftp.ncep.noaa.gov/pub/data/nccf/com/cfs/prod/monthly/time>`_
 The file size is about 20 MB. We compare run times of **wgrib2** and Python scripts
 **cfgrib** and **pywgrib2**. The tests were ran several times, with no significant
-differences in lapsed times::
+differences in lapsed times:
 
-  $ time wgrib2 tmp2m.gdas.l.201912.grib2 -inv /dev/null -netcdf x.nc
+.. code-block:: console
+
+  time wgrib2 tmp2m.gdas.l.201912.grib2 -inv /dev/null -netcdf x.nc
+
+.. parsed-literal::
 
   real	0m9.814s
   user	0m9.696s
   sys	0m0.100s
 
-  $ time cfgrib to_netcdf -o y.nc tmp2m.l.gdas.202002.grib2
+.. code-block:: console
+
+  time cfgrib to_netcdf -o y.nc tmp2m.l.gdas.202002.grib2
+
+.. parsed-literal::
 
   real	0m16.451s
   user	0m15.146s
   sys	0m0.714s
 
-  $ time pywgrib2 template -t '2019-12-01T00' -o tmp2m.tmpl tmp2m.l.gdas.201912.grib2
+.. code-block:: console
+
+  time pywgrib2 template -t '2019-12-01T00' -o tmp2m.tmpl tmp2m.l.gdas.201912.grib2
 
   real	0m1.160s
   user	0m1.210s
   sys	0m0.417s
 
+.. code-block:: console
+
   time pywgrib2 to_nc -T tmp2m.tmpl -o tmp2m-pywgrib.nc tmp2m.l.gdas.201912.grib2
+
+.. parsed-literal::
 
   real	0m12.577s
   user	0m12.401s
@@ -39,9 +53,14 @@ differences in lapsed times::
 **wgrib2** is the fastest, followed by **pywgrib2** and **cfgrib**.
 One has to note that **wgrib2** does not handle this dataset correctly: it uses
 forecast valid time as the time coordinate. The datafile contains analysis
-and 1 to 6 hour forecast, every 6 hours::
+and 1 to 6 hour forecast, every 6 hours:
 
-  $ wgrib2 tmp2m.gdas.l.202002.grib2
+.. code-block:: console
+
+  wgrib2 tmp2m.gdas.l.202002.grib2
+
+.. parsed-literal::
+
   1:0:d=2020020100:TMP:2 m above ground:anl:
   2:26025:d=2020020100:TMP:2 m above ground:1 hour fcst:
   3:52040:d=2020020100:TMP:2 m above ground:2 hour fcst:
