@@ -2,7 +2,7 @@
 Remapping Dataset
 =================
 
-Datasets created by **pywgrib2** can be remapped to cover smaller area.
+Datasets created by **pywgrib2_xr** can be remapped to cover smaller area.
 This might be important to save on storage or compute time. For forecast
 verification model data is compared to observations at a finite set of points.
 The interpolation methods are provided by **xarray** dataset_accessor ``wgrib2``. 
@@ -11,7 +11,7 @@ Interpolation to grid
 ---------------------
 
 To interpolate to a new grid, one has to define first that grid parameters.
-**pywgrib2** provides two functions: :py:func:`~pywgrib2_xr.grid_fromdict`
+**pywgrib2_xr** provides two functions: :py:func:`~pywgrib2_xr.grid_fromdict`
 and :py:func:`~pywgrib2_xr.grid_fromstring`. The latter follows
 `wgrib2 style <https://www.cpc.ncep.noaa.gov/products/wesley/wgrib2/new_grid.html>`_
 and is easier to use. The argument is a single string (unlike three passed to
@@ -66,7 +66,7 @@ The following code extracts 3-hour accumulated precipitation, surface model elev
 ceiling and heights at pressure levels, within a smaller area. The data variables are
 renamed before remapping.
 
-**pywgrib2** allows interpolation type to depend on variable. The specification
+**pywgrib2_xr** allows interpolation type to depend on variable. The specification
 is a dictionary: ``variable -> interpolation_type``. The ``default`` entry is for
 all remaining variables, in this case ``elev`` and ``height``.
 

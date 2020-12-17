@@ -2,8 +2,8 @@
 Overview
 ========
 
-**pywgrib2_xr** is a package to read and write GRIB2 files. It uses wgrib2_ as
-a background engine. It provides following functionality:
+**pywgrib2_xr** uses wgrib2_ as a background engine. It provides following
+functionality:
 
   1. A low-level interface to **wgrib2** C-API. This is the one to use to write
      GRIB2 files.
@@ -25,7 +25,7 @@ a large grib file. This can be achieved with a **wgrib2** call:
     ':(TMP:2 m above ground|[U|V]GRD:10 m above ground):' \
     -out /tmp/subset.grib2
 
-The equivalent Python code:
+The equivalent Python code is:
 
 .. _example-1:
 
@@ -40,7 +40,13 @@ The equivalent Python code:
     pywgrib2.wgrib(in_file, '-inv', '/dev/null', '-match', match_str, '-grib', out_file)
     pywgrib2.free_files(in_file, out_file)
 
-We can check the output file contain requested data:
+We can check the output file contain requested data. The **wgrib2** call:
+
+.. code-block:: console
+
+    wgrib2 /tmp/subset.grib2
+
+translates to Python as:
 
 .. code-block:: python
 

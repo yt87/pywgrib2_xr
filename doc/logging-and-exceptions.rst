@@ -65,9 +65,12 @@ possible to set logging level and a different output stream:
     logging.basicConfig(filename='my.log', level=logging.DEBUG)
     pywgrib2.wgrib('gfs.grib2', '-inv', 'gfs.inv')
 
-.. parsed-literal::
+.. code-block:: console
 
     cat my.log
+
+.. parsed-literal::
+
     DEBUG:pywgrib2_xr.wgrib2:args: ('gfs.grib2', '-inv', 'gfs.inv')
   
 Setting level to ``DEBUG`` outputs arguments passed to ``wgrib``.

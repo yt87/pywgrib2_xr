@@ -56,10 +56,9 @@ This type of listing is used to select messages, either implicitly, as shown in
                    '-match', match_str, '-grib', out_file)
     pywgrib2.free_files(in_file, out_file)
 
-While this code is longer and runs a bit slower than the first version, it makes sense
-to create inventory files when the GRIB2 files are accessed frequently. Decoding of 
-message metadata is done only once. Subsequent message selection is done by reading
-inventory file, which is much faster.
+When the GRIB2 files are accessed frequently it makes sense to create permanent
+inventory files. Decoding of message metadata is done only once. Subsequent message
+selection is done by reading inventory file, which is much faster.
 
 The above inventories can be useful with the low-level interface is used.
 **pywgrib2_xr** uses option ``-pyinv`` which is a new feature in wgrib2 v3.0.0:

@@ -121,7 +121,7 @@ Creating a projection
 
 GRIB2 defines projection in terms of Grid Definition Template (Section 3 in
 GRIB2 message), which includes also grid parameters such as number of points
-and cell size. **pywgrib2** wraps it in a class :py:class:`pywgrib2_xr.Grid`.
+and cell size. **pywgrib2_xr** wraps it in a class :py:class:`pywgrib2_xr.Grid`.
 
 .. autosummary::
    :toctree: generated/
