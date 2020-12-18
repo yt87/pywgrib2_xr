@@ -60,6 +60,7 @@ test:
   # copy over any needed test files here
   source_files:
     - tests/
+    - data/
 
 # Uncomment and fill in pywgrib2_xr metadata
 about:
