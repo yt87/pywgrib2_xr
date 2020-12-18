@@ -5,9 +5,9 @@ c_compiler:
 c_compiler_version:
 - '11'
 channel_sources:
-- yt87,conda-forge,defaults
+- yt87,conda-forge,default
 channel_targets:
-- yt87 main
+- yt87
 macos_machine:
 - x86_64-apple-darwin13.4.0
 pin_run_as_build:
