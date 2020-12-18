@@ -5,4 +5,4 @@ python:
 channel_sources:
   - yt87,conda-forge,default
 channel_targets:
-  - yt87
+  - yt87 main
