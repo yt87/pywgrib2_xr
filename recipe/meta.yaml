@@ -52,8 +52,8 @@ test:
     - pywgrib2_xr
   # Run your test commands here
   commands:
-    - pywgrib2_xr --help
     - pytest
+    - pywgrib2 --help
   # declare any test-only requirements here
   requires:
     - pytest
