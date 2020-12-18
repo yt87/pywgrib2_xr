@@ -31,12 +31,12 @@ requirements:
   host:
     - python {{ python }}
     - cython
-    - numpy
+    - numpy >=1.17
     - libwgrib2
     - setuptools <50.0
   run:
     - python
-    - libwgrib2
+    - libwgrib2 >3.0
     - xarray >=0.16
     - dask >=2.11
     - python-blosc >=1.9
