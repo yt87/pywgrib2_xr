@@ -2,7 +2,7 @@
 # {% set version = environ.get('GIT_DESCRIBE_TAG', 'untagged')|string|replace('-','_') %}
 # {% set build_number = environ.get('GIT_DESCRIBE_NUMBER', '0') %}
 {% set version = "0.2.2" %}
-{% set build_number = 2 %}
+{% set build_number = 3 %}
 
 package:
   name: {{ name|lower }}
@@ -53,17 +53,17 @@ test:
   # Run your test commands here
   commands:
     - pywgrib2 -h
-    - pytest
+  #  - pytest
   # declare any test-only requirements here
-  requires:
-    - pytest
-    - dill
-    - netcdf4
-    - zarr
+  #requires:
+  #  - pytest
+  #  - dill
+  #  - netcdf4
+  #  - zarr
   # copy over any needed test files here
-  source_files:
-    - tests/
-    - data/
+  #source_files:
+  #  - tests/
+  #  - data/
 
 # Uncomment and fill in pywgrib2_xr metadata
 about:
