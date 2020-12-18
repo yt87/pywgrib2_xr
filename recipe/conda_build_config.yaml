@@ -1,7 +1,7 @@
 python:
-  - '3.7.* *_cpython'
+#  - '3.7.* *_cpython'
   - '3.8.* *_cpython'
-  - '3.9.* *_cpython'
+#  - '3.9.* *_cpython'
 channel_sources:
   - yt87,conda-forge,default
 channel_targets:
