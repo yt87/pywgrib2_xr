@@ -53,10 +53,10 @@ test:
   # Run your test commands here
   commands:
     - pytest
-    - pywgrib2 --help
   # declare any test-only requirements here
   requires:
     - pytest
+    - dill
   # copy over any needed test files here
   source_files:
     - tests/
