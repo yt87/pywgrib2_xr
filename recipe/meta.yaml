@@ -2,7 +2,7 @@
 # {% set version = environ.get('GIT_DESCRIBE_TAG', 'untagged')|string|replace('-','_') %}
 # {% set build_number = environ.get('GIT_DESCRIBE_NUMBER', '0') %}
 {% set version = "0.2.2" %}
-{% set build_number = 1 %}
+{% set build_number = 2 %}
 
 package:
   name: {{ name|lower }}
@@ -19,7 +19,7 @@ build:
   # for more details.
   # noarch: python
 
-  skip: true    # [win or osx]
+  skip: true    # [win]
   number: {{ build_number }}
   # string: {{ [build_number, ('h' + PKG_HASH), environ.get('GIT_DESCRIBE_HASH', '')]|join('_') }}
 
