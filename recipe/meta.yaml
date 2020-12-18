@@ -52,11 +52,14 @@ test:
     - pywgrib2_xr
   # Run your test commands here
   commands:
+    - pywgrib2 -h
     - pytest
   # declare any test-only requirements here
   requires:
     - pytest
     - dill
+    - netcdf4
+    - zarr
   # copy over any needed test files here
   source_files:
     - tests/
