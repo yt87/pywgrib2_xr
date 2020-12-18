@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.Grid.gdtnum
+========================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autoattribute:: Grid.gdtnum

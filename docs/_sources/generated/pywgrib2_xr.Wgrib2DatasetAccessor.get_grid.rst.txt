@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.Wgrib2DatasetAccessor.get\_grid
+============================================
+
+.. currentmodule:: pywgrib2_xr
+
+.. automethod:: Wgrib2DatasetAccessor.get_grid

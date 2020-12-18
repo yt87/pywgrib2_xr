@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.make\_template
+===========================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autofunction:: make_template

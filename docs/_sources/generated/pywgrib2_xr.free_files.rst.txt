@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.free\_files
+========================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autofunction:: free_files

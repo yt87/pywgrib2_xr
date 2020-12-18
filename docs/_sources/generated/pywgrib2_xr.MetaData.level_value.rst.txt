@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.MetaData.level\_value
+==================================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autoproperty:: MetaData.level_value

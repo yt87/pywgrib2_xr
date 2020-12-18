@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.utils.remotepath
+=============================
+
+.. currentmodule:: pywgrib2_xr.utils
+
+.. autofunction:: remotepath

@@ -1,0 +1,617 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pywgrib2_xr.wgrib2 &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pywgrib2_xr.wgrib2</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pywgrib2_xr.wgrib2</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">wurlitzer</span> <span class="kn">import</span> <span class="n">pipes</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">WgribError</span><span class="p">,</span> <span class="n">_wgrib2</span>  <span class="c1"># type: ignore</span>
+
+<span class="c1"># from wgrib2.h: N_mem_buffers and N_RPN_REGS</span>
+<span class="n">N_MEM_BUF</span> <span class="o">=</span> <span class="mi">30</span>  <span class="c1"># Number of memory buffers</span>
+<span class="n">N_RPN_REG</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># Number of RPN registers</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Private exception that should be raised by functions decorated by organs on error</span>
+<span class="k">class</span> <span class="nc">_WgribError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="c1"># Wurlitzer organs</span>
+<span class="k">def</span> <span class="nf">organs</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Decorator to capture of C-emitted output to stderr.&quot;&quot;&quot;</span>
+
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;args: </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;kwargs: </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="n">_err</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">pipes</span><span class="p">(</span><span class="n">stdout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">_err</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">_WgribError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="kn">import</span> <span class="nn">time</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># Wurlitzer.flush_interval</span>
+                <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="n">_err</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span> <span class="kn">from</span> <span class="nn">e</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">_err</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">err</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># FIXME: testing overhead</span>
+        <span class="c1"># ret = func(*args, **kwargs)</span>
+        <span class="c1"># if ret is None:</span>
+        <span class="c1"># Fatal error, by convention</span>
+        <span class="c1">#     raise WgribError(&#39;Some error&#39;)</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+
+<span class="c1"># def set_num_threads(nthreads):</span>
+<span class="c1">#    &quot;&quot;&quot;Set number of threads for `wgrib2`.</span>
+<span class="c1">#</span>
+<span class="c1">#    Parameters</span>
+<span class="c1">#    ----------</span>
+<span class="c1">#    nthreads: int</span>
+<span class="c1">#        Number of threads.</span>
+<span class="c1">#    &quot;&quot;&quot;</span>
+<span class="c1">#    _wgrib2.set_num_threads(nthreads)</span>
+<span class="k">def</span> <span class="nf">set_num_threads</span><span class="p">(</span><span class="n">num_threads</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">num_threads</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">num_threads</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;OMP_NUM_THREADS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_threads</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MemoryBuffer"><a class="viewcode-back" href="../../generated/pywgrib2_xr.MemoryBuffer.html#pywgrib2_xr.MemoryBuffer">[docs]</a><span class="k">class</span> <span class="nc">MemoryBuffer</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Encapsulates `wgrib2` memory buffer.</span>
+
+<span class="sd">    Keeps track of `wgrib2` memory buffers. Implemented as a context manager.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; with MemoryBuffer() as reg:</span>
+<span class="sd">    ...     do_something_with(buf)</span>
+
+<span class="sd">    or (does the same thing)</span>
+
+<span class="sd">    &gt;&gt;&gt; buf = MemoryBuffer()</span>
+<span class="sd">    &gt;&gt;&gt; do_something_with(buf)</span>
+<span class="sd">    &gt;&gt;&gt; buf.close()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_buflen</span> <span class="o">=</span> <span class="n">N_MEM_BUF</span>
+    <span class="n">_buffers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">_buflen</span>
+
+<div class="viewcode-block" id="MemoryBuffer.__init__"><a class="viewcode-back" href="../../generated/pywgrib2_xr.MemoryBuffer.html#pywgrib2_xr.MemoryBuffer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Finds available buffer.</span>
+
+<span class="sd">        Maximum number of buffers is 30.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        WgribError</span>
+<span class="sd">            If there are no free buffers left.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bind</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_buffers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;@mem:</span><span class="si">{:d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MemoryBuffer.usage"><a class="viewcode-back" href="../../generated/pywgrib2_xr.MemoryBuffer.usage.html#pywgrib2_xr.MemoryBuffer.usage">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">usage</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns copy of buffer array.</span>
+
+<span class="sd">        Intended for debugging resource leaks.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            Content of internal buffer array. One means buffer in use.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_buffers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_bind</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_buflen</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_buffers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_buffers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">return</span> <span class="n">i</span>
+        <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="s2">&quot;No free buffers&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MemoryBuffer.get"><a class="viewcode-back" href="../../generated/pywgrib2_xr.MemoryBuffer.get.html#pywgrib2_xr.MemoryBuffer.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rtype</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns buffer content.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        rtype : str</span>
+<span class="sd">            Return type. One of &#39;a&#39; - np.ndarray, &#39;b&#39; - bytes, &#39;s&#39; - str.</span>
+<span class="sd">            Default is &#39;b&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">bytes</span> <span class="o">=</span> <span class="n">_wgrib2</span><span class="o">.</span><span class="n">get_mem_buf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">bytes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="s2">&quot;wgrib2_get_mem_buffer failed&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rtype</span> <span class="o">==</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">bytes</span>
+        <span class="k">elif</span> <span class="n">rtype</span> <span class="o">==</span> <span class="s2">&quot;s&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">rtype</span> <span class="o">==</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Invalid argument </span><span class="si">{:s}</span><span class="s2">, must be &#39;a&#39;, &#39;b&#39; or &#39;s&#39;)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rtype</span><span class="p">)</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MemoryBuffer.set"><a class="viewcode-back" href="../../generated/pywgrib2_xr.MemoryBuffer.set.html#pywgrib2_xr.MemoryBuffer.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialises buffer with `data`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : bytes, str or ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">_wgrib2</span><span class="o">.</span><span class="n">set_mem_buf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="s2">&quot;wgrib2_set_mem_buffer (malloc) failed&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MemoryBuffer.close"><a class="viewcode-back" href="../../generated/pywgrib2_xr.MemoryBuffer.close.html#pywgrib2_xr.MemoryBuffer.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes buffer free for reuse.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_buffers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span></div></div>
+
+
+<div class="viewcode-block" id="RPNRegister"><a class="viewcode-back" href="../../generated/pywgrib2_xr.RPNRegister.html#pywgrib2_xr.RPNRegister">[docs]</a><span class="k">class</span> <span class="nc">RPNRegister</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Encapsulates `wgrib2` RPN register.</span>
+
+<span class="sd">    Keeps track of `wgrib2` registers. Implemented as a context manager.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; with RPNRegister() as reg:</span>
+<span class="sd">        ... do_something_with(reg)</span>
+
+<span class="sd">    or (does the same thing)</span>
+
+<span class="sd">    &gt;&gt;&gt; reg = RPNRegister()</span>
+<span class="sd">    &gt;&gt;&gt; do_something_with(reg)</span>
+<span class="sd">    &gt;&gt;&gt; reg.close()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_buflen</span> <span class="o">=</span> <span class="n">N_RPN_REG</span>
+    <span class="n">_buffers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">_buflen</span>
+
+<div class="viewcode-block" id="RPNRegister.__init__"><a class="viewcode-back" href="../../generated/pywgrib2_xr.RPNRegister.html#pywgrib2_xr.RPNRegister.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Finds available register.</span>
+
+<span class="sd">        Maximum number of registers is 20.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        WgribError</span>
+<span class="sd">            If there are no free registers left.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bind</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_buffers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
+
+    <span class="c1"># def __str__(self):</span>
+    <span class="c1">#    return str(self._n)</span>
+
+<div class="viewcode-block" id="RPNRegister.usage"><a class="viewcode-back" href="../../generated/pywgrib2_xr.RPNRegister.usage.html#pywgrib2_xr.RPNRegister.usage">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">usage</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns copy of register array.</span>
+
+<span class="sd">        Intended for debugging resource leaks.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            Content of internal register array. Ones mean registers in use.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_buffers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_bind</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_buflen</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_buffers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_buffers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">return</span> <span class="n">i</span>
+        <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="s2">&quot;No free buffers&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RPNRegister.get"><a class="viewcode-back" href="../../generated/pywgrib2_xr.RPNRegister.get.html#pywgrib2_xr.RPNRegister.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns content of the register.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.array</span>
+<span class="sd">            Register data as 1-D array</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">_wgrib2</span><span class="o">.</span><span class="n">get_reg_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">arr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="s2">&quot;wgrib2_get_reg_data failed&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">arr</span></div>
+
+<div class="viewcode-block" id="RPNRegister.set"><a class="viewcode-back" href="../../generated/pywgrib2_xr.RPNRegister.set.html#pywgrib2_xr.RPNRegister.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialises register with data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        arr : array-like</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">_wgrib2</span><span class="o">.</span><span class="n">set_reg_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="n">arr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="s2">&quot;wgrib2_set_reg (malloc) failed&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RPNRegister.close"><a class="viewcode-back" href="../../generated/pywgrib2_xr.RPNRegister.close.html#pywgrib2_xr.RPNRegister.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes register free for reuse.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_buffers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span></div></div>
+
+
+<div class="viewcode-block" id="free_files"><a class="viewcode-back" href="../../generated/pywgrib2_xr.free_files.html#pywgrib2_xr.free_files">[docs]</a><span class="nd">@organs</span>
+<span class="k">def</span> <span class="nf">free_files</span><span class="p">(</span><span class="o">*</span><span class="n">files</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Closes and removes `files` from wgrib2 linked list.</span>
+
+<span class="sd">    Optionally unlinks those files.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    *files : str</span>
+<span class="sd">        Name(s) of files to close.</span>
+<span class="sd">    delete: bool</span>
+<span class="sd">        Unlink closed files. Default is False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">_wgrib2</span><span class="o">.</span><span class="n">free_file</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">delete</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Failed to remove </span><span class="si">{:s}</span><span class="s2">: </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="status_open"><a class="viewcode-back" href="../../generated/pywgrib2_xr.status_open.html#pywgrib2_xr.status_open">[docs]</a><span class="nd">@organs</span>
+<span class="k">def</span> <span class="nf">status_open</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Prints open files to stderr.</span>
+
+<span class="sd">    This is a debug utility function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_wgrib2</span><span class="o">.</span><span class="n">status_open</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="wgrib"><a class="viewcode-back" href="../../generated/pywgrib2_xr.wgrib.html#pywgrib2_xr.wgrib">[docs]</a><span class="nd">@organs</span>
+<span class="k">def</span> <span class="nf">wgrib</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mimics `wgrib2` executable.</span>
+
+<span class="sd">    `wgrib2` output is captured. If it exits with non-zero status,</span>
+<span class="sd">    the output is passed to :py:exc:`~pywgrib2_xr.WgribError`,</span>
+<span class="sd">    else a warning is emmited.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : str</span>
+<span class="sd">        Arguments passed to wgrib2.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    WgribError</span>
+<span class="sd">        When `wgrib2` exits with non-zero status.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The files opened by `wgrib2` are not closed on exit.</span>
+<span class="sd">    Use :py:func:`free_files` to close.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; try:</span>
+<span class="sd">    ...     wgrib(*args)</span>
+<span class="sd">    &gt;&gt;&gt; except WgribError as e:</span>
+<span class="sd">    ...     print(&quot;wgrib2 error: {!r}&quot;.format(e))</span>
+<span class="sd">    &gt;&gt;&gt; finally:</span>
+<span class="sd">    ...     free_files(gribfile)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">_wgrib2</span><span class="o">.</span><span class="n">wgrib</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="c1"># 8 means help (i.e. no arguments)</span>
+    <span class="k">if</span> <span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">rc</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">_WgribError</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<span class="nd">@organs</span>
+<span class="k">def</span> <span class="nf">latlon2xy</span><span class="p">(</span><span class="n">sec3</span><span class="p">,</span> <span class="n">grid_lon</span><span class="p">,</span> <span class="n">grid_lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes grid coordinates.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sec3 : bytes</span>
+<span class="sd">           Section 3 of GRIB2 message.</span>
+<span class="sd">    grid_lon, grid_lat : array_like</span>
+<span class="sd">          Longitudes and latitudes of grid points.</span>
+<span class="sd">    lon, lat : array_like</span>
+<span class="sd">          Longitudes and latitudes to compute x and y coordinates.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    x, y : tuple</span>
+<span class="sd">          x and y coordinates in grid units.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    WgribError</span>
+<span class="sd">        When the C function exits with non-zero status.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">grid_lon</span> <span class="o">=</span> <span class="n">grid_lon</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">grid_lat</span> <span class="o">=</span> <span class="n">grid_lat</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">lon</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">lat</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">_wgrib2</span><span class="o">.</span><span class="n">latlon2xy</span><span class="p">(</span><span class="n">sec3</span><span class="p">,</span> <span class="n">grid_lon</span><span class="p">,</span> <span class="n">grid_lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">_WgribError</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+
+<span class="nd">@organs</span>
+<span class="k">def</span> <span class="nf">latlon</span><span class="p">(</span><span class="n">sec3</span><span class="p">,</span> <span class="n">npoints</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes latitudes and longitudes of grid points.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sec3 : bytes</span>
+<span class="sd">           Section 3 of GRIB2 message.</span>
+<span class="sd">    npoints : int</span>
+<span class="sd">           Number of points in grid.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    lon, lat : tuple</span>
+<span class="sd">          Longitudes and latitudes of grid points.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    WgribError</span>
+<span class="sd">        When the C function exits with non-zero status.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">_wgrib2</span><span class="o">.</span><span class="n">latlon</span><span class="p">(</span><span class="n">sec3</span><span class="p">,</span> <span class="n">npoints</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">_WgribError</span>
+    <span class="k">return</span> <span class="n">ret</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

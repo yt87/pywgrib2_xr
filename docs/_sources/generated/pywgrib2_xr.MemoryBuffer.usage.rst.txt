@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.MemoryBuffer.usage
+===============================
+
+.. currentmodule:: pywgrib2_xr
+
+.. automethod:: MemoryBuffer.usage

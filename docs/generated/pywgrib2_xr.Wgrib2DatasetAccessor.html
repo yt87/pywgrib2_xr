@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pywgrib2_xr.Wgrib2DatasetAccessor &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pywgrib2_xr.Wgrib2DatasetAccessor.get_grid" href="pywgrib2_xr.Wgrib2DatasetAccessor.get_grid.html" />
+    <link rel="prev" title="pywgrib2_xr.open_dataset" href="pywgrib2_xr.open_dataset.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">What’s New</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api.html#wgrib2-interface">wgrib2 Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#iplib-interface">iplib Interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#dataset">Dataset</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../api.html#reading-grib2-files">Reading GRIB2 files</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../api.html#accessors">Accessors</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">pywgrib2_xr.Wgrib2DatasetAccessor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pywgrib2_xr.Wgrib2DatasetAccessor.get_grid.html">pywgrib2_xr.Wgrib2DatasetAccessor.get_grid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pywgrib2_xr.Wgrib2DatasetAccessor.location.html">pywgrib2_xr.Wgrib2DatasetAccessor.location</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pywgrib2_xr.Wgrib2DatasetAccessor.grid.html">pywgrib2_xr.Wgrib2DatasetAccessor.grid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pywgrib2_xr.Wgrib2DatasetAccessor.winds.html">pywgrib2_xr.Wgrib2DatasetAccessor.winds</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#inventory">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#projection">Projection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#template">Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#utilities">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api.html">API reference</a> &raquo;</li>
+        
+      <li>pywgrib2_xr.Wgrib2DatasetAccessor</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/pywgrib2_xr.Wgrib2DatasetAccessor.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pywgrib2-xr-wgrib2datasetaccessor">
+<h1>pywgrib2_xr.Wgrib2DatasetAccessor<a class="headerlink" href="#pywgrib2-xr-wgrib2datasetaccessor" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="pywgrib2_xr.Wgrib2DatasetAccessor">
+<em class="property">class </em><code class="sig-prename descclassname">pywgrib2_xr.</code><code class="sig-name descname">Wgrib2DatasetAccessor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xarray_obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pywgrib2_xr/accessor.html#Wgrib2DatasetAccessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pywgrib2_xr.Wgrib2DatasetAccessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides custom attributes and methods on xarray Dataset.</p>
+<p>Do not instantiate this class directly, use accessor name ‘.wgrib2’ to call
+its method, for example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ds</span><span class="o">.</span><span class="n">wgrib2</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="pywgrib2_xr.Wgrib2DatasetAccessor.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xarray_obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pywgrib2_xr/accessor.html#Wgrib2DatasetAccessor.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pywgrib2_xr.Wgrib2DatasetAccessor.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pywgrib2_xr.Wgrib2DatasetAccessor.__init__" title="pywgrib2_xr.Wgrib2DatasetAccessor.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(xarray_obj)</p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="pywgrib2_xr.Wgrib2DatasetAccessor.get_grid.html#pywgrib2_xr.Wgrib2DatasetAccessor.get_grid" title="pywgrib2_xr.Wgrib2DatasetAccessor.get_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_grid</span></code></a>()</p></td>
+<td><p>Returns GRIB2 grid definition as dictionary.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="pywgrib2_xr.Wgrib2DatasetAccessor.grid.html#pywgrib2_xr.Wgrib2DatasetAccessor.grid" title="pywgrib2_xr.Wgrib2DatasetAccessor.grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grid</span></code></a>(grid[, iptype])</p></td>
+<td><p>Remaps all variables to points specified by <cite>longitude</cite> and <cite>latitude</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="pywgrib2_xr.Wgrib2DatasetAccessor.location.html#pywgrib2_xr.Wgrib2DatasetAccessor.location" title="pywgrib2_xr.Wgrib2DatasetAccessor.location"><code class="xref py py-obj docutils literal notranslate"><span class="pre">location</span></code></a>(points[, iptype])</p></td>
+<td><p>Remaps all variables to point locations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="pywgrib2_xr.Wgrib2DatasetAccessor.winds.html#pywgrib2_xr.Wgrib2DatasetAccessor.winds" title="pywgrib2_xr.Wgrib2DatasetAccessor.winds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">winds</span></code></a>(winds[, inplace])</p></td>
+<td><p>Changes vector coordinates to grid/Earth direction.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pywgrib2_xr.Wgrib2DatasetAccessor.get_grid.html" class="btn btn-neutral float-right" title="pywgrib2_xr.Wgrib2DatasetAccessor.get_grid" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pywgrib2_xr.open_dataset.html" class="btn btn-neutral float-left" title="pywgrib2_xr.open_dataset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

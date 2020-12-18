@@ -1,0 +1,46 @@
+﻿pywgrib2\_xr.Grid
+=================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autoclass:: Grid
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Grid.__init__
+      ~Grid.decode_globe
+      ~Grid.decode_params
+      ~Grid.encode_globe
+      ~Grid.encode_params
+      ~Grid.fromdict
+      ~Grid.fromstring
+      ~Grid.set_coords
+      ~Grid.set_winds
+      ~Grid.strings2params
+      ~Grid.to_wesn
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Grid.attrs
+      ~Grid.cfname
+      ~Grid.coords
+      ~Grid.crs
+      ~Grid.dims
+      ~Grid.gdtnum
+      ~Grid.globe
+      ~Grid.params
+      ~Grid.shape
+   
+   

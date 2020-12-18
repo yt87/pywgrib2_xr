@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.earth2grid\_points
+===============================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autofunction:: earth2grid_points

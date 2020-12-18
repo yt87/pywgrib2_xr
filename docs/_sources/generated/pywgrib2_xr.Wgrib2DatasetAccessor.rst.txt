@@ -1,0 +1,26 @@
+﻿pywgrib2\_xr.Wgrib2DatasetAccessor
+==================================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autoclass:: Wgrib2DatasetAccessor
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Wgrib2DatasetAccessor.__init__
+      ~Wgrib2DatasetAccessor.get_grid
+      ~Wgrib2DatasetAccessor.grid
+      ~Wgrib2DatasetAccessor.location
+      ~Wgrib2DatasetAccessor.winds
+   
+   
+
+   
+   
+   

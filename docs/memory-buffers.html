@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Memory Buffers &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Logging and Exceptions" href="logging-and-exceptions.html" />
+    <link rel="prev" title="Remapping Dataset" href="remapping.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Memory Buffers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/memory-buffers.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="memory-buffers">
+<h1>Memory Buffers<a class="headerlink" href="#memory-buffers" title="Permalink to this headline">¶</a></h1>
+<p><strong>wgrib2</strong> C API has an unorthodox design. Usually, libraries are written
+first,  executables call functions from those libraries. In case of <strong>wgrib2</strong>,
+the C <code class="docutils literal notranslate"><span class="pre">main</span></code> functions was made a library function. As a consequence,
+all arguments must be strings. Data returned by <code class="docutils literal notranslate"><span class="pre">wgrib2</span></code> is written to
+memory buffers. The API provides methods to read those buffers. <code class="docutils literal notranslate"><span class="pre">wgrib2</span></code>
+can also process data written to memory buffers by the client application.</p>
+<p>There can be up to 30 distinct memory buffers (and 20 RPN registers, used
+to pass calculated data, those are also chunks of memory). The buffers are
+identifiable by a number.
+In order to free the library user from keeping track of those numbers,
+<code class="docutils literal notranslate"><span class="pre">pywgrib2_xr</span></code> has its own classes <a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.html#pywgrib2_xr.MemoryBuffer" title="pywgrib2_xr.MemoryBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryBuffer</span></code></a>
+and <a class="reference internal" href="generated/pywgrib2_xr.RPNRegister.html#pywgrib2_xr.RPNRegister" title="pywgrib2_xr.RPNRegister"><code class="xref py py-class docutils literal notranslate"><span class="pre">RPNRegister</span></code></a> that shadow their <code class="docutils literal notranslate"><span class="pre">wgrib2</span></code>
+counterparts.
+Instantiating a class retrieves available number from a pool, calling
+<a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.close.html#pywgrib2_xr.MemoryBuffer.close" title="pywgrib2_xr.MemoryBuffer.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> returns buffer number
+to the pool. It <em>does not</em> free allocated memory. Closing the buffer can
+also be achieved by using the <code class="docutils literal notranslate"><span class="pre">with</span></code> construct.</p>
+<p>Examples:</p>
+<ol class="arabic simple">
+<li><p>Create a short inventory of a GRIB2 file in memory, then print it.</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pywgrib2_xr</span> <span class="k">as</span> <span class="nn">pywgrib2</span>
+<span class="kn">from</span> <span class="nn">pywgrib2_xr.utils</span> <span class="kn">import</span> <span class="n">localpath</span>
+<span class="n">file</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_850_ps30km_2020012500_P000.grib2&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">MemoryBuffer</span><span class="p">()</span> <span class="k">as</span> <span class="n">buf</span><span class="p">:</span>
+<span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;-inv&#39;</span><span class="p">,</span> <span class="n">buf</span><span class="p">]</span>
+<span class="n">pywgrib2</span><span class="o">.</span><span class="n">wgrib</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="n">inv</span> <span class="o">=</span> <span class="n">buf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">inv</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020012500</span><span class="p">:</span><span class="n">TMP</span><span class="p">:</span><span class="mi">850</span> <span class="n">mb</span><span class="p">:</span><span class="n">anl</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>Here, the argument <code class="docutils literal notranslate"><span class="pre">'s'</span></code> in a call to <code class="docutils literal notranslate"><span class="pre">buf.get()</span></code> means the returned data should
+be a string.</p>
+<ol class="arabic simple" start="2">
+<li><p>Read values and geolocation data into <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays.</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pywgrib2_xr</span> <span class="k">as</span> <span class="nn">pywgrib2</span>
+<span class="kn">from</span> <span class="nn">pywgrib2_xr.utils</span> <span class="kn">import</span> <span class="n">localpath</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">ExitStack</span>
+<span class="n">file</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_ps30km_2020012512.grib2&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">ExitStack</span><span class="p">()</span> <span class="k">as</span> <span class="n">stack</span><span class="p">:</span>
+    <span class="n">data_reg</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">enter_context</span><span class="p">(</span><span class="n">pywgrib2</span><span class="o">.</span><span class="n">RPNRegister</span><span class="p">())</span>
+    <span class="n">lon_reg</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">enter_context</span><span class="p">(</span><span class="n">pywgrib2</span><span class="o">.</span><span class="n">RPNRegister</span><span class="p">())</span>
+    <span class="n">lat_reg</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">enter_context</span><span class="p">(</span><span class="n">pywgrib2</span><span class="o">.</span><span class="n">RPNRegister</span><span class="p">())</span>
+    <span class="n">inv_buf</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">enter_context</span><span class="p">(</span><span class="n">pywgrib2</span><span class="o">.</span><span class="n">MemoryBuffer</span><span class="p">())</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;-rewind_init&#39;</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="s1">&#39;-d&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s1">&#39;-inv&#39;</span><span class="p">,</span> <span class="n">inv_buf</span><span class="p">,</span> <span class="s1">&#39;-ftn_api_fn0&#39;</span><span class="p">,</span> <span class="s1">&#39;-rpn_sto&#39;</span><span class="p">,</span> <span class="n">data_reg</span><span class="p">,</span>
+            <span class="s1">&#39;-rpn&#39;</span><span class="p">,</span> <span class="s1">&#39;rcl_lon:sto_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lon_reg</span><span class="p">),</span>
+            <span class="s1">&#39;-rpn&#39;</span><span class="p">,</span> <span class="s1">&#39;rcl_lat:sto_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lat_reg</span><span class="p">)]</span>
+    <span class="n">pywgrib2</span><span class="o">.</span><span class="n">wgrib</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">npts</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">buf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]]</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">data_reg</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">))</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">lon_reg</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">))</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">lat_reg</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">lon</span><span class="p">[:</span><span class="mi">3</span><span class="p">,:</span><span class="mi">3</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">lat</span><span class="p">[:</span><span class="mi">3</span><span class="p">,:</span><span class="mi">3</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">tmp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">225.38573</span> <span class="mf">225.62788</span> <span class="mf">225.87093</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">225.2796</span>  <span class="mf">225.5226</span>  <span class="mf">225.76648</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">225.17259</span> <span class="mf">225.41641</span> <span class="mf">225.66115</span><span class="p">]]</span>
+<span class="p">[[</span><span class="mf">32.549114</span> <span class="mf">32.637794</span> <span class="mf">32.725685</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">32.752975</span> <span class="mf">32.842205</span> <span class="mf">32.93064</span> <span class="p">]</span>
+ <span class="p">[</span><span class="mf">32.957066</span> <span class="mf">33.04685</span>  <span class="mf">33.135838</span><span class="p">]]</span>
+<span class="mf">288.38113</span> <span class="mf">285.1811</span>
+</pre></div>
+</div>
+<p>All three registers and the memory buffers are available for reuse.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="logging-and-exceptions.html" class="btn btn-neutral float-right" title="Logging and Exceptions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="remapping.html" class="btn btn-neutral float-left" title="Remapping Dataset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,264 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pywgrib2_xr.RPNRegister.close &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pywgrib2_xr.RPNRegister.usage" href="pywgrib2_xr.RPNRegister.usage.html" />
+    <link rel="prev" title="pywgrib2_xr.RPNRegister.set" href="pywgrib2_xr.RPNRegister.set.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">What’s New</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#wgrib2-interface">wgrib2 Interface</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../api.html#memory-buffer">Memory Buffer</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../api.html#rpnregister">RPNRegister</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="pywgrib2_xr.RPNRegister.html">pywgrib2_xr.RPNRegister</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pywgrib2_xr.RPNRegister.get.html">pywgrib2_xr.RPNRegister.get</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pywgrib2_xr.RPNRegister.set.html">pywgrib2_xr.RPNRegister.set</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">pywgrib2_xr.RPNRegister.close</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pywgrib2_xr.RPNRegister.usage.html">pywgrib2_xr.RPNRegister.usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api.html#top-level-functions">Top-level functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#iplib-interface">iplib Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#dataset">Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#inventory">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#projection">Projection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#template">Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#utilities">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api.html">API reference</a> &raquo;</li>
+        
+      <li>pywgrib2_xr.RPNRegister.close</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/pywgrib2_xr.RPNRegister.close.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pywgrib2-xr-rpnregister-close">
+<h1>pywgrib2_xr.RPNRegister.close<a class="headerlink" href="#pywgrib2-xr-rpnregister-close" title="Permalink to this headline">¶</a></h1>
+<dl class="py method">
+<dt id="pywgrib2_xr.RPNRegister.close">
+<code class="sig-prename descclassname">RPNRegister.</code><code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pywgrib2_xr/wgrib2.html#RPNRegister.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pywgrib2_xr.RPNRegister.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes register free for reuse.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pywgrib2_xr.RPNRegister.usage.html" class="btn btn-neutral float-right" title="pywgrib2_xr.RPNRegister.usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pywgrib2_xr.RPNRegister.set.html" class="btn btn-neutral float-left" title="pywgrib2_xr.RPNRegister.set" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

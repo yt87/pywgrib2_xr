@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pywgrib2_xr.grid_fromdict &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pywgrib2_xr.grid_fromstring" href="pywgrib2_xr.grid_fromstring.html" />
+    <link rel="prev" title="pywgrib2_xr.grid_fromgds" href="pywgrib2_xr.grid_fromgds.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">What’s New</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api.html#wgrib2-interface">wgrib2 Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#iplib-interface">iplib Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#dataset">Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#inventory">Inventory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#projection">Projection</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../api.html#creating-a-projection">Creating a projection</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="pywgrib2_xr.Point.html">pywgrib2_xr.Point</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pywgrib2_xr.Grid.html">pywgrib2_xr.Grid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pywgrib2_xr.grid_fromgds.html">pywgrib2_xr.grid_fromgds</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">pywgrib2_xr.grid_fromdict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pywgrib2_xr.grid_fromstring.html">pywgrib2_xr.grid_fromstring</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api.html#attributes">Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#template">Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#utilities">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api.html">API reference</a> &raquo;</li>
+        
+      <li>pywgrib2_xr.grid_fromdict</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/pywgrib2_xr.grid_fromdict.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pywgrib2-xr-grid-fromdict">
+<h1>pywgrib2_xr.grid_fromdict<a class="headerlink" href="#pywgrib2-xr-grid-fromdict" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="pywgrib2_xr.grid_fromdict">
+<code class="sig-prename descclassname">pywgrib2_xr.</code><code class="sig-name descname">grid_fromdict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">projname</span></em>, <em class="sig-param"><span class="n">globe</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pywgrib2_xr/grids.html#grid_fromdict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pywgrib2_xr.grid_fromdict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factory method to create projection from dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>projname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Projection name, one of {‘latitude_longitude’, ‘rotated_latitude_longitude’,
+‘mercator’, ‘polar_stereographic’, ‘lambert_conformal’, ‘gaussian’,
+‘space_view’}.</p></li>
+<li><p><strong>globe</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – Mapping: code -&gt; int, ‘shape’ -&gt; str, ‘earth_radius’ -&gt; float,
+‘semi_major_axis’ -&gt; float, ‘semi_minor_axis’ -&gt; float</p></li>
+<li><p><strong>**kwargs</strong> – <p>Projection-specific parameters.</p>
+<blockquote>
+<div><ul>
+<li><p>latitude_longitude:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>La1 : latitude of first grid point</p></li>
+<li><p>Lo1 : longitude of first grid point</p></li>
+<li><p>Ni : number of points along a parallel</p></li>
+<li><p>Nj : number of points along a meridan</p></li>
+<li><p>Di : i direction increment (deg)</p></li>
+<li><p>Dj : j direction increment (deg)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>rotated latitude_longitude:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>La1 : latitude of first grid point</p></li>
+<li><p>Lo1 : longitude of first grid point</p></li>
+<li><p>Ni : number of points along a parallel</p></li>
+<li><p>Nj : number of points along a meridan</p></li>
+<li><p>Di : i direction increment (deg)</p></li>
+<li><p>Dj : j direction increment (deg)</p></li>
+<li><p>LaSP : latitude of the southern pole of projection</p></li>
+<li><p>LoSP : longitude of the southern pole of projection</p></li>
+<li><p>Rot : angle of rotation of projection</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<blockquote>
+<div><ul>
+<li><p>mercator:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>La1 : latitude of first grid point</p></li>
+<li><p>Lo1 : longitude of first grid point</p></li>
+<li><p>La2 : latitude of last grid point</p></li>
+<li><p>Lo2 : longitude of last grid point</p></li>
+<li><p>LaD : latitude  where Di and Dj are specified</p></li>
+<li><p>Ni : number of points along a parallel</p></li>
+<li><p>Nj : number of points along a meridian</p></li>
+<li><p>Di : longitudinal direction grid length</p></li>
+<li><p>Dj : latitudinal direction grid length</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p>wgrib2/Sec1.c  - polar_stereographic:</p>
+<blockquote>
+<div><blockquote>
+<div><ul>
+<li><p>La1 : latitude of first grid point</p></li>
+<li><p>Lo1 : longitude of first grid point</p></li>
+<li><p>LaD : latitude  where Dx and Dy are specified [deg].                     LaD must be 60 (nps) or -60 (sps) (library limitation).</p></li>
+<li><p>LoV : longitude where y axis is parallel to meridian.</p></li>
+<li><p>LaO : latitude of projection origin, either 90 (nps) or -90 (sps)</p></li>
+<li><p>Nx : number of points along the x-axis</p></li>
+<li><p>Ny : number of points along the y-axis</p></li>
+<li><p>Dx : x-direction grid length [m]</p></li>
+<li><p>Dy : y-direction  grid length [m]</p></li>
+</ul>
+</div></blockquote>
+<ul>
+<li><p>lambert_conformal_conic:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>La1 : latitude of first grid point</p></li>
+<li><p>Lo1 : longitude of first grid point</p></li>
+<li><p>LaD : latitude  where Dx and Dy are specified [deg]</p></li>
+<li><p>LoV : longitude where y axis is parallel to meridian</p></li>
+<li><p>Latin1 : first latitude from pole which cuts the secant cone</p></li>
+<li><p>Latin2 : second latitude from pole which cuts the secant cone</p></li>
+<li><p>Nx : number of points along the x-axis</p></li>
+<li><p>Ny : number of points along the y-axis</p></li>
+<li><p>Dx : x-direction grid length [m]</p></li>
+<li><p>Dy : y-direction  grid length [m]</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><dl class="simple">
+<dt>gaussian :</dt><dd><ul class="simple">
+<li><p>lat0, lon0 : degrees of lat/lon for 1st grid point                 <code class="docutils literal notranslate"><span class="pre">lon1</span> <span class="pre">=</span> <span class="pre">-lon0</span></code>, <code class="docutils literal notranslate"><span class="pre">lat1</span> <span class="pre">=</span> <span class="pre">lat0</span> <span class="pre">+</span> <span class="pre">(nx-1)*dlon</span></code></p></li>
+<li><p>nx : number of grid points in X direction.</p></li>
+<li><p>ny : number of grid points in Y direction. <cite>ny</cite> must be even.</p></li>
+<li><p>dlon : degrees of longitude between adjacent grid points.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>space_view :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Lap : latitude of sub-satellite point</p></li>
+<li><p>Lop : longitude of sub-satellite point</p></li>
+<li><p>Nx : number of points along the x-axis</p></li>
+<li><p>Ny : number of points along the y-axis</p></li>
+<li><p>Dx : apparent diameter of Earth in grid lengths, in x-direction</p></li>
+<li><p>Dy : apparent diameter of Earth in grid lengths, in y-direction</p></li>
+<li><p>Xp : x-coordinate of sub-satellite point</p></li>
+<li><p>Yp : y-coordinate of sub-satellite point</p></li>
+<li><p>Nr : altitude of the camera from the Earth’s centre, measured in units of the Earth’s (equatorial) radius</p></li>
+<li><p>Xo : x-coordinate of origin of sector image</p></li>
+<li><p>Yo : y-coordinate of origin of sector image</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>unstructured :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Npts : number of points.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>The following parameter is common for all projections :</p>
+<blockquote>
+<div><ul>
+<li><p>winds : {‘grid’, ‘earth’}, optional. Vector orientation. Default is ‘earth’.</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Projection specific class instance.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pywgrib2_xr.Grid.html#pywgrib2_xr.Grid" title="pywgrib2_xr.Grid">Grid</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pywgrib2_xr.grid_fromstring.html" class="btn btn-neutral float-right" title="pywgrib2_xr.grid_fromstring" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pywgrib2_xr.grid_fromgds.html" class="btn btn-neutral float-left" title="pywgrib2_xr.grid_fromgds" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

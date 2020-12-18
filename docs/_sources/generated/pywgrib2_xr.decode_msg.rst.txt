@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.decode\_msg
+========================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autofunction:: decode_msg

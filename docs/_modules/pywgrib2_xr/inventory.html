@@ -1,0 +1,568 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pywgrib2_xr.inventory &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pywgrib2_xr.inventory</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pywgrib2_xr.inventory</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TYPE_CHECKING</span><span class="p">,</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Sequence</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">blosc</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">blosc</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">WgribError</span>
+<span class="kn">from</span> <span class="nn">.wgrib2</span> <span class="kn">import</span> <span class="n">MemoryBuffer</span><span class="p">,</span> <span class="n">wgrib</span><span class="p">,</span> <span class="n">free_files</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MetaData"><a class="viewcode-back" href="../../generated/pywgrib2_xr.MetaData.html#pywgrib2_xr.MetaData">[docs]</a><span class="k">class</span> <span class="nc">MetaData</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;GRIB2 message metadata.</span>
+
+<span class="sd">    Contains subset of decoded elements from sections 1 - 4 of a GRIB2 message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="vm">__slots__</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;offset&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;varname&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;level_str&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;time_str&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;discipline&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;centre&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;subcentre&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mastertab&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;localtab&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;long_name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;units&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pdt&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parmcat&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parmnum&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bot_level_code&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bot_level_value&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;top_level_code&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;top_level_value&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reftime&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;start_ft&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;end_ft&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;npts&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;nx&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ny&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;gdtnum&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;gdtmpl&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="MetaData.__init__"><a class="viewcode-back" href="../../generated/pywgrib2_xr.MetaData.html#pywgrib2_xr.MetaData.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;file&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;offset&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">varname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;varname&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">level_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;level_str&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;time_str&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">discipline</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;discipline&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">centre</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;centre&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subcentre</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;subcentre&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mastertab</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;mastertab&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">localtab</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;localtab&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">long_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;long_name&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pdt</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;pdt&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parmcat</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;parmcat&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parmnum</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;parmnum&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot_level_code</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;bot_level_code&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot_level_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;bot_level_value&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">top_level_code</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;top_level_code&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">top_level_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;top_level_value&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reftime</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;reftime&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_ft</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;start_ft&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">end_ft</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;end_ft&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">npts</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;npts&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;nx&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ny</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;ny&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;gdtnum&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;gdtmpl&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">s</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">])</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;{{:&gt;</span><span class="si">{:d}</span><span class="s2">}}: {{!r}}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+        <span class="n">summary</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&lt;</span><span class="si">{:s}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)]</span>
+        <span class="n">summary</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+
+    <span class="c1"># Shorthand for single levels</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">level_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Shortcut for self.bot_level_code.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bot_level_code</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">level_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Shortcut for self.bot_level_value.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bot_level_value</span></div>
+
+
+<span class="k">class</span> <span class="nc">FileMetaData</span><span class="p">:</span>
+    <span class="n">file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">MetaData</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">inventory</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">MetaData</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_copy</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inventory</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&lt;</span><span class="si">{:s}</span><span class="s2">&gt; </span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&lt;</span><span class="si">{:s}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)]</span>
+        <span class="n">slots</span> <span class="o">=</span> <span class="n">MetaData</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># Skip &#39;file&#39;</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="s2">&quot;</span><span class="si">{!s}</span><span class="s2">=</span><span class="si">{!s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">)))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">slots</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&lt;</span><span class="si">{:s}</span><span class="s2">&gt; </span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&lt;</span><span class="si">{:s}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)]</span>
+        <span class="n">slots</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="s2">&quot;varname&quot;</span><span class="p">,</span> <span class="s2">&quot;level_str&quot;</span><span class="p">,</span> <span class="s2">&quot;time_str&quot;</span><span class="p">,</span> <span class="s2">&quot;reftime&quot;</span><span class="p">)</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">slots</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_copy</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">newmeta</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
+        <span class="n">newmeta</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">file</span>
+        <span class="k">return</span> <span class="n">newmeta</span>
+
+    <span class="k">def</span> <span class="nf">to_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">MetaData</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Misssing argument &#39;file&#39;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_copy</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">item_match</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">predicates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns True if one of predicates evaluates to True.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    item: MetaData</span>
+<span class="sd">    predicates : sequence</span>
+<span class="sd">       Sequence of boolean functions accepting `item` as an argument.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">predicates</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="nb">next</span><span class="p">((</span><span class="kc">True</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">predicates</span> <span class="k">if</span> <span class="n">p</span><span class="p">(</span><span class="n">item</span><span class="p">)),</span> <span class="kc">False</span><span class="p">)</span>
+
+
+<span class="c1"># Remove parantheses from level_str</span>
+<span class="n">_trans_table</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">({</span><span class="s2">&quot;(&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;)&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">})</span>
+
+
+<span class="k">def</span> <span class="nf">_meta_from_string</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetaData</span><span class="p">:</span>
+    <span class="c1"># Will raise IndexError on invalid string</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;pyinv&quot;</span><span class="p">)</span>
+    <span class="n">tok</span> <span class="o">=</span> <span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="n">file</span><span class="p">}</span>
+    <span class="n">d</span><span class="p">[</span><span class="s2">&quot;offset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tok</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">d</span><span class="p">[</span><span class="s2">&quot;varname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tok</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">d</span><span class="p">[</span><span class="s2">&quot;level_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tok</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">_trans_table</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">[</span><span class="s2">&quot;time_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tok</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot;pyinv=&quot;</span><span class="p">)</span> <span class="p">:]))</span>
+    <span class="c1"># Fix level string to eliminate slashes - messing up conversion to NetCDF.</span>
+    <span class="n">level_code</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;bot_level_code&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">level_code</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">):</span>
+        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;level_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;level_str&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/m^3&quot;</span><span class="p">,</span> <span class="s2">&quot;*m-3&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">level_code</span> <span class="o">==</span> <span class="mi">109</span><span class="p">:</span>
+        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;level_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;level_str&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Km^2/kg/s&quot;</span><span class="p">,</span> <span class="s2">&quot;K*m2*kg-1*s-1&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;reftime&quot;</span><span class="p">,</span> <span class="s2">&quot;start_ft&quot;</span><span class="p">,</span> <span class="s2">&quot;end_ft&quot;</span><span class="p">]:</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">MetaData</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">)</span>
+
+
+<span class="c1"># def make_inventory(file: str) -&gt; Union[None, List[MetaData]]:</span>
+<div class="viewcode-block" id="make_inventory"><a class="viewcode-back" href="../../generated/pywgrib2_xr.make_inventory.html#pywgrib2_xr.make_inventory">[docs]</a><span class="k">def</span> <span class="nf">make_inventory</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates inventory for file &#39;file&#39;.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file : str</span>
+<span class="sd">        GRIB file name.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    inv : list</span>
+<span class="sd">        pywgrib2_xr.MetaData for all messages in GRIB file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">MemoryBuffer</span><span class="p">()</span> <span class="k">as</span> <span class="n">buf</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">wgrib</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;-rewind_init&quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="s2">&quot;-inv&quot;</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="s2">&quot;-pyinv&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">_meta_from_string</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">buf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span><span class="p">]</span>
+        <span class="k">except</span> <span class="n">WgribError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;wgrib2 error: </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">free_files</span><span class="p">(</span><span class="n">file</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">inventory_name</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">directory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="s2">&quot;.pinv&quot;</span> <span class="k">if</span> <span class="n">blosc</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;.binv&quot;</span>
+    <span class="k">if</span> <span class="n">directory</span><span class="p">:</span>
+        <span class="n">inv_file</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">inv_file</span><span class="p">)</span> <span class="o">+</span> <span class="n">ext</span>  <span class="c1"># local file</span>
+    <span class="k">return</span> <span class="n">file</span> <span class="o">+</span> <span class="n">ext</span>  <span class="c1"># collocated with GRIB file</span>
+
+
+<div class="viewcode-block" id="save_inventory"><a class="viewcode-back" href="../../generated/pywgrib2_xr.save_inventory.html#pywgrib2_xr.save_inventory">[docs]</a><span class="k">def</span> <span class="nf">save_inventory</span><span class="p">(</span>
+    <span class="n">inventory</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">MetaData</span><span class="p">],</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">directory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Saves inventory to a file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    inventory : sequence of pywgrib2_xr.MetaData</span>
+<span class="sd">    file : str</span>
+<span class="sd">        GRIB2 file path.</span>
+<span class="sd">    directory : str, optional</span>
+<span class="sd">        Directory where to save the inventory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">inventory</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;inventory is empty&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">directory</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">file_inventory</span> <span class="o">=</span> <span class="n">FileMetaData</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">inventory</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file_inventory</span> <span class="o">=</span> <span class="n">FileMetaData</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">inventory</span><span class="p">)</span>
+    <span class="n">inv_file</span> <span class="o">=</span> <span class="n">inventory_name</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">directory</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">blosc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">inv_file</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+                <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">file_inventory</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">arr</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">file_inventory</span><span class="p">)</span>
+            <span class="n">packed</span> <span class="o">=</span> <span class="n">blosc</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span>
+                <span class="n">arr</span><span class="p">,</span> <span class="n">typesize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cname</span><span class="o">=</span><span class="s2">&quot;lz4&quot;</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">blosc</span><span class="o">.</span><span class="n">BITSHUFFLE</span>
+            <span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">inv_file</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+                <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">packed</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Cannot save inventory to file </span><span class="si">{:s}</span><span class="s2">: </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inv_file</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span></div>
+        <span class="c1"># raise</span>
+
+
+<div class="viewcode-block" id="load_inventory"><a class="viewcode-back" href="../../generated/pywgrib2_xr.load_inventory.html#pywgrib2_xr.load_inventory">[docs]</a><span class="k">def</span> <span class="nf">load_inventory</span><span class="p">(</span>
+    <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">directory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">MetaData</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Retrieves inventory from a file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file : str</span>
+<span class="sd">        GRIB file path.</span>
+<span class="sd">    directory : str, optional</span>
+<span class="sd">        Directory of the inventory file, if not collocated with GRIB2 file.</span>
+<span class="sd">        Default is None.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    inventory: list</span>
+<span class="sd">        List of MetaData for all messages in a GRIB2 file. In case of an error,</span>
+<span class="sd">        None is returned.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inv_file</span> <span class="o">=</span> <span class="n">inventory_name</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">directory</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">inv_file</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">blosc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">blosc</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">file_inventory</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">file_inventory</span><span class="o">.</span><span class="n">to_meta</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Cannot load inventory from </span><span class="si">{:s}</span><span class="s2">: </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inv_file</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="load_or_make_inventory"><a class="viewcode-back" href="../../generated/pywgrib2_xr.load_or_make_inventory.html#pywgrib2_xr.load_or_make_inventory">[docs]</a><span class="k">def</span> <span class="nf">load_or_make_inventory</span><span class="p">(</span>
+    <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">directory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">MetaData</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Returns inventory for a GRIB2 file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file : str</span>
+<span class="sd">        GRIB file path.</span>
+<span class="sd">    directory : str, optional</span>
+<span class="sd">        Directory of the inventory file, if not collocated with GRIB2 file.</span>
+<span class="sd">        Default is None.</span>
+<span class="sd">    save : bool</span>
+<span class="sd">        Save created inventory, if inventory file does not exist. Default is False.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    inventory: list</span>
+<span class="sd">        List of MetaData for all messages in a GRIB2 file. In case of an error,</span>
+<span class="sd">        None is returned.</span>
+
+<span class="sd">    See also</span>
+<span class="sd">    --------</span>
+<span class="sd">    pywgrib2_xr.load_inventory, pywgrib2_xr.make_inventory, pywgrib2_xr.save_inventory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inventory</span> <span class="o">=</span> <span class="n">load_inventory</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">directory</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">inventory</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">inventory</span>
+    <span class="n">inventory</span> <span class="o">=</span> <span class="n">make_inventory</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">inventory</span> <span class="ow">and</span> <span class="n">save</span><span class="p">:</span>
+        <span class="n">save_inventory</span><span class="p">(</span><span class="n">inventory</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">directory</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">inventory</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

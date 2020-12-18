@@ -1,0 +1,26 @@
+﻿pywgrib2\_xr.RPNRegister
+========================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autoclass:: RPNRegister
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RPNRegister.__init__
+      ~RPNRegister.close
+      ~RPNRegister.get
+      ~RPNRegister.set
+      ~RPNRegister.usage
+   
+   
+
+   
+   
+   

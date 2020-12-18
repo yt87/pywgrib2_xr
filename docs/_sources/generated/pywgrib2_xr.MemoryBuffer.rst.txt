@@ -1,0 +1,26 @@
+﻿pywgrib2\_xr.MemoryBuffer
+=========================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autoclass:: MemoryBuffer
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MemoryBuffer.__init__
+      ~MemoryBuffer.close
+      ~MemoryBuffer.get
+      ~MemoryBuffer.set
+      ~MemoryBuffer.usage
+   
+   
+
+   
+   
+   

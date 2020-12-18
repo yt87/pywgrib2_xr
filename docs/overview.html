@@ -1,0 +1,535 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Overview &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installing.html" />
+    <link rel="prev" title="pywgrib2_xr: GRIB2 library based on wgrib2" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#low-level-interface">Low-level interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xarray-backend">Xarray backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#remapping">Remapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cf-support">CF support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Overview</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/overview.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p><strong>pywgrib2_xr</strong> uses <a class="reference external" href="https://www.cpc.ncep.noaa.gov/products/wesley/wgrib2">wgrib2</a> as a background engine. It provides following
+functionality:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>A low-level interface to <strong>wgrib2</strong> C-API. This is the one to use to write
+GRIB2 files.</p></li>
+<li><p>A GRIB2 backend to <a class="reference external" href="http://xarray.pydata.org/">xarray</a>, similar to <a class="reference external" href="https://github.com/ecmwf/cfgrib">cfgrib</a>. The decoded messages are
+assembled as <strong>xarray</strong> datasets.</p></li>
+<li><p>Remapping the resulting datasets to a different grid or to an arbitrary set
+of locations. It uses Fortran library <a class="reference external" href="https://www.nco.ncep.noaa.gov/pmb/docs/libs/iplib/ncep_iplib.shtml">iplib</a>, which is a part of <strong>wgrib2</strong>
+distribution.</p></li>
+</ol>
+</div></blockquote>
+<div class="section" id="low-level-interface">
+<h2>Low-level interface<a class="headerlink" href="#low-level-interface" title="Permalink to this headline">¶</a></h2>
+<p>Suppose the task is to write grib file containing surface temperature and wind from
+a large grib file. This can be achieved with a <strong>wgrib2</strong> call:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">wgrib2 nam.t12z.awak3d18.tm00.grib2 -match \</span>
+<span class="go">&#39;:(TMP:2 m above ground|[U|V]GRD:10 m above ground):&#39; \</span>
+<span class="go">-out /tmp/subset.grib2</span>
+</pre></div>
+</div>
+<p>The equivalent Python code is:</p>
+<div class="highlight-python notranslate" id="example-1"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pywgrib2_xr</span> <span class="k">as</span> <span class="nn">pywgrib2</span>
+
+<span class="n">in_file</span> <span class="o">=</span> <span class="s1">&#39;nam.t12z.awak3d18.tm00.grib2&#39;</span>
+<span class="n">out_file</span> <span class="o">=</span> <span class="s1">&#39;/tmp/subset.grib2&#39;</span>
+
+<span class="n">match_str</span> <span class="o">=</span> <span class="s1">&#39;:(TMP:2 m above ground|[U|V]GRD:10 m above ground):&#39;</span>
+<span class="n">pywgrib2</span><span class="o">.</span><span class="n">wgrib</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="s1">&#39;-inv&#39;</span><span class="p">,</span> <span class="s1">&#39;/dev/null&#39;</span><span class="p">,</span> <span class="s1">&#39;-match&#39;</span><span class="p">,</span> <span class="n">match_str</span><span class="p">,</span> <span class="s1">&#39;-grib&#39;</span><span class="p">,</span> <span class="n">out_file</span><span class="p">)</span>
+<span class="n">pywgrib2</span><span class="o">.</span><span class="n">free_files</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can check the output file contain requested data. The <strong>wgrib2</strong> call:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">wgrib2 /tmp/subset.grib2</span>
+</pre></div>
+</div>
+<p>translates to Python as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">MemoryBuffer</span><span class="p">()</span> <span class="k">as</span> <span class="n">buf</span><span class="p">:</span>
+    <span class="n">pywgrib2</span><span class="o">.</span><span class="n">wgrib</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s1">&#39;-inv&#39;</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+    <span class="n">buf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The class <a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.html#pywgrib2_xr.MemoryBuffer" title="pywgrib2_xr.MemoryBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryBuffer</span></code></a> used in this example is a wrapper
+around <strong>wgrib2</strong> C-API functions
+<code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">wgrib2_get_mem_buffer(unsigned</span> <span class="pre">char</span> <span class="pre">*my_buffer,</span> <span class="pre">size_t</span> <span class="pre">size,</span> <span class="pre">int</span> <span class="pre">n)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">wgrib2_set_mem_buffer(const</span> <span class="pre">unsigned</span> <span class="pre">char</span> <span class="pre">*my_buffer,</span> <span class="pre">size_t</span> <span class="pre">size,</span> <span class="pre">int</span> <span class="pre">n)</span></code> to
+transfer data between the calling program and the API “superfunction”
+<code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">wgrib2(int</span> <span class="pre">argc,</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">**argv)</span></code>. The argument <code class="docutils literal notranslate"><span class="pre">'s'</span></code> means <code class="docutils literal notranslate"><span class="pre">buf.get()</span></code>
+should return a string.</p>
+<p>Section <a class="reference internal" href="writing-grib-files.html#writing-grib-files"><span class="std std-ref">Writing GRIB2 files</span></a> shows a an example of storing
+calculated weather element in a GRIB2 file.</p>
+</div>
+<div class="section" id="xarray-backend">
+<h2>Xarray backend<a class="headerlink" href="#xarray-backend" title="Permalink to this headline">¶</a></h2>
+<p>Conversion of GRIB2 messages to an <strong>xarray</strong> dataset is a task that can not have
+a fully satisfactory solution. Each GRIB2 message is a self-contained unit,
+essentially a 2-dimensional data, plus attributes, while an <strong>xarray</strong> dataset is
+a collection of multidimensional arrays that may share some dimensions.</p>
+<p>The first difficulty are element, or variable names. Model output usually contains
+many geopotential height variables: pressure or sigma levels, cloud base/top,
+tropopause, etc. All have the same name, <code class="docutils literal notranslate"><span class="pre">HGT</span></code> (NCEP mnemonic), and can only be
+distinguishad by attributes. A dataset can have only one variable named <code class="docutils literal notranslate"><span class="pre">HGT</span></code>.
+<strong>cfgrib</strong> solves the issue by forcing different heights to be in separate datasets.
+This leads to proliferation of number of datasets for each model output.</p>
+<p><strong>pywgrib2_xr</strong> uses attributes to define variable name. Thus variables
+<code class="docutils literal notranslate"><span class="pre">HGT.isobaric</span></code> and <code class="docutils literal notranslate"><span class="pre">HGT.cloud_ceiling</span></code> can both coexist in the same dataset.</p>
+<p>The next issue is dimension handling. Different variables can have different
+time and vertical dimensions. Temperature is provided for all forecast times,
+accumulated precipitation is not available at initial (analysis) time. Wind
+and vorticity do not have the same number of vertical levels. <strong>cfgrib</strong> needs
+to put those elements in separate datasets.</p>
+<p>The third issue stems from the way GRIB2 messages are distributed.
+<a class="reference external" href="https://dd.weather.gc.ca/">MSC Datamart</a> makes one file per message while
+<a class="reference external" href="ftp://ftp.ncep.noaa.gov/pub/data/nccf/com">NCEP</a>
+files group messages by reference and forecast times. Each file can contain hundreds
+of messages.  <strong>xarray</strong> has a concept of a <cite>datastore</cite>, which essentially
+means a single file storing the data. A dataset is build from datastore.
+Those datasets can then be combined, there are two combining
+functions: <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.combine_by_coords.html#xarray.combine_by_coords" title="(in xarray v0.16.3.dev0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">xarray.combine_by_coords()</span></code></a> and <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.combine_nested.html#xarray.combine_nested" title="(in xarray v0.16.3.dev0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">xarray.combine_nested()</span></code></a>.
+The latter, the most flexible, requires user to partition input files into
+nested lists. This is not simple and may not be even possible when some
+of the files are missing. Consider the following example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">from</span> <span class="nn">pywgrib2_xr.utils</span> <span class="kn">import</span> <span class="n">localpath</span>
+
+<span class="n">f_10_0_00</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_1000_ps30km_2020012500_P000.grib2&#39;</span><span class="p">)</span>
+<span class="n">f_10_3_00</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_1000_ps30km_2020012500_P003.grib2&#39;</span><span class="p">)</span>
+<span class="n">f_7_0_00</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_700_ps30km_2020012500_P000.grib2&#39;</span><span class="p">)</span>
+<span class="n">f_7_3_00</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_700_ps30km_2020012500_P003.grib2&#39;</span><span class="p">)</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">([[</span><span class="n">f_10_0_00</span><span class="p">,</span> <span class="n">f_10_3_00</span><span class="p">],</span> <span class="p">[</span><span class="n">f_7_0_00</span><span class="p">,</span> <span class="n">f_7_3_00</span><span class="p">]],</span>
+                       <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;cfgrib&#39;</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s1">&#39;nested&#39;</span><span class="p">,</span>
+                       <span class="n">concat_dim</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;step&#39;</span><span class="p">])</span>
+<span class="n">ds</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="o">&gt;</span>
+<span class="n">Dimensions</span><span class="p">:</span>        <span class="p">(</span><span class="n">level</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="mi">247</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">Coordinates</span><span class="p">:</span>
+    <span class="n">time</span>           <span class="n">datetime64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">25</span>
+<span class="o">*</span> <span class="n">step</span>           <span class="p">(</span><span class="n">step</span><span class="p">)</span> <span class="n">timedelta64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="mi">03</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+    <span class="n">isobaricInhPa</span>  <span class="p">(</span><span class="n">level</span><span class="p">)</span> <span class="n">int64</span> <span class="mi">1000</span> <span class="mi">700</span>
+    <span class="n">latitude</span>       <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="n">float64</span> <span class="n">dask</span><span class="o">.</span><span class="n">array</span><span class="o">&lt;</span><span class="n">chunksize</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">247</span><span class="p">),</span> <span class="n">meta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="o">&gt;</span>
+    <span class="n">longitude</span>      <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="n">float64</span> <span class="n">dask</span><span class="o">.</span><span class="n">array</span><span class="o">&lt;</span><span class="n">chunksize</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">247</span><span class="p">),</span> <span class="n">meta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="o">&gt;</span>
+    <span class="n">valid_time</span>     <span class="p">(</span><span class="n">step</span><span class="p">)</span> <span class="n">datetime64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">25</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">25</span><span class="n">T03</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">Dimensions</span> <span class="n">without</span> <span class="n">coordinates</span><span class="p">:</span> <span class="n">level</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+<span class="n">Data</span> <span class="n">variables</span><span class="p">:</span>
+    <span class="n">t</span>              <span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="n">float32</span> <span class="n">dask</span><span class="o">.</span><span class="n">array</span><span class="o">&lt;</span><span class="n">chunksize</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">247</span><span class="p">),</span> <span class="n">meta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="o">&gt;</span>
+<span class="n">Attributes</span><span class="p">:</span>
+    <span class="n">GRIB_edition</span><span class="p">:</span>            <span class="mi">2</span>
+    <span class="n">GRIB_centre</span><span class="p">:</span>             <span class="n">cwao</span>
+    <span class="n">GRIB_centreDescription</span><span class="p">:</span>  <span class="n">Canadian</span> <span class="n">Meteorological</span> <span class="n">Service</span> <span class="o">-</span> <span class="n">Montreal</span>
+    <span class="n">GRIB_subCentre</span><span class="p">:</span>          <span class="mi">0</span>
+    <span class="n">Conventions</span><span class="p">:</span>             <span class="n">CF</span><span class="o">-</span><span class="mf">1.7</span>
+    <span class="n">institution</span><span class="p">:</span>             <span class="n">Canadian</span> <span class="n">Meteorological</span> <span class="n">Service</span> <span class="o">-</span> <span class="n">Montreal</span>
+    <span class="n">history</span><span class="p">:</span>                 <span class="mi">2020</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">29</span><span class="n">T19</span><span class="p">:</span><span class="mi">45</span><span class="p">:</span><span class="mi">43</span> <span class="n">GRIB</span> <span class="n">to</span> <span class="n">CDM</span><span class="o">+</span><span class="n">CF</span> <span class="n">via</span> <span class="n">cfgrib</span><span class="o">-</span><span class="mf">0.</span><span class="o">...</span>
+</pre></div>
+</div>
+<p>This works as expected. But if a file is missing, the above code will fail:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">([[</span><span class="n">f_10_0_00</span><span class="p">,</span> <span class="n">f_10_3_00</span><span class="p">],</span> <span class="p">[</span><span class="n">f_7_0_00</span><span class="p">]],</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;cfgrib&#39;</span><span class="p">,</span>
+                       <span class="n">combine</span><span class="o">=</span><span class="s1">&#39;nested&#39;</span><span class="p">,</span> <span class="n">concat_dim</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;step&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">supplied</span> <span class="n">objects</span> <span class="n">do</span> <span class="ow">not</span> <span class="n">form</span> <span class="n">a</span> <span class="n">hypercube</span> <span class="n">because</span> <span class="n">sub</span><span class="o">-</span><span class="n">lists</span> <span class="n">do</span> <span class="ow">not</span> <span class="n">have</span> <span class="n">consistent</span> <span class="n">lengths</span> <span class="n">along</span> <span class="n">dimension0</span>
+</pre></div>
+</div>
+<p><strong>pywgrib2_xr</strong> attempts to solve this problem by the concept of a template,
+borrowed from <strong>AWIPS1</strong>.
+The template defines logical dataset structure. The logical dataset contains messages
+sharing horizontal grid and <code class="docutils literal notranslate"><span class="pre">reference</span> <span class="pre">time</span></code>, coded in
+<a class="reference external" href="https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_sect1.shtml">Section 1</a>
+of a GRIB2 message. Vertical and time coordinates may differ. Conceptually this means
+that the logical dataset corresponds to one model run.</p>
+<p>To build a template, one has to have a coplete set of files for one model run,
+In most cases an archive will contain such a set. Once the template is built,
+the logical datasets can be concatenated over dimension <cite>reference time</cite>.
+Missing files will result in respective chunks set to NaNs.</p>
+<p>What this means, however, is that <strong>pywgrib2_xr</strong> cannot be simply implemented as
+another backend for <strong>xarray</strong>. It does attempt to have the same interface,
+the function <a class="reference internal" href="generated/pywgrib2_xr.open_dataset.html#pywgrib2_xr.open_dataset" title="pywgrib2_xr.open_dataset"><code class="xref py py-func docutils literal notranslate"><span class="pre">pywgrib2_xr.open_dataset()</span></code></a> is ported from the <cite>backends</cite>
+module of <strong>xarray</strong>.
+There is no need for <code class="docutils literal notranslate"><span class="pre">open_mfdataset()</span></code>, the logic of combining input files
+is included in <code class="docutils literal notranslate"><span class="pre">open_dataset()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+<span class="kn">import</span> <span class="nn">pywgrib2_xr</span> <span class="k">as</span> <span class="nn">pywgrib2</span>
+<span class="kn">from</span> <span class="nn">pywgrib2_xr.utils</span> <span class="kn">import</span> <span class="n">localpath</span>
+
+<span class="n">f_10_0_00</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_1000_ps30km_2020012500_P000.grib2&#39;</span><span class="p">)</span>
+<span class="n">f_10_3_00</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_1000_ps30km_2020012500_P003.grib2&#39;</span><span class="p">)</span>
+<span class="n">f_7_0_00</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_700_ps30km_2020012500_P000.grib2&#39;</span><span class="p">)</span>
+<span class="n">f_7_3_00</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_700_ps30km_2020012500_P003.grib2&#39;</span><span class="p">)</span>
+<span class="n">f_10_0_12</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_1000_ps30km_2020012512_P000.grib2&#39;</span><span class="p">)</span>
+<span class="n">f_10_3_12</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_1000_ps30km_2020012512_P003.grib2&#39;</span><span class="p">)</span>
+<span class="n">f_7_0_12</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_700_ps30km_2020012512_P000.grib2&#39;</span><span class="p">)</span>
+<span class="n">f_7_3_12</span> <span class="o">=</span> <span class="n">localpath</span><span class="p">(</span><span class="s1">&#39;CMC_glb_TMP_ISBL_700_ps30km_2020012512_P003.grib2&#39;</span><span class="p">)</span>
+
+<span class="n">f_12Zrun</span> <span class="o">=</span> <span class="p">[</span><span class="n">f_10_0_12</span><span class="p">,</span> <span class="n">f_10_3_12</span><span class="p">,</span> <span class="n">f_7_0_12</span><span class="p">,</span> <span class="n">f_7_3_12</span><span class="p">]</span>   <span class="c1"># complete set for template</span>
+<span class="n">f_all</span> <span class="o">=</span> <span class="p">[</span><span class="n">f_10_0_00</span><span class="p">,</span> <span class="n">f_10_3_00</span><span class="p">,</span> <span class="n">f_7_0_00</span><span class="p">]</span> <span class="o">+</span> <span class="n">f_12Zrun</span>     <span class="c1"># simulate missing file</span>
+<span class="n">tmpl</span> <span class="o">=</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">make_template</span><span class="p">(</span><span class="n">f_12Zrun</span><span class="p">,</span> <span class="n">vertlevels</span><span class="o">=</span><span class="s1">&#39;isobaric&#39;</span><span class="p">)</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">f_all</span><span class="p">,</span> <span class="n">tmpl</span><span class="p">)</span>
+<span class="n">ds</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="o">&gt;</span>
+<span class="n">Dimensions</span><span class="p">:</span>              <span class="p">(</span><span class="n">isobaric1</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">reftime</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">time1</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="mi">247</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">Coordinates</span><span class="p">:</span>
+    <span class="n">longitude</span>            <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="n">float64</span> <span class="n">dask</span><span class="o">.</span><span class="n">array</span><span class="o">&lt;</span><span class="n">chunksize</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">247</span><span class="p">),</span> <span class="n">meta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="o">&gt;</span>
+    <span class="n">latitude</span>             <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="n">float64</span> <span class="n">dask</span><span class="o">.</span><span class="n">array</span><span class="o">&lt;</span><span class="n">chunksize</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">247</span><span class="p">),</span> <span class="n">meta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="o">&gt;</span>
+  <span class="o">*</span> <span class="n">x</span>                    <span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">float64</span> <span class="o">-</span><span class="mf">2.61e+06</span> <span class="o">-</span><span class="mf">2.58e+06</span> <span class="o">...</span> <span class="mf">4.74e+06</span> <span class="mf">4.77e+06</span>
+  <span class="o">*</span> <span class="n">y</span>                    <span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="n">float64</span> <span class="o">-</span><span class="mf">5.97e+06</span> <span class="o">-</span><span class="mf">5.94e+06</span> <span class="o">...</span> <span class="o">-</span><span class="mf">3.022e+04</span> <span class="o">-</span><span class="mf">216.1</span>
+  <span class="o">*</span> <span class="n">isobaric1</span>            <span class="p">(</span><span class="n">isobaric1</span><span class="p">)</span> <span class="n">int64</span> <span class="mi">100000</span> <span class="mi">70000</span>
+  <span class="o">*</span> <span class="n">time1</span>                <span class="p">(</span><span class="n">time1</span><span class="p">)</span> <span class="n">timedelta64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="mi">03</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+  <span class="o">*</span> <span class="n">reftime</span>              <span class="p">(</span><span class="n">reftime</span><span class="p">)</span> <span class="n">datetime64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">25</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">25</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+    <span class="n">polar_stereographic</span>  <span class="n">int64</span> <span class="o">...</span>
+<span class="n">Data</span> <span class="n">variables</span><span class="p">:</span>
+    <span class="n">TMP</span><span class="o">.</span><span class="n">isobaric</span>         <span class="p">(</span><span class="n">reftime</span><span class="p">,</span> <span class="n">time1</span><span class="p">,</span> <span class="n">isobaric1</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="n">float32</span> <span class="n">dask</span><span class="o">.</span><span class="n">array</span><span class="o">&lt;</span><span class="n">chunksize</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">247</span><span class="p">),</span> <span class="n">meta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="o">&gt;</span>
+<span class="n">Attributes</span><span class="p">:</span>
+    <span class="n">Projection</span><span class="p">:</span>             <span class="n">polar_stereographic</span>
+    <span class="n">Originating</span> <span class="n">centre</span><span class="p">:</span>     <span class="mi">54</span> <span class="o">-</span> <span class="n">Canadian</span> <span class="n">Meteorological</span> <span class="n">Service</span> <span class="o">-</span> <span class="n">Montreal</span> <span class="p">(</span><span class="o">...</span>
+    <span class="n">Originating</span> <span class="n">subcentre</span><span class="p">:</span>  <span class="mi">0</span>
+    <span class="n">History</span><span class="p">:</span>                <span class="n">Created</span> <span class="n">by</span> <span class="n">pywgrib2_xr</span><span class="o">-</span><span class="mf">0.2</span><span class="o">.</span><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;TMP.isobaric&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">({</span><span class="s1">&#39;reftime&#39;</span><span class="p">:</span> <span class="s1">&#39;2020-01-25T00:00:00&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;time1&#39;</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+                        <span class="s1">&#39;isobaric1&#39;</span><span class="p">:</span> <span class="mi">70000</span><span class="p">})</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">],</span>
+       <span class="p">[</span><span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">],</span>
+       <span class="p">[</span><span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">],</span>
+       <span class="o">...</span><span class="p">,</span>
+       <span class="p">[</span><span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">],</span>
+       <span class="p">[</span><span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">],</span>
+       <span class="p">[</span><span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">nan</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The decoder handles the following grids:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Equidistant Cylindrical, also known as latitude-longitude</p></li>
+<li><p>Rotated latitude-longitude</p></li>
+<li><p>Mercator</p></li>
+<li><p>Polar Stereographic</p></li>
+<li><p>Lambert Conformal Conic</p></li>
+<li><p>Gaussian</p></li>
+<li><p>Space View</p></li>
+</ul>
+</div></blockquote>
+<p>Creation af a dataset from GRIB2 files is a three stage process:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Create inventory for each input file.</p></li>
+<li><p>Create template.</p></li>
+<li><p>Read all input files.</p></li>
+</ol>
+</div></blockquote>
+<p>The first step was done implicitly in the above example. When the same GRIB2 files
+are processed multiple times, it makes sense (to save time) to save each inventory
+to a disk file. The whole process is described in the <a class="reference internal" href="index.html#user-guide"><span class="std std-ref">User Guide</span></a>.</p>
+</div>
+<div class="section" id="remapping">
+<h2>Remapping<a class="headerlink" href="#remapping" title="Permalink to this headline">¶</a></h2>
+<p><strong>pywgrib2_xr</strong> comes with interpolation library <a class="reference external" href="https://www.nco.ncep.noaa.gov/pmb/docs/libs/iplib/ncep_iplib.shtml">iplib</a> which allows to remap dataset
+to different grid, or to a set of arbitrary points.
+Remapping are implemented as methods of <strong>xarray</strong> data accessor
+<a class="reference internal" href="generated/pywgrib2_xr.Wgrib2DatasetAccessor.html#pywgrib2_xr.Wgrib2DatasetAccessor" title="pywgrib2_xr.Wgrib2DatasetAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Wgrib2DatasetAccessor</span></code></a>, registered as an attribute <code class="docutils literal notranslate"><span class="pre">wgrib2</span></code>.
+The next example shows how to remap dataset to a set of locations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lons</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">77.03</span><span class="p">,</span> <span class="o">-</span><span class="mf">150.02</span><span class="p">,</span> <span class="o">-</span><span class="mf">78.62</span><span class="p">]</span>
+<span class="n">lats</span> <span class="o">=</span> <span class="p">[</span><span class="mf">38.85</span><span class="p">,</span> <span class="mf">61.17</span><span class="p">,</span> <span class="mf">43.57</span><span class="p">]</span>
+<span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;KDCA&#39;</span><span class="p">,</span> <span class="s1">&#39;PANC&#39;</span><span class="p">,</span> <span class="s1">&#39;CYYZ&#39;</span><span class="p">]</span>
+<span class="n">sites</span> <span class="o">=</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">lons</span><span class="p">,</span> <span class="n">lats</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;airport&#39;</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="p">{}))</span>
+<span class="n">ds2</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">wgrib2</span><span class="o">.</span><span class="n">location</span><span class="p">(</span><span class="n">sites</span><span class="p">)</span>
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">ds2</span><span class="p">[</span><span class="s1">&#39;TMP.isobaric&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<span class="n">tmp</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">airport</span><span class="o">=</span><span class="s1">&#39;CYYZ&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">xarray</span><span class="o">.</span><span class="n">DataArray</span> <span class="s1">&#39;TMP.isobaric&#39;</span> <span class="p">(</span><span class="n">reftime</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">time1</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">isobaric1</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span><span class="o">&gt;</span>
+<span class="n">array</span><span class="p">([[[</span><span class="mf">279.4096</span> <span class="p">,</span> <span class="mf">268.39636</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">280.62656</span><span class="p">,</span>       <span class="n">nan</span><span class="p">]],</span>
+
+       <span class="p">[[</span><span class="mf">275.98114</span><span class="p">,</span> <span class="mf">266.69205</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">275.85538</span><span class="p">,</span> <span class="mf">264.9516</span> <span class="p">]]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">Coordinates</span><span class="p">:</span>
+    <span class="n">points</span>     <span class="n">int64</span> <span class="mi">0</span>
+    <span class="n">longitude</span>  <span class="n">float64</span> <span class="o">-</span><span class="mf">78.62</span>
+    <span class="n">latitude</span>   <span class="n">float64</span> <span class="mf">43.57</span>
+    <span class="n">airport</span>    <span class="o">&lt;</span><span class="n">U4</span> <span class="s1">&#39;CYYZ&#39;</span>
+  <span class="o">*</span> <span class="n">reftime</span>    <span class="p">(</span><span class="n">reftime</span><span class="p">)</span> <span class="n">datetime64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">25</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">25</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+  <span class="o">*</span> <span class="n">time1</span>      <span class="p">(</span><span class="n">time1</span><span class="p">)</span> <span class="n">timedelta64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="mi">03</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+  <span class="o">*</span> <span class="n">isobaric1</span>  <span class="p">(</span><span class="n">isobaric1</span><span class="p">)</span> <span class="n">int64</span> <span class="mi">100000</span> <span class="mi">70000</span>
+<span class="n">Attributes</span><span class="p">:</span>
+    <span class="n">short_name</span><span class="p">:</span>    <span class="n">TMP</span>
+    <span class="n">long_name</span><span class="p">:</span>     <span class="n">Temperature</span>
+    <span class="n">units</span><span class="p">:</span>         <span class="n">K</span>
+    <span class="n">grid_mapping</span><span class="p">:</span>  <span class="n">points</span>
+</pre></div>
+</div>
+<p><strong>iplib</strong> supports all grids handled by the decoder with the exception of <cite>Space View</cite>.</p>
+</div>
+<div class="section" id="cf-support">
+<h2>CF support<a class="headerlink" href="#cf-support" title="Permalink to this headline">¶</a></h2>
+<p><strong>pywgrib2_xr</strong> does not follow CF conventions at this time. Standard names are set
+only for coordinate variables, not data. Also, composite units are as provided by
+wgrib2 code. For example, speed units are <code class="docutils literal notranslate"><span class="pre">m/s</span></code>, not <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">s-1</span></code>, as mandated
+<a class="reference external" href="http://cfconventions.org/Data/cf-standard-names/current/build/cf-standard-name-table.html">here</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cf_xarray</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">cf</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Axes</span><span class="p">:</span>
+    <span class="n">X</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+    <span class="n">Y</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+    <span class="n">Z</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;isobaric1&#39;</span><span class="p">]</span>
+    <span class="n">T</span><span class="p">:</span> <span class="p">[]</span>
+
+<span class="n">Coordinates</span><span class="p">:</span>
+        <span class="n">longitude</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span>
+        <span class="n">latitude</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span>
+        <span class="n">vertical</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;isobaric1&#39;</span><span class="p">]</span>
+        <span class="n">time</span><span class="p">:</span> <span class="p">[]</span>
+
+<span class="n">Cell</span> <span class="n">Measures</span><span class="p">:</span>
+        <span class="n">area</span><span class="p">:</span> <span class="n">unsupported</span>
+        <span class="n">volume</span><span class="p">:</span> <span class="n">unsupported</span>
+
+<span class="n">Standard</span> <span class="n">Names</span><span class="p">:</span>
+        <span class="n">forecast_period</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;time1&#39;</span><span class="p">]</span>
+        <span class="n">projection_x_coordinate</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+        <span class="n">projection_y_coordinate</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+        <span class="n">reference_time</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;reftime&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installing.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="pywgrib2_xr: GRIB2 library based on wgrib2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

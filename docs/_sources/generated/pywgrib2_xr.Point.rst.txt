@@ -1,0 +1,33 @@
+﻿pywgrib2\_xr.Point
+==================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autoclass:: Point
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Point.__init__
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Point.attrs
+      ~Point.cfname
+      ~Point.coords
+      ~Point.crs
+      ~Point.dims
+      ~Point.shape
+   
+   

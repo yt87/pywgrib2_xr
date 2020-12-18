@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.open\_dataset
+==========================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autofunction:: open_dataset

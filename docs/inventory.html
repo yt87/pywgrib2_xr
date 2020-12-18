@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Inventory &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Template" href="template.html" />
+    <link rel="prev" title="Installation" href="installing.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Inventory</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/inventory.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="inventory">
+<h1>Inventory<a class="headerlink" href="#inventory" title="Permalink to this headline">¶</a></h1>
+<p><strong>wgrib2</strong> has many options to list content of a GRIB2. Those are identified by
+a tag <code class="docutils literal notranslate"><span class="pre">inv</span></code> in the second column of <strong>wgrib2</strong> help screen. The default short
+listing is a sequence of elements separated by a colon:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">wgrib2 hrrrAK.grib2</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">VIS</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="mi">2</span><span class="p">:</span><span class="mi">754142</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">LCDC</span><span class="p">:</span><span class="n">low</span> <span class="n">cloud</span> <span class="n">layer</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="mi">3</span><span class="p">:</span><span class="mi">1212817</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">MCDC</span><span class="p">:</span><span class="n">middle</span> <span class="n">cloud</span> <span class="n">layer</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="mi">4</span><span class="p">:</span><span class="mi">1569231</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">HCDC</span><span class="p">:</span><span class="n">high</span> <span class="n">cloud</span> <span class="n">layer</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="mi">5</span><span class="p">:</span><span class="mi">1782227</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">TCDC</span><span class="p">:</span><span class="n">entire</span> <span class="n">atmosphere</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="mi">6</span><span class="p">:</span><span class="mi">2164301</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">HGT</span><span class="p">:</span><span class="n">cloud</span> <span class="n">base</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="mi">7</span><span class="p">:</span><span class="mi">3174056</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">HGT</span><span class="p">:</span><span class="n">cloud</span> <span class="n">ceiling</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="mi">8</span><span class="p">:</span><span class="mi">4445291</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">HGT</span><span class="p">:</span><span class="n">cloud</span> <span class="n">top</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>An extended listing is obtained by adding option <code class="docutils literal notranslate"><span class="pre">-Match_inv</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">wgrib2 hrrAK.grib2 -Match_inv</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="n">D</span><span class="o">=</span><span class="mi">20200210000000</span><span class="p">:</span><span class="n">VIS</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">::</span><span class="n">VIS</span><span class="p">:</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">npts</span><span class="o">=</span><span class="mi">1193781</span><span class="p">:</span><span class="n">var0_2_1_7_19_0</span><span class="p">:</span><span class="n">pdt</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">start_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">end_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">scaling</span> <span class="n">ref</span><span class="o">=</span><span class="mi">0</span> <span class="n">dec_scale</span><span class="o">=</span><span class="mi">2</span> <span class="n">bin_scale</span><span class="o">=</span><span class="mi">0</span> <span class="n">nbits</span><span class="o">=</span><span class="mi">10</span><span class="p">:</span><span class="n">vt</span><span class="o">=</span><span class="mi">2020021100</span><span class="p">:</span>
+<span class="mi">2</span><span class="p">:</span><span class="mi">754142</span><span class="p">:</span><span class="n">D</span><span class="o">=</span><span class="mi">20200210000000</span><span class="p">:</span><span class="n">LCDC</span><span class="p">:</span><span class="n">low</span> <span class="n">cloud</span> <span class="n">layer</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">::</span><span class="n">LCDC</span><span class="p">:</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">:</span><span class="n">npts</span><span class="o">=</span><span class="mi">1193781</span><span class="p">:</span><span class="n">var0_2_1_7_6_3</span><span class="p">:</span><span class="n">pdt</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">start_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">end_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">scaling</span> <span class="n">ref</span><span class="o">=</span><span class="mi">0</span> <span class="n">dec_scale</span><span class="o">=</span><span class="mi">0</span> <span class="n">bin_scale</span><span class="o">=-</span><span class="mi">3</span> <span class="n">nbits</span><span class="o">=</span><span class="mi">11</span><span class="p">:</span><span class="n">vt</span><span class="o">=</span><span class="mi">2020021100</span><span class="p">:</span>
+<span class="mi">3</span><span class="p">:</span><span class="mi">1212817</span><span class="p">:</span><span class="n">D</span><span class="o">=</span><span class="mi">20200210000000</span><span class="p">:</span><span class="n">MCDC</span><span class="p">:</span><span class="n">middle</span> <span class="n">cloud</span> <span class="n">layer</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">::</span><span class="n">MCDC</span><span class="p">:</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">:</span><span class="n">npts</span><span class="o">=</span><span class="mi">1193781</span><span class="p">:</span><span class="n">var0_2_1_7_6_4</span><span class="p">:</span><span class="n">pdt</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">start_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">end_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">scaling</span> <span class="n">ref</span><span class="o">=</span><span class="mi">0</span> <span class="n">dec_scale</span><span class="o">=</span><span class="mi">0</span> <span class="n">bin_scale</span><span class="o">=-</span><span class="mi">3</span> <span class="n">nbits</span><span class="o">=</span><span class="mi">11</span><span class="p">:</span><span class="n">vt</span><span class="o">=</span><span class="mi">2020021100</span><span class="p">:</span>
+<span class="mi">4</span><span class="p">:</span><span class="mi">1569231</span><span class="p">:</span><span class="n">D</span><span class="o">=</span><span class="mi">20200210000000</span><span class="p">:</span><span class="n">HCDC</span><span class="p">:</span><span class="n">high</span> <span class="n">cloud</span> <span class="n">layer</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">::</span><span class="n">HCDC</span><span class="p">:</span><span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">:</span><span class="n">npts</span><span class="o">=</span><span class="mi">1193781</span><span class="p">:</span><span class="n">var0_2_1_7_6_5</span><span class="p">:</span><span class="n">pdt</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">start_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">end_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">scaling</span> <span class="n">ref</span><span class="o">=</span><span class="mi">0</span> <span class="n">dec_scale</span><span class="o">=</span><span class="mi">0</span> <span class="n">bin_scale</span><span class="o">=-</span><span class="mi">3</span> <span class="n">nbits</span><span class="o">=</span><span class="mi">12</span><span class="p">:</span><span class="n">vt</span><span class="o">=</span><span class="mi">2020021100</span><span class="p">:</span>
+<span class="mi">5</span><span class="p">:</span><span class="mi">1782227</span><span class="p">:</span><span class="n">D</span><span class="o">=</span><span class="mi">20200210000000</span><span class="p">:</span><span class="n">TCDC</span><span class="p">:</span><span class="n">entire</span> <span class="n">atmosphere</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">::</span><span class="n">TCDC</span><span class="p">:</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">:</span><span class="n">npts</span><span class="o">=</span><span class="mi">1193781</span><span class="p">:</span><span class="n">var0_2_1_7_6_1</span><span class="p">:</span><span class="n">pdt</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">start_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">end_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">scaling</span> <span class="n">ref</span><span class="o">=</span><span class="mi">0</span> <span class="n">dec_scale</span><span class="o">=</span><span class="mi">0</span> <span class="n">bin_scale</span><span class="o">=-</span><span class="mi">3</span> <span class="n">nbits</span><span class="o">=</span><span class="mi">10</span><span class="p">:</span><span class="n">vt</span><span class="o">=</span><span class="mi">2020021100</span><span class="p">:</span>
+<span class="mi">6</span><span class="p">:</span><span class="mi">2164301</span><span class="p">:</span><span class="n">D</span><span class="o">=</span><span class="mi">20200210000000</span><span class="p">:</span><span class="n">HGT</span><span class="p">:</span><span class="n">cloud</span> <span class="n">base</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">::</span><span class="n">HGT</span><span class="p">:</span><span class="n">n</span><span class="o">=</span><span class="mi">6</span><span class="p">:</span><span class="n">npts</span><span class="o">=</span><span class="mi">1193781</span><span class="p">:</span><span class="n">var0_2_1_7_3_5</span><span class="p">:</span><span class="n">pdt</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">start_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">end_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">scaling</span> <span class="n">ref</span><span class="o">=</span><span class="mf">16.8566</span> <span class="n">dec_scale</span><span class="o">=</span><span class="mi">0</span> <span class="n">bin_scale</span><span class="o">=-</span><span class="mi">3</span> <span class="n">nbits</span><span class="o">=</span><span class="mi">18</span><span class="p">:</span><span class="n">vt</span><span class="o">=</span><span class="mi">2020021100</span><span class="p">:</span>
+<span class="mi">7</span><span class="p">:</span><span class="mi">3174056</span><span class="p">:</span><span class="n">D</span><span class="o">=</span><span class="mi">20200210000000</span><span class="p">:</span><span class="n">HGT</span><span class="p">:</span><span class="n">cloud</span> <span class="n">ceiling</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">::</span><span class="n">HGT</span><span class="p">:</span><span class="n">n</span><span class="o">=</span><span class="mi">7</span><span class="p">:</span><span class="n">npts</span><span class="o">=</span><span class="mi">1193781</span><span class="p">:</span><span class="n">var0_2_1_7_3_5</span><span class="p">:</span><span class="n">pdt</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">start_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">end_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">scaling</span> <span class="n">ref</span><span class="o">=</span><span class="mf">30.9375</span> <span class="n">dec_scale</span><span class="o">=</span><span class="mi">0</span> <span class="n">bin_scale</span><span class="o">=-</span><span class="mi">3</span> <span class="n">nbits</span><span class="o">=</span><span class="mi">19</span><span class="p">:</span><span class="n">vt</span><span class="o">=</span><span class="mi">2020021100</span><span class="p">:</span>
+<span class="mi">8</span><span class="p">:</span><span class="mi">4445291</span><span class="p">:</span><span class="n">D</span><span class="o">=</span><span class="mi">20200210000000</span><span class="p">:</span><span class="n">HGT</span><span class="p">:</span><span class="n">cloud</span> <span class="n">top</span><span class="p">:</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">::</span><span class="n">HGT</span><span class="p">:</span><span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">:</span><span class="n">npts</span><span class="o">=</span><span class="mi">1193781</span><span class="p">:</span><span class="n">var0_2_1_7_3_5</span><span class="p">:</span><span class="n">pdt</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020021000</span><span class="p">:</span><span class="n">start_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">end_FT</span><span class="o">=</span><span class="mi">20200211000000</span><span class="p">:</span><span class="n">scaling</span> <span class="n">ref</span><span class="o">=</span><span class="mf">31.1188</span> <span class="n">dec_scale</span><span class="o">=</span><span class="mi">0</span> <span class="n">bin_scale</span><span class="o">=-</span><span class="mi">3</span> <span class="n">nbits</span><span class="o">=</span><span class="mi">19</span><span class="p">:</span><span class="n">vt</span><span class="o">=</span><span class="mi">2020021100</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>This type of listing is used to select messages, either implicitly, as shown in
+<a class="reference internal" href="overview.html#example-1"><span class="std std-ref">Overview</span></a>, or explicitly, by saving it to an <cite>inventory file</cite>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pywgrib2_xr</span> <span class="k">as</span> <span class="nn">pywgrib2</span>
+<span class="kn">from</span> <span class="nn">pywgrib2_xr.utils</span> <span class="kn">import</span> <span class="n">remotepath</span>
+
+<span class="n">in_file</span> <span class="o">=</span> <span class="n">remotepath</span><span class="p">(</span><span class="s1">&#39;nam.t12z.awak3d18.tm00.grib2&#39;</span><span class="p">)</span>
+<span class="n">out_file</span> <span class="o">=</span> <span class="s1">&#39;/tmp/subset2.grib2&#39;</span>
+<span class="n">inv_file</span> <span class="o">=</span> <span class="s1">&#39;/tmp/nam.t12z.awak3d18.tm00.inv&#39;</span>
+
+<span class="n">pywgrib2</span><span class="o">.</span><span class="n">wgrib</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="s1">&#39;-inv&#39;</span><span class="p">,</span> <span class="n">inv_file</span><span class="p">,</span> <span class="s1">&#39;-Match_inv&#39;</span><span class="p">)</span>
+<span class="n">match_str</span> <span class="o">=</span> <span class="s1">&#39;:(TMP:2 m above ground|[U|V]GRD:10 m above ground):&#39;</span>
+<span class="n">pywgrib2</span><span class="o">.</span><span class="n">wgrib</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="s1">&#39;-i_file&#39;</span><span class="p">,</span> <span class="n">inv_file</span><span class="p">,</span> <span class="s1">&#39;-inv&#39;</span><span class="p">,</span> <span class="s1">&#39;/dev/null&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;-match&#39;</span><span class="p">,</span> <span class="n">match_str</span><span class="p">,</span> <span class="s1">&#39;-grib&#39;</span><span class="p">,</span> <span class="n">out_file</span><span class="p">)</span>
+<span class="n">pywgrib2</span><span class="o">.</span><span class="n">free_files</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When the GRIB2 files are accessed frequently it makes sense to create permanent
+inventory files. Decoding of message metadata is done only once. Subsequent message
+selection is done by reading inventory file, which is much faster.</p>
+<p>The above inventories can be useful with the low-level interface is used.
+<strong>pywgrib2_xr</strong> uses option <code class="docutils literal notranslate"><span class="pre">-pyinv</span></code> which is a new feature in wgrib2 v3.0.0:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">wgrib2 nam.t12z.awak3d18.tm00.grib2 -d 1 -pyinv</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="n">PRMSL</span><span class="p">:</span><span class="n">mean</span> <span class="n">sea</span> <span class="n">level</span><span class="p">:</span><span class="mi">18</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">:</span><span class="n">pyinv</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;discipline&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;centre&#39;</span><span class="p">:</span><span class="s1">&#39;7 - US National Weather Service - NCEP (WMC)&#39;</span><span class="p">,</span><span class="s1">&#39;subcentre&#39;</span><span class="p">:</span><span class="s1">&#39;0&#39;</span><span class="p">,</span><span class="s1">&#39;mastertab&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;localtab&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;reftime&#39;</span><span class="p">:</span><span class="s1">&#39;2018-02-20T12:00:00&#39;</span><span class="p">,</span><span class="s1">&#39;npts&#39;</span><span class="p">:</span><span class="mi">235025</span><span class="p">,</span><span class="s1">&#39;nx&#39;</span><span class="p">:</span><span class="mi">553</span><span class="p">,</span><span class="s1">&#39;ny&#39;</span><span class="p">:</span><span class="mi">425</span><span class="p">,</span><span class="s1">&#39;gdtnum&#39;</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span><span class="s1">&#39;gdtmpl&#39;</span><span class="p">:[</span><span class="mi">6</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">553</span><span class="p">,</span><span class="mi">425</span><span class="p">,</span><span class="mi">30000000</span><span class="p">,</span><span class="mi">187000000</span><span class="p">,</span><span class="mi">56</span><span class="p">,</span><span class="mi">60000000</span><span class="p">,</span><span class="mi">225000000</span><span class="p">,</span><span class="mi">11250000</span><span class="p">,</span><span class="mi">11250000</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">64</span><span class="p">],</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span><span class="s1">&#39;Pressure Reduced to MSL&#39;</span><span class="p">,</span><span class="s1">&#39;units&#39;</span><span class="p">:</span><span class="s1">&#39;Pa&#39;</span><span class="p">,</span><span class="s1">&#39;pdt&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;parmcat&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;parmnum&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;start_ft&#39;</span><span class="p">:</span><span class="s1">&#39;2018-02-21T06:00:00&#39;</span><span class="p">,</span><span class="s1">&#39;end_ft&#39;</span><span class="p">:</span><span class="s1">&#39;2018-02-21T06:00:00&#39;</span><span class="p">,</span><span class="s1">&#39;bot_level_code&#39;</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span><span class="s1">&#39;bot_level_value&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;top_level_code&#39;</span><span class="p">:</span><span class="mi">255</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The inventory is a list of <a class="reference internal" href="generated/pywgrib2_xr.MetaData.html#pywgrib2_xr.MetaData" title="pywgrib2_xr.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>, each element corresponding
+to a line like the above. <code class="docutils literal notranslate"><span class="pre">MetaData</span></code> contains also path to the GRIB2 file. This warrants
+some careful consideration. When GRIB2 files are accessed via NFS, the mount points do
+not have to be the same. Therefore the <code class="docutils literal notranslate"><span class="pre">file</span></code> attribute has to be filled when the
+inventory is read from a file.</p>
+<p>Inventory is created by a call to <a class="reference internal" href="generated/pywgrib2_xr.make_inventory.html#pywgrib2_xr.make_inventory" title="pywgrib2_xr.make_inventory"><code class="xref py py-func docutils literal notranslate"><span class="pre">make_inventory()</span></code></a>,
+It can be saved to a file by <a class="reference internal" href="generated/pywgrib2_xr.save_inventory.html#pywgrib2_xr.save_inventory" title="pywgrib2_xr.save_inventory"><code class="xref py py-func docutils literal notranslate"><span class="pre">save_inventory()</span></code></a>.
+To retrieve previously saved inventory, use <a class="reference internal" href="generated/pywgrib2_xr.load_inventory.html#pywgrib2_xr.load_inventory" title="pywgrib2_xr.load_inventory"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_inventory()</span></code></a>.
+Another function <a class="reference internal" href="generated/pywgrib2_xr.load_or_make_inventory.html#pywgrib2_xr.load_or_make_inventory" title="pywgrib2_xr.load_or_make_inventory"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_or_make_inventory()</span></code></a> combines
+functionality of the three functions in one call. If an inventory exists, it is
+retrieved from a file, otherwise created, and optionally saved.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inv</span> <span class="o">=</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">make_inventory</span><span class="p">(</span><span class="n">in_file</span><span class="p">)</span>
+<span class="n">pywgrib2</span><span class="o">.</span><span class="n">save_inventory</span><span class="p">(</span><span class="n">inv</span><span class="p">,</span> <span class="n">in_file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that the second argument to <code class="docutils literal notranslate"><span class="pre">save_inventory()</span></code> is path to the GRIB2 file.
+The inventory file name is created by the function. In this example the inventory is
+written to the same location as the GRIB2 file, the file name is that of GRIB2 file
+with the suffix <code class="docutils literal notranslate"><span class="pre">.binv</span></code> (<cite>Blosc</cite>-compressed inventory). If the GRIB2 file resides
+on a read only medium, the inventory must be saved somewhere else.
+<code class="docutils literal notranslate"><span class="pre">save_inventory()</span></code> accepts argument <code class="docutils literal notranslate"><span class="pre">directory</span></code> to specify location of
+the output file.</p>
+<p>To handle archives with a tree structure, when GRIB2 file names are not unique,
+inventory file name is a hash of the path to the GRIB2 file. To illustrate
+the concept, assume that the archive is grouped by date.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ls -l /archive/*</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="mi">20200912</span><span class="p">:</span>
+<span class="n">total</span> <span class="mi">38572</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">39496058</span> <span class="n">Sep</span> <span class="mi">12</span> <span class="mi">22</span><span class="p">:</span><span class="mi">25</span> <span class="n">nam</span><span class="o">.</span><span class="n">t00z</span><span class="o">.</span><span class="n">afwaca00</span><span class="o">.</span><span class="n">tm00</span><span class="o">.</span><span class="n">grib2</span>
+<span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="mi">20200913</span><span class="p">:</span>
+<span class="n">total</span> <span class="mi">39456</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">40401894</span> <span class="n">Sep</span> <span class="mi">13</span> <span class="mi">22</span><span class="p">:</span><span class="mi">29</span> <span class="n">nam</span><span class="o">.</span><span class="n">t00z</span><span class="o">.</span><span class="n">afwaca00</span><span class="o">.</span><span class="n">tm00</span><span class="o">.</span><span class="n">grib2</span>
+</pre></div>
+</div>
+<p>One can create private inventory in <code class="docutils literal notranslate"><span class="pre">/tmp/nam</span></code> and access it as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">pywgrib2_xr</span> <span class="k">as</span> <span class="nn">pywgrib2</span>
+
+<span class="n">gribfiles</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/archive/*/*.grib2&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">gribfiles</span><span class="p">:</span>
+    <span class="n">pywgrib2</span><span class="o">.</span><span class="n">save_inventory</span><span class="p">(</span><span class="n">pywgrib2</span><span class="o">.</span><span class="n">make_inventory</span><span class="p">(</span><span class="n">file</span><span class="p">),</span> <span class="n">file</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="s1">&#39;/tmp/nam&#39;</span><span class="p">)</span>
+<span class="c1"># Retrieve saved inventory for 13 of September</span>
+<span class="n">inv</span> <span class="o">=</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">load_inventory</span><span class="p">(</span><span class="s1">&#39;/archive/20200913/nam.t00z.afwaca00.tm00.grib2&#39;</span><span class="p">,</span>
+                              <span class="n">directory</span><span class="o">=</span><span class="s1">&#39;/tmp/nam&#39;</span><span class="p">)</span>
+<span class="nb">str</span><span class="p">(</span><span class="n">inv</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The inventory files are blosc-compressed pickles. Compression saves both space
+(~8 ratio) and time (~15% on write):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ls /tmp/nam</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">19764</span><span class="n">fbe34d658b7e1ec1126d31d2737</span><span class="o">.</span><span class="n">binv</span>  <span class="mi">388</span><span class="n">fbfdf6e3f866d1b1f182bc795aab4</span><span class="o">.</span><span class="n">binv</span>
+</pre></div>
+</div>
+<p><strong>pywgrib2_xr</strong> provides script <a class="reference internal" href="pywgrib2.html#pywgrib2"><span class="std std-ref">pywgrib2</span></a> that can list content
+of an inventory file.</p>
+<p id="inventory-content">Internally, inventory is saves a a class with the following attributes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span>
+<span class="o">*</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">str</span>
+<span class="o">*</span> <span class="n">varname</span><span class="p">:</span> <span class="nb">str</span>
+<span class="o">*</span> <span class="n">level_str</span><span class="p">:</span> <span class="nb">str</span>
+<span class="o">*</span> <span class="n">time_str</span><span class="p">:</span> <span class="nb">str</span>
+<span class="o">*</span> <span class="n">discipline</span><span class="p">:</span> <span class="nb">int</span>
+<span class="o">*</span> <span class="n">centre</span><span class="p">:</span> <span class="nb">str</span>
+<span class="o">*</span> <span class="n">subcentre</span><span class="p">:</span> <span class="nb">str</span>
+<span class="o">*</span> <span class="n">mastertab</span><span class="p">:</span> <span class="nb">int</span>
+<span class="o">*</span> <span class="n">localtab</span><span class="p">:</span> <span class="nb">int</span>
+<span class="o">*</span> <span class="n">long_name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="o">*</span> <span class="n">units</span><span class="p">:</span> <span class="nb">str</span>
+<span class="o">*</span> <span class="n">pdt</span><span class="p">:</span> <span class="nb">int</span>
+<span class="o">*</span> <span class="n">parmcat</span><span class="p">:</span> <span class="nb">int</span>
+<span class="o">*</span> <span class="n">parmnum</span><span class="p">:</span> <span class="nb">int</span>
+<span class="o">*</span> <span class="n">bot_level_code</span><span class="p">:</span> <span class="nb">int</span>
+<span class="o">*</span> <span class="n">bot_level_value</span><span class="p">:</span> <span class="nb">float</span>
+<span class="o">*</span> <span class="n">top_level_code</span><span class="p">:</span> <span class="nb">int</span>
+<span class="o">*</span> <span class="n">top_level_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+<span class="o">*</span> <span class="n">reftime</span><span class="p">:</span> <span class="n">datetime</span>
+<span class="o">*</span> <span class="n">start_ft</span><span class="p">:</span> <span class="n">datetime</span>
+<span class="o">*</span> <span class="n">end_ft</span><span class="p">:</span> <span class="n">datetime</span>
+<span class="o">*</span> <span class="n">npts</span><span class="p">:</span> <span class="nb">int</span>
+<span class="o">*</span> <span class="n">nx</span><span class="p">:</span> <span class="nb">int</span>
+<span class="o">*</span> <span class="n">ny</span><span class="p">:</span> <span class="nb">int</span>
+<span class="o">*</span> <span class="n">gdtnum</span><span class="p">:</span> <span class="nb">int</span>
+<span class="o">*</span> <span class="n">gdtmpl</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">reftime</span></code>, <code class="docutils literal notranslate"><span class="pre">start_ft</span></code> and <code class="docutils literal notranslate"><span class="pre">end_ft</span></code> are decoded to
+<code class="docutils literal notranslate"><span class="pre">datetime.datetime</span></code>.  Also, <code class="docutils literal notranslate"><span class="pre">bot_level_value</span></code> and <code class="docutils literal notranslate"><span class="pre">top_level_value</span></code> are scaled.
+The latter might be missing if <code class="docutils literal notranslate"><span class="pre">top_level_code</span></code> is set to 255, i.e. for single
+surface. As a shortcut, <code class="docutils literal notranslate"><span class="pre">bot_level_code</span></code> and <code class="docutils literal notranslate"><span class="pre">bot_level_value</span></code> can be accessed
+as <code class="docutils literal notranslate"><span class="pre">level_code</span></code> and <code class="docutils literal notranslate"><span class="pre">level_value</span></code>.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="template.html" class="btn btn-neutral float-right" title="Template" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installing.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

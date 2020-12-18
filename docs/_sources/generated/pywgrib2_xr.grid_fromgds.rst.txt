@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.grid\_fromgds
+==========================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autofunction:: grid_fromgds

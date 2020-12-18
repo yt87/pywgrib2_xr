@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.Grid.cfname
+========================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autoattribute:: Grid.cfname

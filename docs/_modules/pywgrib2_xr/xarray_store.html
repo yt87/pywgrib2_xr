@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pywgrib2_xr.xarray_store &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pywgrib2_xr.xarray_store</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pywgrib2_xr.xarray_store</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># modified code from xarray.backends</span>
+<span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">xarray</span> <span class="kn">import</span> <span class="n">Variable</span><span class="p">,</span> <span class="n">conventions</span>
+<span class="kn">from</span> <span class="nn">xarray.core</span> <span class="kn">import</span> <span class="n">indexing</span><span class="p">,</span> <span class="n">dtypes</span>
+<span class="kn">from</span> <span class="nn">xarray.core.concat</span> <span class="kn">import</span> <span class="n">concat</span>
+<span class="kn">from</span> <span class="nn">xarray.core.utils</span> <span class="kn">import</span> <span class="n">Frozen</span><span class="p">,</span> <span class="n">FrozenDict</span><span class="p">,</span> <span class="n">close_on_error</span>
+<span class="kn">from</span> <span class="nn">xarray.backends.common</span> <span class="kn">import</span> <span class="n">AbstractDataStore</span><span class="p">,</span> <span class="n">BackendArray</span>
+<span class="kn">from</span> <span class="nn">xarray.backends.locks</span> <span class="kn">import</span> <span class="n">SerializableLock</span><span class="p">,</span> <span class="n">ensure_lock</span>
+
+<span class="kn">from</span> <span class="nn">.wgrib2</span> <span class="kn">import</span> <span class="n">free_files</span><span class="p">,</span> <span class="n">status_open</span>
+<span class="kn">from</span> <span class="nn">.inventory</span> <span class="kn">import</span> <span class="n">MetaData</span><span class="p">,</span> <span class="n">load_or_make_inventory</span>
+<span class="kn">from</span> <span class="nn">.template</span> <span class="kn">import</span> <span class="n">Template</span>
+
+<span class="n">WGRIB2_LOCK</span> <span class="o">=</span> <span class="n">SerializableLock</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Wgrib2ArrayWrapper</span><span class="p">(</span><span class="n">BackendArray</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datastore</span><span class="p">,</span> <span class="n">array</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datastore</span> <span class="o">=</span> <span class="n">datastore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="n">array</span>
+
+    <span class="k">def</span> <span class="nf">_getitem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">datastore</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">indexing</span><span class="o">.</span><span class="n">explicit_indexing_adapter</span><span class="p">(</span>
+            <span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">indexing</span><span class="o">.</span><span class="n">IndexingSupport</span><span class="o">.</span><span class="n">OUTER</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem</span>
+        <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Wgrib2DataStore</span><span class="p">(</span><span class="n">AbstractDataStore</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">.dataset</span> <span class="kn">import</span> <span class="n">open_dataset</span>
+
+        <span class="k">if</span> <span class="n">lock</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lock</span> <span class="o">=</span> <span class="n">WGRIB2_LOCK</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">ensure_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">file</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ds</span> <span class="o">=</span> <span class="n">open_dataset</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">template</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">open_store_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">wrapped_array</span> <span class="o">=</span> <span class="n">Wgrib2ArrayWrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">indexing</span><span class="o">.</span><span class="n">LazilyOuterIndexedArray</span><span class="p">(</span><span class="n">wrapped_array</span><span class="p">)</span>
+
+        <span class="n">encoding</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;original_shape&quot;</span><span class="p">:</span> <span class="n">var</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">var</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">Variable</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">dims</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">var</span><span class="o">.</span><span class="n">attrs</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">FrozenDict</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_store_variable</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">vars</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_attrs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Frozen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Frozen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_encoding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dimensions</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s2">&quot;reftime&quot;</span> <span class="ow">in</span> <span class="n">dims</span><span class="p">:</span>
+            <span class="n">encoding</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;unlimited_dims&quot;</span><span class="p">:</span> <span class="s2">&quot;reftime&quot;</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">encoding</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">return</span> <span class="n">encoding</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">free_files</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_MultiFileCloser</span><span class="p">:</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;file_objs&quot;</span><span class="p">,)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_objs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_objs</span> <span class="o">=</span> <span class="n">file_objs</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_objs</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="c1"># FIXME: remove this after testing.</span>
+        <span class="n">status_open</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_protect_dataset_variables_inplace</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">cache</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">variable</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">variable</span><span class="o">.</span><span class="n">dims</span><span class="p">:</span>
+            <span class="c1"># no need to protect IndexVariable objects</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">indexing</span><span class="o">.</span><span class="n">CopyOnWriteArray</span><span class="p">(</span><span class="n">variable</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">cache</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">indexing</span><span class="o">.</span><span class="n">MemoryCachedArray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">variable</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+
+
+<span class="k">def</span> <span class="nf">_open_dataset</span><span class="p">(</span>
+    <span class="n">items</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">MetaData</span><span class="p">],</span>
+    <span class="n">template</span><span class="p">:</span> <span class="n">Template</span><span class="p">,</span>
+    <span class="n">chunks</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
+    <span class="n">cache</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span>
+<span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cache</span> <span class="o">=</span> <span class="n">chunks</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">maybe_decode_store</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="n">conventions</span><span class="o">.</span><span class="n">decode_cf</span><span class="p">(</span>
+            <span class="n">store</span><span class="p">,</span>
+            <span class="n">mask_and_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">decode_times</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">concat_characters</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">decode_coords</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">_protect_dataset_variables_inplace</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">cache</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">chunks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">dask.base</span> <span class="kn">import</span> <span class="n">tokenize</span>
+
+            <span class="n">reftime</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reftime</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="n">tokenize</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">reftime</span><span class="p">,</span>
+                <span class="n">chunks</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">name_prefix</span> <span class="o">=</span> <span class="s2">&quot;open_dataset-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">token</span>
+            <span class="n">ds2</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">chunk</span><span class="p">(</span><span class="n">chunks</span><span class="p">,</span> <span class="n">name_prefix</span><span class="o">=</span><span class="n">name_prefix</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+            <span class="n">ds2</span><span class="o">.</span><span class="n">_file_obj</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">_file_obj</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ds2</span> <span class="o">=</span> <span class="n">ds</span>
+
+        <span class="k">return</span> <span class="n">ds2</span>
+
+    <span class="n">store</span> <span class="o">=</span> <span class="n">Wgrib2DataStore</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">close_on_error</span><span class="p">(</span><span class="n">store</span><span class="p">):</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="n">maybe_decode_store</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+
+    <span class="c1"># Ensure source filename always stored in dataset object (GH issue #2550)</span>
+    <span class="k">if</span> <span class="s2">&quot;source&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">encoding</span><span class="p">:</span>
+        <span class="n">ds</span><span class="o">.</span><span class="n">encoding</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">file</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">items</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">ds</span>
+
+
+<div class="viewcode-block" id="open_dataset"><a class="viewcode-back" href="../../generated/pywgrib2_xr.open_dataset.html#pywgrib2_xr.open_dataset">[docs]</a><span class="k">def</span> <span class="nf">open_dataset</span><span class="p">(</span>
+    <span class="n">filenames</span><span class="p">,</span>
+    <span class="n">template</span><span class="p">,</span>
+    <span class="n">chunks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">preprocess</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">cache</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">invdir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Opens one or more files as a single dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filenames : string or sequence of strings.</span>
+<span class="sd">        GRIB files to process.</span>
+<span class="sd">    template : Template.</span>
+<span class="sd">        Template specifies dataset structure. See :py:func:`pywgrib2_xr.make_template`.</span>
+<span class="sd">    chunks : int or dict, optional</span>
+<span class="sd">        Dictionary with keys given by dimension names and values given by chunk sizes.</span>
+<span class="sd">        In general, these should divide the dimensions of each dataset. If int, chunk</span>
+<span class="sd">        each dimension by ``chunks``. By default, chunks will be chosen to load entire</span>
+<span class="sd">        logical dataset into memory at once.</span>
+<span class="sd">    preprocess : callable, optional.</span>
+<span class="sd">        If provided, call this function on each dataset prior to concatenation.</span>
+<span class="sd">        You can find the file names from which each dataset was loaded in</span>
+<span class="sd">        ``ds.encoding[&#39;source&#39;]``.</span>
+<span class="sd">    parallel : bool, optional.</span>
+<span class="sd">        If True, the open and preprocess steps of this function will be</span>
+<span class="sd">        performed in parallel using ``dask.delayed``. Default is False.</span>
+<span class="sd">    cache : bool, optional</span>
+<span class="sd">        If True, cache data loaded from the underlying datastore in memory as</span>
+<span class="sd">        NumPy arrays when accessed to avoid reading from the underlying data-</span>
+<span class="sd">        store multiple times. Defaults to True unless you specify the `chunks`</span>
+<span class="sd">        argument to use dask, in which case it defaults to False. Does not</span>
+<span class="sd">        change the behavior of coordinates corresponding to dimensions, which</span>
+<span class="sd">        always load their data from disk into a ``pandas.Index``.</span>
+<span class="sd">    save : bool, optional</span>
+<span class="sd">        Save inventory files. Default is False.</span>
+<span class="sd">    invdir : str, optional.</span>
+<span class="sd">        Inventory location. None means inventory files are collocated with</span>
+<span class="sd">        data files.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    xarray.Dataset - The newly created dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filenames</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">filenames</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">dask</span>
+
+        <span class="c1"># wrap the open_dataset, getattr, and preprocess with delayed</span>
+        <span class="n">open_</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">delayed</span><span class="p">(</span><span class="n">_open_dataset</span><span class="p">)</span>
+        <span class="n">getattr_</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">delayed</span><span class="p">(</span><span class="nb">getattr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">preprocess</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">preprocess</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">delayed</span><span class="p">(</span><span class="n">preprocess</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">open_</span> <span class="o">=</span> <span class="n">_open_dataset</span>
+        <span class="n">getattr_</span> <span class="o">=</span> <span class="nb">getattr</span>
+
+    <span class="k">def</span> <span class="nf">combine_files</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+        <span class="c1"># Create list of MetaData items grouped and sorted by reference time</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">inventory</span> <span class="o">=</span> <span class="n">load_or_make_inventory</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">invdir</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">inventory</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inventory</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">item_match</span><span class="p">(</span><span class="n">i</span><span class="p">)):</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">reftime</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="p">)]</span>
+
+    <span class="n">filesets</span> <span class="o">=</span> <span class="n">combine_files</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">chunks</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">filesets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">chunks</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">open_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;template&quot;</span><span class="p">:</span> <span class="n">template</span><span class="p">,</span>
+        <span class="s2">&quot;chunks&quot;</span><span class="p">:</span> <span class="n">chunks</span><span class="p">,</span>
+        <span class="s2">&quot;cache&quot;</span><span class="p">:</span> <span class="n">cache</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">open_</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="o">**</span><span class="n">open_kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">filesets</span><span class="p">]</span>
+    <span class="n">file_objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">getattr_</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s2">&quot;_file_obj&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">preprocess</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">preprocess</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span> <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
+        <span class="c1"># calling compute here will return the datasets/file_objs lists,</span>
+        <span class="c1"># the underlying datasets will still be stored as dask arrays</span>
+        <span class="n">datasets</span><span class="p">,</span> <span class="n">file_objs</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">file_objs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">datasets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Combine all datasets, closing them in case of a ValueError</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">combined</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span>
+            <span class="n">datasets</span><span class="p">,</span>
+            <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;reftime&quot;</span><span class="p">,</span>
+            <span class="n">compat</span><span class="o">=</span><span class="s2">&quot;override&quot;</span><span class="p">,</span>
+            <span class="n">data_vars</span><span class="o">=</span><span class="s2">&quot;minimal&quot;</span><span class="p">,</span>
+            <span class="n">coords</span><span class="o">=</span><span class="s2">&quot;minimal&quot;</span><span class="p">,</span>
+            <span class="n">fill_value</span><span class="o">=</span><span class="n">dtypes</span><span class="o">.</span><span class="n">NA</span><span class="p">,</span>
+            <span class="n">join</span><span class="o">=</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
+            <span class="n">ds</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">raise</span>
+
+    <span class="n">combined</span><span class="o">.</span><span class="n">_file_obj</span> <span class="o">=</span> <span class="n">_MultiFileCloser</span><span class="p">(</span><span class="n">file_objs</span><span class="p">)</span>
+    <span class="n">combined</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span>
+    <span class="k">return</span> <span class="n">combined</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

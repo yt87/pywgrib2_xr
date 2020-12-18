@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.Grid.params
+========================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autoproperty:: Grid.params

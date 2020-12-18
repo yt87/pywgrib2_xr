@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.Wgrib2DatasetAccessor.location
+===========================================
+
+.. currentmodule:: pywgrib2_xr
+
+.. automethod:: Wgrib2DatasetAccessor.location

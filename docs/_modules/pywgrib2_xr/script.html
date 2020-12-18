@@ -1,0 +1,551 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pywgrib2_xr.script &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pywgrib2_xr.script</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pywgrib2_xr.script</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This is a stand-alone script installed as **pywgrib2**.</span>
+<span class="sd">It provides the following functionality:</span>
+
+<span class="sd">    1. List content of a GRIB2 file (same as **wgrib2** without options).</span>
+<span class="sd">    2. Create inventory files.</span>
+<span class="sd">    3. List content of inventory files.</span>
+<span class="sd">    4. Convert GRIB2 files to netCDF4.</span>
+<span class="sd">    5. Convert GRIB2 files to zarr.</span>
+<span class="sd">    6. Emulates **wgrib2** executable.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span> <span class="nn">getopt</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">multiprocessing.pool</span> <span class="kn">import</span> <span class="n">Pool</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>  <span class="c1"># , Sequence</span>
+
+<span class="kn">from</span> <span class="nn">.inventory</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">FileMetaData</span><span class="p">,</span>
+    <span class="n">MetaData</span><span class="p">,</span>
+    <span class="n">load_inventory</span><span class="p">,</span>
+    <span class="n">make_inventory</span><span class="p">,</span>
+    <span class="n">save_inventory</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.template</span> <span class="kn">import</span> <span class="n">make_template</span>
+<span class="kn">from</span> <span class="nn">.wgrib2</span> <span class="kn">import</span> <span class="n">wgrib</span>
+<span class="kn">from</span> <span class="nn">.xarray_store</span> <span class="kn">import</span> <span class="n">open_dataset</span>
+
+<span class="n">_inv_ext</span> <span class="o">=</span> <span class="s2">&quot;.binv&quot;</span>
+
+<span class="n">USAGE</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;USAGE: pywgrib2 [-h] | [command [option ...]] argument ...</span>
+
+<span class="s2">where:</span>
+<span class="s2">    -h</span>
+<span class="s2">        Print this message and exit.</span>
+
+<span class="s2">    When command is not specified, the script emulates wgrib2 executable.</span>
+
+<span class="s2">    command:</span>
+<span class="s2">        list_inv</span>
+<span class="s2">            Displays content of GRIB file(s).</span>
+
+<span class="s2">            Options:</span>
+<span class="s2">                -L</span>
+<span class="s2">                    Long listing (all metadata). Default is short</span>
+
+<span class="s2">            Arguments:</span>
+<span class="s2">                gribfile ...</span>
+<span class="s2">                    One or more GRIB files.</span>
+
+<span class="s2">        make_inv</span>
+<span class="s2">            Makes inventory file[s]</span>
+
+<span class="s2">            Options:</span>
+<span class="s2">                -i inv-dir</span>
+<span class="s2">                    Directory for inventory files. Will be created if does not exist.</span>
+<span class="s2">                    Intended for read-only GRIB directories.</span>
+<span class="s2">                -n num-procs</span>
+<span class="s2">                    Number of processes in multiprocessing mode. Default is 1.</span>
+<span class="s2">                -p pattern</span>
+<span class="s2">                    &quot;glob.glob&quot; pattern.</span>
+<span class="s2">                -r</span>
+<span class="s2">                    Recursively search grib-dir subdirectories.</span>
+
+<span class="s2">            Arguments:</span>
+<span class="s2">                gribfile ...</span>
+<span class="s2">                    Zero (only if -r or -p is specified) or more GRIB files.</span>
+
+<span class="s2">        cat_inv</span>
+<span class="s2">            Lists content of inventory file[s].</span>
+<span class="s2">            Use when inventories coexist with GRIB files.</span>
+
+<span class="s2">            Options:</span>
+<span class="s2">                -d dir</span>
+<span class="s2">                    Directory of GRIB files</span>
+<span class="s2">                -r</span>
+<span class="s2">                    Recursively search subdirectories for inventory files.</span>
+
+<span class="s2">            Arguments:</span>
+<span class="s2">                gribfile ...</span>
+<span class="s2">                    Zero or more GRIB files. The extension &quot;.binv&quot; does not need</span>
+<span class="s2">                    to be included.</span>
+
+<span class="s2">            The final list of files comprises directory entries and explicit</span>
+<span class="s2">            paths.</span>
+
+<span class="s2">        cat_hash</span>
+<span class="s2">            Lists content of inventory file[s].</span>
+<span class="s2">            Use when inventories are not collocated with GRIB files</span>
+<span class="s2">            (i.e. -i inv_dir was specified for make_inv).</span>
+
+<span class="s2">            Arguments:</span>
+<span class="s2">                invfile ...</span>
+<span class="s2">                    One or more GRIB files. The extension &quot;.binv&quot; does not need</span>
+<span class="s2">                    to be included.</span>
+
+<span class="s2">        template:</span>
+<span class="s2">            Writes template file.</span>
+
+<span class="s2">            Options:</span>
+<span class="s2">                -i inv_dir</span>
+<span class="s2">                    Location of inventory files, if different from GRIB files.</span>
+<span class="s2">                -t reftime</span>
+<span class="s2">                    Reference time, necessary when GRIB files have messages</span>
+<span class="s2">                    with more than one reference time.</span>
+<span class="s2">                -o template</span>
+<span class="s2">                    Output file name. Must be specified.</span>
+
+<span class="s2">            Arguments:</span>
+<span class="s2">                gribfile ...</span>
+<span class="s2">                    One or more GRIB files.</span>
+
+<span class="s2">        to_nc:</span>
+<span class="s2">            Writes netcdf file.</span>
+
+<span class="s2">            Options:</span>
+<span class="s2">                -c</span>
+<span class="s2">                    Compress file, with zlib and compression level 1.</span>
+<span class="s2">                -o ncfile</span>
+<span class="s2">                    Output file name. Must be specified.</span>
+<span class="s2">                -T template</span>
+<span class="s2">                    Template file name. Must be specified.</span>
+
+<span class="s2">            Arguments:</span>
+<span class="s2">                gribfile ...</span>
+<span class="s2">                    One or more GRIB files.</span>
+
+<span class="s2">        to_zarr:</span>
+<span class="s2">            Writes zarr group.</span>
+
+<span class="s2">            Options:</span>
+<span class="s2">                -c level</span>
+<span class="s2">                    Compression level, an integer between 1 and 4. Default is 1.</span>
+<span class="s2">                -o store</span>
+<span class="s2">                    Output directory. Must be specified.</span>
+<span class="s2">                -T template</span>
+<span class="s2">                    Template file name. Must be specified.</span>
+
+<span class="s2">            Arguments:</span>
+<span class="s2">                gribfile ...</span>
+<span class="s2">                    One or more GRIB files.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_print_inventory</span><span class="p">(</span><span class="n">inventory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">MetaData</span><span class="p">]],</span> <span class="n">listing</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">inventory</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">listing</span> <span class="o">==</span> <span class="s2">&quot;full&quot;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inventory</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">inventory</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">file</span>
+    <span class="n">file_inv</span> <span class="o">=</span> <span class="n">FileMetaData</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">inventory</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">listing</span> <span class="o">==</span> <span class="s2">&quot;long&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">file_inv</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">file_inv</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">list_inv</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">opts</span><span class="p">,</span> <span class="n">pargs</span> <span class="o">=</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">)</span>
+    <span class="n">kwds</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+    <span class="n">listing</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-L&quot;</span><span class="p">,</span> <span class="s2">&quot;short&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pargs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+            <span class="n">inventory</span> <span class="o">=</span> <span class="n">make_inventory</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">inventory</span><span class="p">:</span>
+                <span class="n">_print_inventory</span><span class="p">(</span><span class="n">inventory</span><span class="p">,</span> <span class="n">listing</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No GRIB messages in </span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:s}</span><span class="s2"> is not a file&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_f</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">save_inventory</span><span class="p">(</span><span class="n">make_inventory</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">make_inv</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">opts</span><span class="p">,</span> <span class="n">pargs</span> <span class="o">=</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s2">&quot;hi:n:p:&quot;</span><span class="p">)</span>
+    <span class="n">kwds</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+    <span class="n">recursive</span> <span class="o">=</span> <span class="s2">&quot;-r&quot;</span> <span class="ow">in</span> <span class="n">kwds</span>
+    <span class="n">inv_dir</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-i&quot;</span><span class="p">)</span>
+    <span class="n">num_processes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-n&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">num_processes</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Number of processes must be between 1 and 4&quot;</span><span class="p">)</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-p&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pattern</span><span class="p">:</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">p</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="n">recursive</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">_inv_ext</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">pargs</span><span class="p">)</span>
+
+    <span class="n">fun</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">_f</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">inv_dir</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">num_processes</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">fun</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">Pool</span><span class="p">(</span><span class="n">num_processes</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+            <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">cat_inv</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">opts</span><span class="p">,</span> <span class="n">pargs</span> <span class="o">=</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s2">&quot;d:hi:Lr&quot;</span><span class="p">)</span>
+    <span class="n">kwds</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+    <span class="n">recursive</span> <span class="o">=</span> <span class="s2">&quot;-r&quot;</span> <span class="ow">in</span> <span class="n">kwds</span>
+    <span class="n">data_dir</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-d&quot;</span><span class="p">)</span>
+    <span class="n">listing</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-L&quot;</span><span class="p">,</span> <span class="s2">&quot;short&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data_dir</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;**&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span> <span class="o">+</span> <span class="n">_inv_ext</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span> <span class="o">+</span> <span class="n">_inv_ext</span><span class="p">)</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="n">recursive</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">pargs</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">base</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">base</span> <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="n">_inv_ext</span> <span class="k">else</span> <span class="n">file</span>
+        <span class="n">inventory</span> <span class="o">=</span> <span class="n">load_inventory</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">_print_inventory</span><span class="p">(</span><span class="n">inventory</span><span class="p">,</span> <span class="n">listing</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">cat_hash</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">opts</span><span class="p">,</span> <span class="n">pargs</span> <span class="o">=</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">)</span>
+    <span class="n">kwds</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+    <span class="n">listing</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-L&quot;</span><span class="p">,</span> <span class="s2">&quot;short&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">pargs</span><span class="p">:</span>
+        <span class="n">base</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">base</span> <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="n">_inv_ext</span> <span class="k">else</span> <span class="n">arg</span>
+        <span class="n">inventory</span> <span class="o">=</span> <span class="n">load_inventory</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">_print_inventory</span><span class="p">(</span><span class="n">inventory</span><span class="p">,</span> <span class="n">listing</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">mk_tmpl</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">opts</span><span class="p">,</span> <span class="n">pargs</span> <span class="o">=</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s2">&quot;i:o:t:v:&quot;</span><span class="p">)</span>
+    <span class="n">kwds</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+    <span class="n">inv_dir</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-i&quot;</span><span class="p">)</span>
+    <span class="n">tmplfile</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-o&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tmplfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing output file&quot;</span><span class="p">)</span>
+    <span class="n">reftime</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-t&quot;</span><span class="p">)</span>
+    <span class="n">vertlevel</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-v&quot;</span><span class="p">)</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">make_template</span><span class="p">(</span>
+        <span class="n">pargs</span><span class="p">,</span> <span class="n">reftime</span><span class="o">=</span><span class="n">reftime</span><span class="p">,</span> <span class="n">invdir</span><span class="o">=</span><span class="n">inv_dir</span><span class="p">,</span> <span class="n">vertlevels</span><span class="o">=</span><span class="n">vertlevel</span>
+    <span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmplfile</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">to_nc</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">opts</span><span class="p">,</span> <span class="n">pargs</span> <span class="o">=</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s2">&quot;co:T:&quot;</span><span class="p">)</span>
+    <span class="n">kwds</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+    <span class="n">compress</span> <span class="o">=</span> <span class="s2">&quot;-c&quot;</span> <span class="ow">in</span> <span class="n">kwds</span>
+    <span class="n">ncfile</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-o&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ncfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing output file&quot;</span><span class="p">)</span>
+    <span class="n">tmplfile</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-T&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tmplfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing template file&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmplfile</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">open_dataset</span><span class="p">(</span><span class="n">pargs</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">)</span>
+    <span class="nb">vars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">data_vars</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="nb">vars</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">])</span>
+    <span class="n">encoding</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;zlib&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;complevel&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span> <span class="k">if</span> <span class="n">compress</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">ncfile</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;netcdf4&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">to_zarr</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">zarr</span>
+
+    <span class="n">opts</span><span class="p">,</span> <span class="n">pargs</span> <span class="o">=</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s2">&quot;c:o:T:&quot;</span><span class="p">)</span>
+    <span class="n">kwds</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+    <span class="n">clevel</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">clevel</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid compression level </span><span class="si">{:d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">clevel</span><span class="p">))</span>
+    <span class="n">zarrdir</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-o&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">zarrdir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing output file&quot;</span><span class="p">)</span>
+    <span class="n">tmplfile</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;-T&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tmplfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing template file&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmplfile</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">open_dataset</span><span class="p">(</span><span class="n">pargs</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">)</span>
+    <span class="n">compressor</span> <span class="o">=</span> <span class="n">zarr</span><span class="o">.</span><span class="n">Blosc</span><span class="p">(</span><span class="n">cname</span><span class="o">=</span><span class="s2">&quot;zstd&quot;</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">clevel</span><span class="o">=</span><span class="n">clevel</span><span class="p">)</span>
+    <span class="nb">vars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">data_vars</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="nb">vars</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">])</span>
+    <span class="n">encoding</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;compressor&quot;</span><span class="p">:</span> <span class="n">compressor</span><span class="p">})</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">zarrdir</span><span class="p">,</span> <span class="n">consolidated</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+
+
+<span class="n">commands</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;list_inv&quot;</span><span class="p">:</span> <span class="n">list_inv</span><span class="p">,</span>
+    <span class="s2">&quot;make_inv&quot;</span><span class="p">:</span> <span class="n">make_inv</span><span class="p">,</span>
+    <span class="s2">&quot;cat_inv&quot;</span><span class="p">:</span> <span class="n">cat_inv</span><span class="p">,</span>
+    <span class="s2">&quot;cat_hash&quot;</span><span class="p">:</span> <span class="n">cat_hash</span><span class="p">,</span>
+    <span class="s2">&quot;template&quot;</span><span class="p">:</span> <span class="n">mk_tmpl</span><span class="p">,</span>
+    <span class="s2">&quot;to_nc&quot;</span><span class="p">:</span> <span class="n">to_nc</span><span class="p">,</span>
+    <span class="s2">&quot;to_zarr&quot;</span><span class="p">:</span> <span class="n">to_zarr</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../pywgrib2.html#pywgrib2_xr.script.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">argv</span><span class="p">:</span>
+        <span class="c1"># Allow to call main() with arguments</span>
+        <span class="n">argv</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="n">argv</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;-h&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">USAGE</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">SystemExit</span>
+        <span class="c1"># if (f := commands.get(argv[1])):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">commands</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">wgrib</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

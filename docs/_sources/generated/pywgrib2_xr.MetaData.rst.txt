@@ -1,0 +1,56 @@
+﻿pywgrib2\_xr.MetaData
+=====================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autoclass:: MetaData
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MetaData.__init__
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~MetaData.bot_level_code
+      ~MetaData.bot_level_value
+      ~MetaData.centre
+      ~MetaData.discipline
+      ~MetaData.end_ft
+      ~MetaData.file
+      ~MetaData.gdtmpl
+      ~MetaData.gdtnum
+      ~MetaData.level_code
+      ~MetaData.level_str
+      ~MetaData.level_value
+      ~MetaData.localtab
+      ~MetaData.long_name
+      ~MetaData.mastertab
+      ~MetaData.npts
+      ~MetaData.nx
+      ~MetaData.ny
+      ~MetaData.offset
+      ~MetaData.parmcat
+      ~MetaData.parmnum
+      ~MetaData.pdt
+      ~MetaData.reftime
+      ~MetaData.start_ft
+      ~MetaData.subcentre
+      ~MetaData.time_str
+      ~MetaData.top_level_code
+      ~MetaData.top_level_value
+      ~MetaData.units
+      ~MetaData.varname
+   
+   

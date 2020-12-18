@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pywgrib2_xr.message &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pywgrib2_xr.message</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pywgrib2_xr.message</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">WgribError</span><span class="p">,</span> <span class="n">UNDEFINED</span>
+<span class="kn">from</span> <span class="nn">.wgrib2</span> <span class="kn">import</span> <span class="n">MemoryBuffer</span><span class="p">,</span> <span class="n">RPNRegister</span><span class="p">,</span> <span class="n">wgrib</span><span class="p">,</span> <span class="n">free_files</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="read_msg"><a class="viewcode-back" href="../../generated/pywgrib2_xr.read_msg.html#pywgrib2_xr.read_msg">[docs]</a><span class="k">def</span> <span class="nf">read_msg</span><span class="p">(</span><span class="n">gribfile</span><span class="p">,</span> <span class="n">num_or_meta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns single message from GRIB2 file as bytes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    gribfile : str or MemoryBuffer</span>
+<span class="sd">        Destination file.</span>
+<span class="sd">    num_or_meta : message number or MetaData</span>
+<span class="sd">        message number or MetaData for the message in the template.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    msg : bytes</span>
+<span class="sd">        Undecoded GRIB2 message.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    pywgrib2_xr.WgribError</span>
+<span class="sd">        When wgrib call fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">num_or_meta</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">num_or_meta</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">num_or_meta</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">num_or_meta</span><span class="o">.</span><span class="n">offset</span>
+    <span class="k">with</span> <span class="n">MemoryBuffer</span><span class="p">()</span> <span class="k">as</span> <span class="n">buf</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">gribfile</span><span class="p">,</span>
+            <span class="s2">&quot;-rewind_init&quot;</span><span class="p">,</span>
+            <span class="n">gribfile</span><span class="p">,</span>
+            <span class="s2">&quot;-inv&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/dev/null&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+            <span class="n">offset</span><span class="p">,</span>
+            <span class="s2">&quot;-grib&quot;</span><span class="p">,</span>
+            <span class="n">buf</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">wgrib</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">WgribError</span><span class="p">:</span>
+            <span class="k">raise</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">free_files</span><span class="p">(</span><span class="n">gribfile</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="decode_msg"><a class="viewcode-back" href="../../generated/pywgrib2_xr.decode_msg.html#pywgrib2_xr.decode_msg">[docs]</a><span class="k">def</span> <span class="nf">decode_msg</span><span class="p">(</span><span class="n">gribfile</span><span class="p">,</span> <span class="n">meta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns decoded GRIB2 file as numpy array.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    gribfile : str or MemoryBuffer</span>
+<span class="sd">        Destination file.</span>
+<span class="sd">    meta : MetaData</span>
+<span class="sd">        MetaData for the message in the template.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    arr : np.ndarray</span>
+<span class="sd">        GRIB2 message data.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    pywgrib2_xr.WgribError</span>
+<span class="sd">        When wgrib call fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">offset</span>
+    <span class="k">with</span> <span class="n">MemoryBuffer</span><span class="p">()</span> <span class="k">as</span> <span class="n">buf</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">gribfile</span><span class="p">,</span>
+            <span class="s2">&quot;-rewind_init&quot;</span><span class="p">,</span>
+            <span class="n">gribfile</span><span class="p">,</span>
+            <span class="s2">&quot;-inv&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/dev/null&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+            <span class="n">offset</span><span class="p">,</span>
+            <span class="s2">&quot;-no_header&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;-bin&quot;</span><span class="p">,</span>
+            <span class="n">buf</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">wgrib</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">meta</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">meta</span><span class="o">.</span><span class="n">nx</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">WgribError</span><span class="p">:</span>
+            <span class="k">raise</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">free_files</span><span class="p">(</span><span class="n">gribfile</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="write_msg"><a class="viewcode-back" href="../../generated/pywgrib2_xr.write_msg.html#pywgrib2_xr.write_msg">[docs]</a><span class="k">def</span> <span class="nf">write_msg</span><span class="p">(</span><span class="n">gribfile</span><span class="p">,</span> <span class="n">tmplfile</span><span class="p">,</span> <span class="n">num_or_meta</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Writes message to a GRIB2 file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    gribfile : str or MemoryBuffer</span>
+<span class="sd">        Destination GRIB file.</span>
+<span class="sd">    tmplfile : str or MemoryBuffer</span>
+<span class="sd">        Template GRIB file.</span>
+<span class="sd">    num_or_meta : int or MetaData</span>
+<span class="sd">        Message number or Metadata for the message in the template.</span>
+<span class="sd">    append : bool</span>
+<span class="sd">        Append message to gribfile. Default is False.</span>
+<span class="sd">    data : array_like or None</span>
+<span class="sd">        Data to be written. When None, only metadata is updated.</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Optional arguments setting metadata: item=value, which results in</span>
+<span class="sd">        arguments `set_item, value` passed to `wgrib2`.</span>
+<span class="sd">        Valid items are:</span>
+
+<span class="sd">        - metadata : metadata string, see https://www.cpc.ncep.noaa.gov/products/wesley/wgrib2/set_metadata.html</span>
+<span class="sd">        - date : reference time (datetime or ISO format str)</span>
+<span class="sd">        - ftime : forecast time (wgrib2 format str)</span>
+<span class="sd">        - var : variable name</span>
+<span class="sd">        - lev : level</span>
+<span class="sd">        - grib_type : compression = {&#39;jpeg&#39;, &#39;simple&#39;, &#39;complex[1|2|3]&#39;, &#39;aec&#39;, &#39;same&#39;}</span>
+<span class="sd">        - bin_prec : precision ECMWF style, in bits &lt;= 24</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    pywgrib2_xr.WgribError</span>
+<span class="sd">        When wgrib call fails</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">      Update forecast time, preserve data values::</span>
+
+<span class="sd">        write_msg(outfile, tmplfile, meta, ftime=ftime)</span>
+
+<span class="sd">      Write average RH in a layer using metadata of RH at some level::</span>
+
+<span class="sd">        write_msg(outfile, tmplfile, meta, data=rh_ave, lev=&#39;surface - 700 mb&#39;, bin_prec=8)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">num_or_meta</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">num_or_meta</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">num_or_meta</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">num_or_meta</span><span class="o">.</span><span class="n">offset</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">tmplfile</span><span class="p">,</span> <span class="s2">&quot;-rewind_init&quot;</span><span class="p">,</span> <span class="n">tmplfile</span><span class="p">,</span> <span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="s2">&quot;-inv&quot;</span><span class="p">,</span> <span class="s2">&quot;/dev/null&quot;</span><span class="p">]</span>
+    <span class="n">valid_args</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+        <span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;var&quot;</span><span class="p">,</span> <span class="s2">&quot;lev&quot;</span><span class="p">,</span> <span class="s2">&quot;ftime&quot;</span><span class="p">,</span> <span class="s2">&quot;grib_type&quot;</span><span class="p">,</span> <span class="s2">&quot;bin_prec&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;-grib&quot;</span> <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;-grib_out&quot;</span>
+    <span class="c1"># metadata is first source, var, lev are applied afterwards</span>
+    <span class="k">if</span> <span class="s2">&quot;metadata&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-set_metadata_str&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s2">&quot;date&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">%H%M%S&quot;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-set_date&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s2">&quot;var&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;var&quot;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-set_var&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s2">&quot;lev&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;lev&quot;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-set_lev&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s2">&quot;ftime&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;ftime&quot;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-set_ftime&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s2">&quot;grib_type&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;grib_type&quot;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-set_grib_type&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">])</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;-grib_out&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># set grid point data</span>
+        <span class="c1"># -rpn will clear scaling parameters, so set grid point data first</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">reg</span> <span class="o">=</span> <span class="n">RPNRegister</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">)]</span> <span class="o">=</span> <span class="n">UNDEFINED</span>
+            <span class="n">reg</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-rpn_rcl&quot;</span><span class="p">,</span> <span class="n">reg</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">reg</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="s2">&quot;bin_prec&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-set_grib_max_bits&quot;</span><span class="p">,</span> <span class="mi">24</span><span class="p">])</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;bin_prec&quot;</span><span class="p">)</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-set_bin_prec&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">append</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-append&quot;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">out</span><span class="p">,</span> <span class="n">gribfile</span><span class="p">])</span>
+        <span class="n">wgrib</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">WgribError</span><span class="p">:</span>
+        <span class="k">raise</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">free_files</span><span class="p">(</span><span class="n">tmplfile</span><span class="p">,</span> <span class="n">gribfile</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">reg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">reg</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+        
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

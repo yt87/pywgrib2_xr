@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.ipv\_points
+========================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autofunction:: ipv_points

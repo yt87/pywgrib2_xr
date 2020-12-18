@@ -1,0 +1,659 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API reference &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pywgrib2_xr.MemoryBuffer" href="generated/pywgrib2_xr.MemoryBuffer.html" />
+    <link rel="prev" title="What’s New" href="whats-new.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="whats-new.html">What’s New</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#wgrib2-interface">wgrib2 Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#memory-buffer">Memory Buffer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.html">pywgrib2_xr.MemoryBuffer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.get.html">pywgrib2_xr.MemoryBuffer.get</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.set.html">pywgrib2_xr.MemoryBuffer.set</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.close.html">pywgrib2_xr.MemoryBuffer.close</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.usage.html">pywgrib2_xr.MemoryBuffer.usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rpnregister">RPNRegister</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.RPNRegister.html">pywgrib2_xr.RPNRegister</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.RPNRegister.get.html">pywgrib2_xr.RPNRegister.get</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.RPNRegister.set.html">pywgrib2_xr.RPNRegister.set</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.RPNRegister.close.html">pywgrib2_xr.RPNRegister.close</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.RPNRegister.usage.html">pywgrib2_xr.RPNRegister.usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#top-level-functions">Top-level functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.free_files.html">pywgrib2_xr.free_files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.status_open.html">pywgrib2_xr.status_open</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.wgrib.html">pywgrib2_xr.wgrib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.read_msg.html">pywgrib2_xr.read_msg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.decode_msg.html">pywgrib2_xr.decode_msg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.write_msg.html">pywgrib2_xr.write_msg</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#iplib-interface">iplib Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/pywgrib2_xr.earth2grid_points.html">pywgrib2_xr.earth2grid_points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pywgrib2_xr.grid2earth_grid.html">pywgrib2_xr.grid2earth_grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pywgrib2_xr.grid2earth_points.html">pywgrib2_xr.grid2earth_points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pywgrib2_xr.ips_grid.html">pywgrib2_xr.ips_grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pywgrib2_xr.ips_points.html">pywgrib2_xr.ips_points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pywgrib2_xr.ipv_grid.html">pywgrib2_xr.ipv_grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pywgrib2_xr.ipv_points.html">pywgrib2_xr.ipv_points</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset">Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reading-grib2-files">Reading GRIB2 files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.open_dataset.html">pywgrib2_xr.open_dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#accessors">Accessors</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Wgrib2DatasetAccessor.html">pywgrib2_xr.Wgrib2DatasetAccessor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Wgrib2DatasetAccessor.get_grid.html">pywgrib2_xr.Wgrib2DatasetAccessor.get_grid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Wgrib2DatasetAccessor.location.html">pywgrib2_xr.Wgrib2DatasetAccessor.location</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Wgrib2DatasetAccessor.grid.html">pywgrib2_xr.Wgrib2DatasetAccessor.grid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Wgrib2DatasetAccessor.winds.html">pywgrib2_xr.Wgrib2DatasetAccessor.winds</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#inventory">Inventory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-structures">Data structures</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.MetaData.html">pywgrib2_xr.MetaData</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.MetaData.level_code.html">pywgrib2_xr.MetaData.level_code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.MetaData.level_value.html">pywgrib2_xr.MetaData.level_value</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-inventory">Creating inventory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.make_inventory.html">pywgrib2_xr.make_inventory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.save_inventory.html">pywgrib2_xr.save_inventory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.load_inventory.html">pywgrib2_xr.load_inventory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.load_or_make_inventory.html">pywgrib2_xr.load_or_make_inventory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#projection">Projection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-projection">Creating a projection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Point.html">pywgrib2_xr.Point</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Grid.html">pywgrib2_xr.Grid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.grid_fromgds.html">pywgrib2_xr.grid_fromgds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.grid_fromdict.html">pywgrib2_xr.grid_fromdict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.grid_fromstring.html">pywgrib2_xr.grid_fromstring</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#attributes">Attributes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Grid.cfname.html">pywgrib2_xr.Grid.cfname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Grid.gdtnum.html">pywgrib2_xr.Grid.gdtnum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Grid.attrs.html">pywgrib2_xr.Grid.attrs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Grid.coords.html">pywgrib2_xr.Grid.coords</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Grid.crs.html">pywgrib2_xr.Grid.crs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Grid.dims.html">pywgrib2_xr.Grid.dims</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Grid.globe.html">pywgrib2_xr.Grid.globe</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Grid.params.html">pywgrib2_xr.Grid.params</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/pywgrib2_xr.Grid.shape.html">pywgrib2_xr.Grid.shape</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#template">Template</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/pywgrib2_xr.Template.html">pywgrib2_xr.Template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pywgrib2_xr.make_template.html">pywgrib2_xr.make_template</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#utilities">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/pywgrib2_xr.utils.localpath.html">pywgrib2_xr.utils.localpath</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pywgrib2_xr.utils.localpaths.html">pywgrib2_xr.utils.localpaths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/pywgrib2_xr.utils.remotepath.html">pywgrib2_xr.utils.remotepath</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>API reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-reference">
+<h1>API reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<p>This page provides an auto-generated summary of pywgrib2’s API. For more
+details and examples, refer to the relevant chapters in the main part of the
+documentation.</p>
+<div class="section" id="wgrib2-interface">
+<h2>wgrib2 Interface<a class="headerlink" href="#wgrib2-interface" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="memory-buffer">
+<h3>Memory Buffer<a class="headerlink" href="#memory-buffer" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.html#pywgrib2_xr.MemoryBuffer" title="pywgrib2_xr.MemoryBuffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MemoryBuffer</span></code></a>()</p></td>
+<td><p>Encapsulates <cite>wgrib2</cite> memory buffer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.get.html#pywgrib2_xr.MemoryBuffer.get" title="pywgrib2_xr.MemoryBuffer.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MemoryBuffer.get</span></code></a>([rtype])</p></td>
+<td><p>Returns buffer content.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.set.html#pywgrib2_xr.MemoryBuffer.set" title="pywgrib2_xr.MemoryBuffer.set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MemoryBuffer.set</span></code></a>(data)</p></td>
+<td><p>Initialises buffer with <cite>data</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.close.html#pywgrib2_xr.MemoryBuffer.close" title="pywgrib2_xr.MemoryBuffer.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MemoryBuffer.close</span></code></a>()</p></td>
+<td><p>Makes buffer free for reuse.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.MemoryBuffer.usage.html#pywgrib2_xr.MemoryBuffer.usage" title="pywgrib2_xr.MemoryBuffer.usage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MemoryBuffer.usage</span></code></a>()</p></td>
+<td><p>Returns copy of buffer array.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rpnregister">
+<h3>RPNRegister<a class="headerlink" href="#rpnregister" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.RPNRegister.html#pywgrib2_xr.RPNRegister" title="pywgrib2_xr.RPNRegister"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RPNRegister</span></code></a>()</p></td>
+<td><p>Encapsulates <cite>wgrib2</cite> RPN register.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.RPNRegister.get.html#pywgrib2_xr.RPNRegister.get" title="pywgrib2_xr.RPNRegister.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RPNRegister.get</span></code></a>()</p></td>
+<td><p>Returns content of the register.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.RPNRegister.set.html#pywgrib2_xr.RPNRegister.set" title="pywgrib2_xr.RPNRegister.set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RPNRegister.set</span></code></a>(arr)</p></td>
+<td><p>Initialises register with data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.RPNRegister.close.html#pywgrib2_xr.RPNRegister.close" title="pywgrib2_xr.RPNRegister.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RPNRegister.close</span></code></a>()</p></td>
+<td><p>Makes register free for reuse.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.RPNRegister.usage.html#pywgrib2_xr.RPNRegister.usage" title="pywgrib2_xr.RPNRegister.usage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RPNRegister.usage</span></code></a>()</p></td>
+<td><p>Returns copy of register array.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="top-level-functions">
+<h3>Top-level functions<a class="headerlink" href="#top-level-functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.free_files.html#pywgrib2_xr.free_files" title="pywgrib2_xr.free_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">free_files</span></code></a>(*files[, delete])</p></td>
+<td><p>Closes and removes <cite>files</cite> from wgrib2 linked list.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.status_open.html#pywgrib2_xr.status_open" title="pywgrib2_xr.status_open"><code class="xref py py-obj docutils literal notranslate"><span class="pre">status_open</span></code></a>()</p></td>
+<td><p>Prints open files to stderr.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.wgrib.html#pywgrib2_xr.wgrib" title="pywgrib2_xr.wgrib"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wgrib</span></code></a>(*args)</p></td>
+<td><p>Mimics <cite>wgrib2</cite> executable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.read_msg.html#pywgrib2_xr.read_msg" title="pywgrib2_xr.read_msg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_msg</span></code></a>(gribfile, num_or_meta)</p></td>
+<td><p>Returns single message from GRIB2 file as bytes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.decode_msg.html#pywgrib2_xr.decode_msg" title="pywgrib2_xr.decode_msg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode_msg</span></code></a>(gribfile, meta)</p></td>
+<td><p>Returns decoded GRIB2 file as numpy array.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.write_msg.html#pywgrib2_xr.write_msg" title="pywgrib2_xr.write_msg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_msg</span></code></a>(gribfile, tmplfile, num_or_meta[, …])</p></td>
+<td><p>Writes message to a GRIB2 file.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="iplib-interface">
+<h2>iplib Interface<a class="headerlink" href="#iplib-interface" title="Permalink to this headline">¶</a></h2>
+<p>This is a Python interface to NCEP Interpolation library
+<a class="reference external" href="https://www.nco.ncep.noaa.gov/pmb/docs/libs/iplib/ncep_iplib.shtml">iplib</a></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.earth2grid_points.html#pywgrib2_xr.earth2grid_points" title="pywgrib2_xr.earth2grid_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">earth2grid_points</span></code></a>(grid, point)</p></td>
+<td><p>Computes grid coordinates of selected Earth coordinates.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.grid2earth_grid.html#pywgrib2_xr.grid2earth_grid" title="pywgrib2_xr.grid2earth_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grid2earth_grid</span></code></a>(grid)</p></td>
+<td><p>computes Earth coordinates of all the grid points.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.grid2earth_points.html#pywgrib2_xr.grid2earth_points" title="pywgrib2_xr.grid2earth_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grid2earth_points</span></code></a>(grid, xpts, ypts)</p></td>
+<td><p>Computes Earth coordinates of selected grid points.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.ips_grid.html#pywgrib2_xr.ips_grid" title="pywgrib2_xr.ips_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ips_grid</span></code></a>(data, iptype, grid_in, grid_out[, …])</p></td>
+<td><p>Interface to NCEP subroutine <cite>ipolates</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.ips_points.html#pywgrib2_xr.ips_points" title="pywgrib2_xr.ips_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ips_points</span></code></a>(data, iptype, grid, point[, ipopt])</p></td>
+<td><p>Interface to NCEP subroutine <cite>ipolates</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.ipv_grid.html#pywgrib2_xr.ipv_grid" title="pywgrib2_xr.ipv_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ipv_grid</span></code></a>(udata, vdata, iptype, grid_in, grid_out)</p></td>
+<td><p>Interface to NCEP subroutine <cite>ipolatev</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.ipv_points.html#pywgrib2_xr.ipv_points" title="pywgrib2_xr.ipv_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ipv_points</span></code></a>(udata, vdata, iptype, grid, point)</p></td>
+<td><p>Interface to NCEP subroutine <cite>ipolatev</cite>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dataset">
+<h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="reading-grib2-files">
+<h3>Reading GRIB2 files<a class="headerlink" href="#reading-grib2-files" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.open_dataset.html#pywgrib2_xr.open_dataset" title="pywgrib2_xr.open_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_dataset</span></code></a>(filenames, template[, chunks, …])</p></td>
+<td><p>Opens one or more files as a single dataset.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="accessors">
+<h3>Accessors<a class="headerlink" href="#accessors" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Wgrib2DatasetAccessor.html#pywgrib2_xr.Wgrib2DatasetAccessor" title="pywgrib2_xr.Wgrib2DatasetAccessor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Wgrib2DatasetAccessor</span></code></a>(xarray_obj)</p></td>
+<td><p>Provides custom attributes and methods on xarray Dataset.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Wgrib2DatasetAccessor.get_grid.html#pywgrib2_xr.Wgrib2DatasetAccessor.get_grid" title="pywgrib2_xr.Wgrib2DatasetAccessor.get_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Wgrib2DatasetAccessor.get_grid</span></code></a>()</p></td>
+<td><p>Returns GRIB2 grid definition as dictionary.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Wgrib2DatasetAccessor.location.html#pywgrib2_xr.Wgrib2DatasetAccessor.location" title="pywgrib2_xr.Wgrib2DatasetAccessor.location"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Wgrib2DatasetAccessor.location</span></code></a>(points[, iptype])</p></td>
+<td><p>Remaps all variables to point locations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Wgrib2DatasetAccessor.grid.html#pywgrib2_xr.Wgrib2DatasetAccessor.grid" title="pywgrib2_xr.Wgrib2DatasetAccessor.grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Wgrib2DatasetAccessor.grid</span></code></a>(grid[, iptype])</p></td>
+<td><p>Remaps all variables to points specified by <cite>longitude</cite> and <cite>latitude</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Wgrib2DatasetAccessor.winds.html#pywgrib2_xr.Wgrib2DatasetAccessor.winds" title="pywgrib2_xr.Wgrib2DatasetAccessor.winds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Wgrib2DatasetAccessor.winds</span></code></a>(winds[, inplace])</p></td>
+<td><p>Changes vector coordinates to grid/Earth direction.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="inventory">
+<h2>Inventory<a class="headerlink" href="#inventory" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="data-structures">
+<h3>Data structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.MetaData.html#pywgrib2_xr.MetaData" title="pywgrib2_xr.MetaData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MetaData</span></code></a>(*args, **kwargs)</p></td>
+<td><p>GRIB2 message metadata.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.MetaData.level_code.html#pywgrib2_xr.MetaData.level_code" title="pywgrib2_xr.MetaData.level_code"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MetaData.level_code</span></code></a></p></td>
+<td><p>Shortcut for self.bot_level_code.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.MetaData.level_value.html#pywgrib2_xr.MetaData.level_value" title="pywgrib2_xr.MetaData.level_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MetaData.level_value</span></code></a></p></td>
+<td><p>Shortcut for self.bot_level_value.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="creating-inventory">
+<h3>Creating inventory<a class="headerlink" href="#creating-inventory" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.make_inventory.html#pywgrib2_xr.make_inventory" title="pywgrib2_xr.make_inventory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_inventory</span></code></a>(file)</p></td>
+<td><p>Creates inventory for file ‘file’.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.save_inventory.html#pywgrib2_xr.save_inventory" title="pywgrib2_xr.save_inventory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_inventory</span></code></a>(inventory, file[, directory])</p></td>
+<td><p>Saves inventory to a file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.load_inventory.html#pywgrib2_xr.load_inventory" title="pywgrib2_xr.load_inventory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_inventory</span></code></a>(file[, directory])</p></td>
+<td><p>Retrieves inventory from a file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.load_or_make_inventory.html#pywgrib2_xr.load_or_make_inventory" title="pywgrib2_xr.load_or_make_inventory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_or_make_inventory</span></code></a>(file[, directory, save])</p></td>
+<td><p>Returns inventory for a GRIB2 file.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="projection">
+<h2>Projection<a class="headerlink" href="#projection" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="creating-a-projection">
+<h3>Creating a projection<a class="headerlink" href="#creating-a-projection" title="Permalink to this headline">¶</a></h3>
+<p>GRIB2 defines projection in terms of Grid Definition Template (Section 3 in
+GRIB2 message), which includes also grid parameters such as number of points
+and cell size. <strong>pywgrib2_xr</strong> wraps it in a class <a class="reference internal" href="generated/pywgrib2_xr.Grid.html#pywgrib2_xr.Grid" title="pywgrib2_xr.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">pywgrib2_xr.Grid</span></code></a>.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Point.html#pywgrib2_xr.Point" title="pywgrib2_xr.Point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Point</span></code></a>(longitude, latitude[, coord])</p></td>
+<td><p>Unstructured list of points.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Grid.html#pywgrib2_xr.Grid" title="pywgrib2_xr.Grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grid</span></code></a>(gdtmpl)</p></td>
+<td><p>2-dimensional rectangular grid.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.grid_fromgds.html#pywgrib2_xr.grid_fromgds" title="pywgrib2_xr.grid_fromgds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grid_fromgds</span></code></a>(gdtnum, gdtmpl)</p></td>
+<td><p>Factory method to create projection from grid definition section.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.grid_fromdict.html#pywgrib2_xr.grid_fromdict" title="pywgrib2_xr.grid_fromdict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grid_fromdict</span></code></a>(projname[, globe])</p></td>
+<td><p>Factory method to create projection from dictionary.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.grid_fromstring.html#pywgrib2_xr.grid_fromstring" title="pywgrib2_xr.grid_fromstring"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grid_fromstring</span></code></a>(string[, winds, globe])</p></td>
+<td><p>Factory method to create projection from <cite>wgrib2</cite> style string.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Grid.cfname.html#pywgrib2_xr.Grid.cfname" title="pywgrib2_xr.Grid.cfname"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grid.cfname</span></code></a></p></td>
+<td><p>Class name</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Grid.gdtnum.html#pywgrib2_xr.Grid.gdtnum" title="pywgrib2_xr.Grid.gdtnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grid.gdtnum</span></code></a></p></td>
+<td><p>Grid definition template number</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Grid.attrs.html#pywgrib2_xr.Grid.attrs" title="pywgrib2_xr.Grid.attrs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grid.attrs</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Grid.coords.html#pywgrib2_xr.Grid.coords" title="pywgrib2_xr.Grid.coords"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grid.coords</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Grid.crs.html#pywgrib2_xr.Grid.crs" title="pywgrib2_xr.Grid.crs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grid.crs</span></code></a></p></td>
+<td><p>Parameters for cartopy coordinate reference system.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Grid.dims.html#pywgrib2_xr.Grid.dims" title="pywgrib2_xr.Grid.dims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grid.dims</span></code></a></p></td>
+<td><p>Grid dimension names.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Grid.globe.html#pywgrib2_xr.Grid.globe" title="pywgrib2_xr.Grid.globe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grid.globe</span></code></a></p></td>
+<td><p>Parameters for cartopy globe</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Grid.params.html#pywgrib2_xr.Grid.params" title="pywgrib2_xr.Grid.params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grid.params</span></code></a></p></td>
+<td><p>GRIB parameters as dictionary</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Grid.shape.html#pywgrib2_xr.Grid.shape" title="pywgrib2_xr.Grid.shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grid.shape</span></code></a></p></td>
+<td><p>Grid shape.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="template">
+<h2>Template<a class="headerlink" href="#template" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.Template.html#pywgrib2_xr.Template" title="pywgrib2_xr.Template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Template</span></code></a>(commoninfo, var_info_map, …[, …])</p></td>
+<td><p>Defines dataset structure.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.make_template.html#pywgrib2_xr.make_template" title="pywgrib2_xr.make_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_template</span></code></a>(files, *predicates[, …])</p></td>
+<td><p>Creates template from GRIB2 files.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h2>
+<p>Functions in this module are used to retrieve data for the test suite
+and documentation.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.utils.localpath.html#pywgrib2_xr.utils.localpath" title="pywgrib2_xr.utils.localpath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils.localpath</span></code></a>(file)</p></td>
+<td><p>Returns path to <cite>file</cite> on the disk.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/pywgrib2_xr.utils.localpaths.html#pywgrib2_xr.utils.localpaths" title="pywgrib2_xr.utils.localpaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils.localpaths</span></code></a>(pattern)</p></td>
+<td><p>Returns files in data directory matching pattern.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/pywgrib2_xr.utils.remotepath.html#pywgrib2_xr.utils.remotepath" title="pywgrib2_xr.utils.remotepath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils.remotepath</span></code></a>(file[, cachedir])</p></td>
+<td><p>Returns path to <cite>file</cite>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="generated/pywgrib2_xr.MemoryBuffer.html" class="btn btn-neutral float-right" title="pywgrib2_xr.MemoryBuffer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="whats-new.html" class="btn btn-neutral float-left" title="What’s New" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

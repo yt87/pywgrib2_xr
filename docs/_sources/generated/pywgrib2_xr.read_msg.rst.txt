@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.read\_msg
+======================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autofunction:: read_msg

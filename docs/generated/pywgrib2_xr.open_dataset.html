@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pywgrib2_xr.open_dataset &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pywgrib2_xr.Wgrib2DatasetAccessor" href="pywgrib2_xr.Wgrib2DatasetAccessor.html" />
+    <link rel="prev" title="pywgrib2_xr.ipv_points" href="pywgrib2_xr.ipv_points.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">What’s New</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api.html#wgrib2-interface">wgrib2 Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#iplib-interface">iplib Interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#dataset">Dataset</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../api.html#reading-grib2-files">Reading GRIB2 files</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">pywgrib2_xr.open_dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api.html#accessors">Accessors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#inventory">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#projection">Projection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#template">Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#utilities">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api.html">API reference</a> &raquo;</li>
+        
+      <li>pywgrib2_xr.open_dataset</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/pywgrib2_xr.open_dataset.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pywgrib2-xr-open-dataset">
+<h1>pywgrib2_xr.open_dataset<a class="headerlink" href="#pywgrib2-xr-open-dataset" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="pywgrib2_xr.open_dataset">
+<code class="sig-prename descclassname">pywgrib2_xr.</code><code class="sig-name descname">open_dataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filenames</span></em>, <em class="sig-param"><span class="n">template</span></em>, <em class="sig-param"><span class="n">chunks</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">preprocess</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parallel</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">save</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">invdir</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pywgrib2_xr/xarray_store.html#open_dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pywgrib2_xr.open_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens one or more files as a single dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filenames</strong> (<em>string</em><em> or </em><em>sequence of strings.</em>) – GRIB files to process.</p></li>
+<li><p><strong>template</strong> (<em>Template.</em>) – Template specifies dataset structure. See <a class="reference internal" href="pywgrib2_xr.make_template.html#pywgrib2_xr.make_template" title="pywgrib2_xr.make_template"><code class="xref py py-func docutils literal notranslate"><span class="pre">pywgrib2_xr.make_template()</span></code></a>.</p></li>
+<li><p><strong>chunks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary with keys given by dimension names and values given by chunk sizes.
+In general, these should divide the dimensions of each dataset. If int, chunk
+each dimension by <code class="docutils literal notranslate"><span class="pre">chunks</span></code>. By default, chunks will be chosen to load entire
+logical dataset into memory at once.</p></li>
+<li><p><strong>preprocess</strong> (<em>callable</em><em>, </em><em>optional.</em>) – If provided, call this function on each dataset prior to concatenation.
+You can find the file names from which each dataset was loaded in
+<code class="docutils literal notranslate"><span class="pre">ds.encoding['source']</span></code>.</p></li>
+<li><p><strong>parallel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional.</em>) – If True, the open and preprocess steps of this function will be
+performed in parallel using <code class="docutils literal notranslate"><span class="pre">dask.delayed</span></code>. Default is False.</p></li>
+<li><p><strong>cache</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, cache data loaded from the underlying datastore in memory as
+NumPy arrays when accessed to avoid reading from the underlying data-
+store multiple times. Defaults to True unless you specify the <cite>chunks</cite>
+argument to use dask, in which case it defaults to False. Does not
+change the behavior of coordinates corresponding to dimensions, which
+always load their data from disk into a <code class="docutils literal notranslate"><span class="pre">pandas.Index</span></code>.</p></li>
+<li><p><strong>save</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Save inventory files. Default is False.</p></li>
+<li><p><strong>invdir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional.</em>) – Inventory location. None means inventory files are collocated with
+data files.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>xarray.Dataset - The newly created dataset.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pywgrib2_xr.Wgrib2DatasetAccessor.html" class="btn btn-neutral float-right" title="pywgrib2_xr.Wgrib2DatasetAccessor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pywgrib2_xr.ipv_points.html" class="btn btn-neutral float-left" title="pywgrib2_xr.ipv_points" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

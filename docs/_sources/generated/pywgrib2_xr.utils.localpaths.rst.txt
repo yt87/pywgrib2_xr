@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.utils.localpaths
+=============================
+
+.. currentmodule:: pywgrib2_xr.utils
+
+.. autofunction:: localpaths

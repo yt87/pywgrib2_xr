@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.load\_inventory
+============================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autofunction:: load_inventory

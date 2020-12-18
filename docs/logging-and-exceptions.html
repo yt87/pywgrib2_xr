@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Logging and Exceptions &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Writing GRIB2 Files" href="writing-grib-files.html" />
+    <link rel="prev" title="Memory Buffers" href="memory-buffers.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Logging and Exceptions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#exception-handling">Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Logging and Exceptions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/logging-and-exceptions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="logging-and-exceptions">
+<h1>Logging and Exceptions<a class="headerlink" href="#logging-and-exceptions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="exception-handling">
+<h2>Exception Handling<a class="headerlink" href="#exception-handling" title="Permalink to this headline">¶</a></h2>
+<p><strong>pywgrib2_xr</strong> defines exception <code class="xref py py-class docutils literal notranslate"><span class="pre">WgribError</span></code>
+which is raised when a C function returns nonzero status. If that function
+writes an error message to <code class="docutils literal notranslate"><span class="pre">stderr</span></code>, it will be captured as exception value:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pywgrib2_xr</span> <span class="k">as</span> <span class="nn">pywgrib2</span>
+
+<span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;nonexistent&#39;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pywgrib2</span><span class="o">.</span><span class="n">wgrib</span><span class="p">(</span><span class="s1">&#39;nonexistent&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">WgribError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">pywgrib2</span><span class="o">.</span><span class="n">free_files</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</pre></div>
+</div>
+<pre class="literal-block">*** FATAL ERROR: missing input file nonexistent ***
+
+*** arg list to wgrib2: wgrib2 nonexistent</pre>
+<p>The <code class="docutils literal notranslate"><span class="pre">finally</span></code> clause ensures that <code class="docutils literal notranslate"><span class="pre">file</span></code> is closed. The function <code class="docutils literal notranslate"><span class="pre">wgrib</span></code>
+does not close files on exit. One can try to set <code class="docutils literal notranslate"><span class="pre">wgrib2</span></code> arguments
+<code class="docutils literal notranslate"><span class="pre">'-transient',</span> <span class="pre">file</span></code>, but this does not work when <code class="docutils literal notranslate"><span class="pre">wgrib</span></code> call fails:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;gfs_tsoil.grib2&#39;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pywgrib2</span><span class="o">.</span><span class="n">wgrib</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;-foo&#39;</span><span class="p">,</span> <span class="s1">&#39;-transient&#39;</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="n">pywgrib2</span><span class="o">.</span><span class="n">status_open</span><span class="p">()</span>
+</pre></div>
+</div>
+<pre class="literal-block">*** FATAL ERROR: unknown option -foo ***
+
+*** arg list to wgrib2: wgrib2 gfs_tsoil.grib2 -foo -transient gfs_tsoil.grib2
+
+&lt;stdin&gt;:1: UserWarning:
+file: gfs_tsoil.grib2 r:perm file_offset=0 usage=0</pre>
+<p>The function <a class="reference internal" href="generated/pywgrib2_xr.status_open.html#pywgrib2_xr.status_open" title="pywgrib2_xr.status_open"><code class="xref py py-func docutils literal notranslate"><span class="pre">status_open()</span></code></a>, intended for debugging,
+prints files opened by the C code.</p>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p><strong>pywgrib2_xr</strong> uses Python module
+<a class="reference external" href="https://docs.python.org/3/howto/logging.html">logging</a>.
+By defaults, all emmited messages are output to Python’s <code class="docutils literal notranslate"><span class="pre">stderr</span></code>. It is
+possible to set logging level and a different output stream:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;my.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n">pywgrib2</span><span class="o">.</span><span class="n">wgrib</span><span class="p">(</span><span class="s1">&#39;gfs.grib2&#39;</span><span class="p">,</span> <span class="s1">&#39;-inv&#39;</span><span class="p">,</span> <span class="s1">&#39;gfs.inv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cat my.log</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEBUG</span><span class="p">:</span><span class="n">pywgrib2_xr</span><span class="o">.</span><span class="n">wgrib2</span><span class="p">:</span><span class="n">args</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;gfs.grib2&#39;</span><span class="p">,</span> <span class="s1">&#39;-inv&#39;</span><span class="p">,</span> <span class="s1">&#39;gfs.inv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Setting level to <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> outputs arguments passed to <code class="docutils literal notranslate"><span class="pre">wgrib</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="writing-grib-files.html" class="btn btn-neutral float-right" title="Writing GRIB2 Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="memory-buffers.html" class="btn btn-neutral float-left" title="Memory Buffers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

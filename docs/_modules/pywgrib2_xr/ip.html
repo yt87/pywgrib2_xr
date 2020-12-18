@@ -1,0 +1,816 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pywgrib2_xr.ip &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pywgrib2_xr.ip</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pywgrib2_xr.ip</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">numpy.typing</span> <span class="kn">import</span> <span class="n">ArrayLike</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">ArrayLike</span> <span class="o">=</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">xarray.backends.locks</span> <span class="kn">import</span> <span class="n">SerializableLock</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_wgrib2</span><span class="p">,</span> <span class="n">WgribError</span>  <span class="c1"># type: ignore</span>
+
+<span class="c1"># iplib is double precision</span>
+<span class="n">DTYPE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+<span class="c1"># Interpolation type codes</span>
+<span class="n">IP_Types</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">bilinear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">bicubic</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">neighbor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">neighbour</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">budget</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">spectral</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="c1"># Interpolation options array size</span>
+<span class="n">IPOPT_SIZE</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="n">IP_LOCK</span> <span class="o">=</span> <span class="n">SerializableLock</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">gdswzd</span><span class="p">(</span>
+    <span class="n">gdtnum</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">gdtmpl</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="n">opt</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">xpts</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="n">ypts</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="n">lon</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="n">lat</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">crot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">xpts</span><span class="p">)</span>
+    <span class="n">srot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">xpts</span><span class="p">)</span>
+    <span class="n">xlon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">xpts</span><span class="p">)</span>
+    <span class="n">xlat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">xpts</span><span class="p">)</span>
+    <span class="n">ylon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">xpts</span><span class="p">)</span>
+    <span class="n">ylat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">xpts</span><span class="p">)</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">xpts</span><span class="p">)</span>
+    <span class="n">nret</span> <span class="o">=</span> <span class="n">_wgrib2</span><span class="o">.</span><span class="n">gdswiz</span><span class="p">(</span>
+        <span class="n">gdtnum</span><span class="p">,</span>
+        <span class="n">gdtmpl</span><span class="p">,</span>
+        <span class="n">opt</span><span class="p">,</span>
+        <span class="n">xpts</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+        <span class="n">ypts</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+        <span class="n">lon</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+        <span class="n">lat</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+        <span class="n">crot</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+        <span class="n">srot</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+        <span class="n">xlon</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+        <span class="n">xlat</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+        <span class="n">ylon</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+        <span class="n">ylat</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+        <span class="n">area</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">nret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="s2">&quot;Unrecognised projection&quot;</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">crot</span><span class="o">=</span><span class="n">crot</span><span class="p">,</span> <span class="n">srot</span><span class="o">=</span><span class="n">srot</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opt</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;lon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lon</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lat</span>
+    <span class="k">if</span> <span class="n">opt</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;xpts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xpts</span> <span class="o">-</span> <span class="mf">1.0</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ypts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ypts</span> <span class="o">-</span> <span class="mf">1.0</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+
+<div class="viewcode-block" id="earth2grid_points"><a class="viewcode-back" href="../../generated/pywgrib2_xr.earth2grid_points.html#pywgrib2_xr.earth2grid_points">[docs]</a><span class="k">def</span> <span class="nf">earth2grid_points</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes grid coordinates of selected Earth coordinates.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    grid: Grid</span>
+<span class="sd">        Grid geometry instance.</span>
+<span class="sd">    point : Point</span>
+<span class="sd">        Point geometry instance.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Calculated coordinates: a dictionary with keys</span>
+<span class="sd">        {&#39;crot&#39;, &#39;srot&#39;, &#39;area&#39;, &#39;xpts&#39;, &#39;ypts&#39;}</span>
+<span class="sd">        where:</span>
+
+<span class="sd">        - crot, srot : Cosine and sines of clockwise vector rotation.</span>
+<span class="sd">        - area : Area weights in `m^2`. Proportional to the square of the map factor \</span>
+<span class="sd">            in the case of conformal projections.</span>
+<span class="sd">        - xpts, ypts : Grid point coordinates`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">xpts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">ypts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">gdtmpl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">IP_LOCK</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gdswzd</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span> <span class="n">gdtmpl</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">xpts</span><span class="p">,</span> <span class="n">ypts</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="grid2earth_grid"><a class="viewcode-back" href="../../generated/pywgrib2_xr.grid2earth_grid.html#pywgrib2_xr.grid2earth_grid">[docs]</a><span class="k">def</span> <span class="nf">grid2earth_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;computes Earth coordinates of all the grid points.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    grid: Grid</span>
+<span class="sd">        Grid definition instance.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Calculated coordinates: a dictionary with keys</span>
+<span class="sd">        {&#39;crot&#39;, &#39;srot&#39;, &#39;area&#39;, &#39;lat&#39;, &#39;lon&#39;, &#39;xpts&#39;, &#39;ypts&#39;}</span>
+<span class="sd">        where:</span>
+
+<span class="sd">        - crot, srot : Cosine and sines of clockwise vector rotation.</span>
+<span class="sd">        - area : Area weights in `m^2`. Proportional to the square of the map factor \</span>
+<span class="sd">            in the case of conformal projections.</span>
+<span class="sd">        - lat, lon : Latitudes and longitudes.</span>
+<span class="sd">        - xpts, ypts : Grid point coordinates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xpts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">ypts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">gdtmpl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">IP_LOCK</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gdswzd</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span> <span class="n">gdtmpl</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">xpts</span><span class="p">,</span> <span class="n">ypts</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="grid2earth_points"><a class="viewcode-back" href="../../generated/pywgrib2_xr.grid2earth_points.html#pywgrib2_xr.grid2earth_points">[docs]</a><span class="k">def</span> <span class="nf">grid2earth_points</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">xpts</span><span class="p">,</span> <span class="n">ypts</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes Earth coordinates of selected grid points.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    grid : Grid</span>
+<span class="sd">        Grid geometry instance.</span>
+
+<span class="sd">    xpts : array_like</span>
+<span class="sd">        Grid X point coordinates.</span>
+<span class="sd">    ypts : array_like</span>
+<span class="sd">        Grid Y point coordinates.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Calculated coordinates: a dictionary with keys</span>
+<span class="sd">        {&#39;crot&#39;, &#39;srot&#39;, &#39;area&#39;, &#39;lat&#39;, &#39;lon&#39;}</span>
+<span class="sd">        where:</span>
+
+<span class="sd">        - crot, srot : Cosine and sines of clockwise vector rotation.</span>
+<span class="sd">        - area : Area weights in `m^2`. Proportional to the square of the map factor \</span>
+<span class="sd">            in the case of conformal projections.</span>
+<span class="sd">        - lat, lon : Latitudes and longitudes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xpts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">xpts</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span>  <span class="c1"># fortran counts from 1</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">xpts</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">ypts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">ypts</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span>
+    <span class="k">if</span> <span class="n">shape</span> <span class="o">!=</span> <span class="n">ypts</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;shapes of xpts </span><span class="si">{!r}</span><span class="s2"> and ypts </span><span class="si">{!r}</span><span class="s2"> must be equal&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">ypts</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">gdtmpl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">IP_LOCK</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gdswzd</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span> <span class="n">gdtmpl</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">xpts</span><span class="p">,</span> <span class="n">ypts</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_get_ipopt</span><span class="p">(</span><span class="n">ip</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ipopt</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArrayLike</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Sets ipopt array.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">ipopt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ipopt</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">ipopt_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">IPOPT_SIZE</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">ipopt_array</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="n">ip</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>  <span class="c1"># bicubic or spectral, wgrib2 defaults</span>
+        <span class="n">ipopt_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">ipopt_array</span>
+
+
+<span class="k">def</span> <span class="nf">ipolates</span><span class="p">(</span>
+    <span class="n">grid</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="n">iptype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">gdtnum_in</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">gdtmpl_in</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">gdtnum_out</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">gdtmpl_out</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">rlon</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">rlat</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">ipopt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Interface to `iplib` subroutine `ipolates`.&quot;&quot;&quot;</span>
+    <span class="n">ip</span> <span class="o">=</span> <span class="n">IP_Types</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">iptype</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ip</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid interpolation type&quot;</span><span class="p">)</span>
+    <span class="n">ipopt_array</span> <span class="o">=</span> <span class="n">_get_ipopt</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">ipopt</span><span class="p">)</span>
+    <span class="n">gdtmpl_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">gdtmpl_in</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">nx_in</span><span class="p">,</span> <span class="n">ny_in</span> <span class="o">=</span> <span class="n">gdtmpl_in</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">!=</span> <span class="p">(</span><span class="n">ny_in</span><span class="p">,</span> <span class="n">nx_in</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span>
+            <span class="s2">&quot;grid description template does not match grid: &quot;</span>
+            <span class="s2">&quot;</span><span class="si">{!r}</span><span class="s2"> and </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">ny_in</span><span class="p">,</span> <span class="n">nx_in</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]))</span>
+        <span class="p">)</span>
+    <span class="n">m_in</span> <span class="o">=</span> <span class="n">nx_in</span> <span class="o">*</span> <span class="n">ny_in</span>
+    <span class="n">km</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">size</span> <span class="o">//</span> <span class="n">m_in</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">gdtnum_out</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">gdtmpl_out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;gdtmpl_out must be specified&quot;</span><span class="p">)</span>
+        <span class="n">gdtmpl_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">gdtmpl_out</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">nx_out</span><span class="p">,</span> <span class="n">ny_out</span> <span class="o">=</span> <span class="n">gdtmpl_out</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span>
+        <span class="n">m_out</span> <span class="o">=</span> <span class="n">nx_out</span> <span class="o">*</span> <span class="n">ny_out</span>
+        <span class="n">rlat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">m_out</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+        <span class="n">rlon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">m_out</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+        <span class="n">shape_out</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="p">[</span><span class="n">ny_out</span><span class="p">,</span> <span class="n">nx_out</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rlat</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rlon</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="s2">&quot;Latitude and longitude must be specified&quot;</span><span class="p">)</span>
+        <span class="n">rlat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">rlat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="n">rlon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">rlon</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">rlon</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="n">rlat</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="s2">&quot;Latitude/longitude sizes differ&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">iptype</span> <span class="o">==</span> <span class="s2">&quot;budget&quot;</span><span class="p">:</span>
+            <span class="n">gdtmpl_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">gdtmpl_out</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">gdtmpl_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">m_out</span> <span class="o">=</span> <span class="n">rlon</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">shape_out</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="p">[</span><span class="n">m_out</span><span class="p">])</span>
+    <span class="n">g_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="n">l_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">g_in</span><span class="o">.</span><span class="n">size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">l_in</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">g_in</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">l_in</span><span class="p">):</span>
+        <span class="n">ib_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">km</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ib_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">km</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">ib_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">km</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">g_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">km</span> <span class="o">*</span> <span class="n">m_out</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">l_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">g_out</span><span class="o">.</span><span class="n">size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">iret</span><span class="p">,</span> <span class="n">nout</span> <span class="o">=</span> <span class="n">_wgrib2</span><span class="o">.</span><span class="n">ipolates</span><span class="p">(</span>
+        <span class="n">ip</span><span class="p">,</span>
+        <span class="n">ipopt_array</span><span class="p">,</span>
+        <span class="n">gdtnum_in</span><span class="p">,</span>
+        <span class="n">gdtmpl_in</span><span class="p">,</span>
+        <span class="n">gdtnum_out</span><span class="p">,</span>
+        <span class="n">gdtmpl_out</span><span class="p">,</span>
+        <span class="n">m_in</span><span class="p">,</span>
+        <span class="n">m_out</span><span class="p">,</span>
+        <span class="n">km</span><span class="p">,</span>
+        <span class="n">ib_in</span><span class="p">,</span>
+        <span class="n">l_in</span><span class="p">,</span>
+        <span class="n">g_in</span><span class="p">,</span>
+        <span class="n">rlat</span><span class="p">,</span>
+        <span class="n">rlon</span><span class="p">,</span>
+        <span class="n">ib_out</span><span class="p">,</span>
+        <span class="n">l_out</span><span class="p">,</span>
+        <span class="n">g_out</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">iret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;Unrecognised interpolation method&quot;</span><span class="p">,</span>
+            <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;Unrecognised input grid or no grid overlap&quot;</span><span class="p">,</span>
+            <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;Unrecognised output grid&quot;</span><span class="p">,</span>
+        <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">iret</span><span class="p">,</span> <span class="s2">&quot;Interpolation failed, reason: </span><span class="si">{:d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iret</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">ib_out</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">g_out</span><span class="p">[</span><span class="n">l_out</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">if</span> <span class="n">gdtnum_out</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">g_out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape_out</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">g_out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape_out</span><span class="p">),</span>
+        <span class="n">lat</span><span class="o">=</span><span class="n">rlat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ny_out</span><span class="p">,</span> <span class="n">nx_out</span><span class="p">),</span>
+        <span class="n">lon</span><span class="o">=</span><span class="n">rlon</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ny_out</span><span class="p">,</span> <span class="n">nx_out</span><span class="p">),</span>
+        <span class="n">nout</span><span class="o">=</span><span class="n">nout</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="ips_grid"><a class="viewcode-back" href="../../generated/pywgrib2_xr.ips_grid.html#pywgrib2_xr.ips_grid">[docs]</a><span class="k">def</span> <span class="nf">ips_grid</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">iptype</span><span class="p">,</span> <span class="n">grid_in</span><span class="p">,</span> <span class="n">grid_out</span><span class="p">,</span> <span class="n">ipopt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Interface to NCEP subroutine `ipolates`.</span>
+
+<span class="sd">    This function interpolates scalar fields from any grid to a grid.</span>
+<span class="sd">    Only horizontal interpolation is performed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : array_like</span>
+<span class="sd">        Input grid.</span>
+<span class="sd">    iptype : {&#39;bilinear&#39;, &#39;bicubic&#39;, &#39;neighbour&#39;, &#39;budget&#39;, &#39;spectral&#39;}</span>
+<span class="sd">        Interpolation method.</span>
+<span class="sd">    grid_in : Grid</span>
+<span class="sd">        Input grid geometry instance. One of</span>
+<span class="sd">        {GridLatLon, GridRotLatLon, GridMercator, GridPolarStereo, \</span>
+<span class="sd">         GridLambertConformal, GridGaussian}</span>
+<span class="sd">    grid_out : Grid</span>
+<span class="sd">        Output grid geometry instance.</span>
+<span class="sd">    ipopt : array_like</span>
+<span class="sd">        Interpolation options.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        A dictionary with keys {&#39;data&#39;, &#39;lat&#39;, &#39;lon&#39;, &#39;nout&#39;}. Values are</span>
+<span class="sd">        interpolated grid, latitudes/longitudes and number of output grid</span>
+<span class="sd">        points.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">IP_LOCK</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ipolates</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">,</span>
+            <span class="n">iptype</span><span class="p">,</span>
+            <span class="n">grid_in</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span>
+            <span class="n">grid_in</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span>
+            <span class="n">grid_out</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span>
+            <span class="n">grid_out</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span>
+            <span class="n">ipopt</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ips_points"><a class="viewcode-back" href="../../generated/pywgrib2_xr.ips_points.html#pywgrib2_xr.ips_points">[docs]</a><span class="k">def</span> <span class="nf">ips_points</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">iptype</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">ipopt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Interface to NCEP subroutine `ipolates`.</span>
+
+<span class="sd">    This function interpolates scalar fields from any grid to a set of points</span>
+<span class="sd">    given by their latitudes and longitudes.</span>
+<span class="sd">    Only horizontal interpolation is performed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : array_like</span>
+<span class="sd">        Input grid.</span>
+<span class="sd">    iptype : {&#39;bilinear&#39;, &#39;bicubic&#39;, &#39;neighbour&#39;, &#39;budget&#39;}</span>
+<span class="sd">        Interpolation method.</span>
+<span class="sd">    grid : Grid</span>
+<span class="sd">        Input grid geometry instance. One of</span>
+<span class="sd">        {GridLatLon, GridRotLatLon, GridMercator, GridPolarStereo, \</span>
+<span class="sd">         GridDefLambertConformal, GridDefGaussian}</span>
+<span class="sd">    point : Point</span>
+<span class="sd">        Output Point geometry instance.</span>
+<span class="sd">    ipopt : array_like</span>
+<span class="sd">        Interpolation options.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        A dictionary with single key {&quot;data&quot;} (for consistency with ips_grid).</span>
+<span class="sd">        Values are interpolated grid at location specified by &#39;point&#39; argument.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">IP_LOCK</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">iptype</span> <span class="o">==</span> <span class="s2">&quot;budget&quot;</span><span class="p">:</span>
+            <span class="c1"># FIXME: define smaller grid containing all points</span>
+            <span class="k">return</span> <span class="n">ipolates</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">,</span>
+                <span class="n">iptype</span><span class="p">,</span>
+                <span class="n">grid</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span>
+                <span class="n">grid</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span>
+                <span class="n">grid</span><span class="o">.</span><span class="n">gdtnum</span> <span class="o">-</span> <span class="mi">255</span><span class="p">,</span>
+                <span class="n">grid</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span>
+                <span class="n">rlon</span><span class="o">=</span><span class="n">lon</span><span class="p">,</span>
+                <span class="n">rlat</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span>
+                <span class="n">ipopt</span><span class="o">=</span><span class="n">ipopt</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ipolates</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">,</span>
+                <span class="n">iptype</span><span class="p">,</span>
+                <span class="n">grid</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span>
+                <span class="n">grid</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span>
+                <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">rlon</span><span class="o">=</span><span class="n">lon</span><span class="p">,</span>
+                <span class="n">rlat</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span>
+                <span class="n">ipopt</span><span class="o">=</span><span class="n">ipopt</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">ipolatev</span><span class="p">(</span>
+    <span class="n">udata</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="n">vdata</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="n">iptype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">gdtnum_in</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">gdtmpl_in</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">gdtnum_out</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">gdtmpl_out</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">rlon</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">rlat</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">ipopt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Interface to NCEP subroutine `ipolatev`.&quot;&quot;&quot;</span>
+    <span class="n">ip</span> <span class="o">=</span> <span class="n">IP_Types</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">iptype</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ip</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="s2">&quot;Invalid interpolation type&quot;</span><span class="p">)</span>
+    <span class="n">ipopt_array</span> <span class="o">=</span> <span class="n">_get_ipopt</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">ipopt</span><span class="p">)</span>
+    <span class="n">gdtmpl_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">gdtmpl_in</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">nx_in</span><span class="p">,</span> <span class="n">ny_in</span> <span class="o">=</span> <span class="n">gdtmpl_in</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">udata</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">vdata</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;U and V grids differ: </span><span class="si">{!r}</span><span class="s2"> and </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">udata</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">vdata</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">udata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">!=</span> <span class="p">(</span><span class="n">ny_in</span><span class="p">,</span> <span class="n">nx_in</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;grid description template does not match grid&quot;</span><span class="p">)</span>
+    <span class="n">m_in</span> <span class="o">=</span> <span class="n">nx_in</span> <span class="o">*</span> <span class="n">ny_in</span>
+    <span class="n">km</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">udata</span><span class="o">.</span><span class="n">size</span> <span class="o">//</span> <span class="n">m_in</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">gdtnum_out</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">gdtmpl_out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;gdtmpl_out must be specified&quot;</span><span class="p">)</span>
+        <span class="n">gdtmpl_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">gdtmpl_out</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">nx_out</span><span class="p">,</span> <span class="n">ny_out</span> <span class="o">=</span> <span class="n">gdtmpl_out</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span>
+        <span class="n">m_out</span> <span class="o">=</span> <span class="n">nx_out</span> <span class="o">*</span> <span class="n">ny_out</span>
+        <span class="n">rlat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">ny_out</span><span class="p">,</span> <span class="n">nx_out</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="n">rlon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">ny_out</span><span class="p">,</span> <span class="n">nx_out</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="n">shape_out</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">udata</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="p">[</span><span class="n">ny_out</span><span class="p">,</span> <span class="n">nx_out</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rlat</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rlon</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;latitudes and longitudes bust be specified&quot;</span><span class="p">)</span>
+        <span class="n">rlat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rlat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="n">rlon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rlon</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">rlon</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="n">rlat</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Latitude/longitude sizes differ: </span><span class="si">{:d}</span><span class="s2"> and </span><span class="si">{:d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">rlon</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">rlat</span><span class="o">.</span><span class="n">size</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">gdtmpl_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">m_out</span> <span class="o">=</span> <span class="n">rlon</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">shape_out</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">udata</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="p">[</span><span class="n">m_out</span><span class="p">])</span>
+    <span class="n">ug_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">udata</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="n">vg_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">vdata</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="n">l_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">ug_in</span><span class="o">.</span><span class="n">size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">l_in</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">ug_in</span><span class="p">)</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">vg_in</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">l_in</span><span class="p">):</span>
+        <span class="n">ib_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">km</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ib_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">km</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">ug_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">km</span> <span class="o">*</span> <span class="n">m_out</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">vg_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">km</span> <span class="o">*</span> <span class="n">m_out</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">crot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">m_out</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">srot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">m_out</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">ib_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">km</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">l_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">km</span> <span class="o">*</span> <span class="n">m_out</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">iret</span><span class="p">,</span> <span class="n">nout</span> <span class="o">=</span> <span class="n">_wgrib2</span><span class="o">.</span><span class="n">ipolatev</span><span class="p">(</span>
+        <span class="n">ip</span><span class="p">,</span>
+        <span class="n">ipopt_array</span><span class="p">,</span>
+        <span class="n">gdtnum_in</span><span class="p">,</span>
+        <span class="n">gdtmpl_in</span><span class="p">,</span>
+        <span class="n">gdtnum_out</span><span class="p">,</span>
+        <span class="n">gdtmpl_out</span><span class="p">,</span>
+        <span class="n">m_in</span><span class="p">,</span>
+        <span class="n">m_out</span><span class="p">,</span>
+        <span class="n">km</span><span class="p">,</span>
+        <span class="n">ib_in</span><span class="p">,</span>
+        <span class="n">l_in</span><span class="p">,</span>
+        <span class="n">ug_in</span><span class="p">,</span>
+        <span class="n">vg_in</span><span class="p">,</span>
+        <span class="n">rlat</span><span class="p">,</span>
+        <span class="n">rlon</span><span class="p">,</span>
+        <span class="n">crot</span><span class="p">,</span>
+        <span class="n">srot</span><span class="p">,</span>
+        <span class="n">ib_out</span><span class="p">,</span>
+        <span class="n">l_out</span><span class="p">,</span>
+        <span class="n">ug_out</span><span class="p">,</span>
+        <span class="n">vg_out</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">iret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;Unrecognised interpolation method.&quot;</span><span class="p">,</span>
+            <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;Unrecognised input grid or no grid overlap.&quot;</span><span class="p">,</span>
+            <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;Unrecognised output grid.&quot;</span><span class="p">,</span>
+        <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">iret</span><span class="p">,</span> <span class="s2">&quot;Interpolation failed, error: </span><span class="si">{:d}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iret</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">WgribError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">ib_out</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">l_out</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="n">ug_out</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="n">vg_out</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">if</span> <span class="n">gdtnum_out</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">udata</span><span class="o">=</span><span class="n">ug_out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape_out</span><span class="p">),</span>
+            <span class="n">vdata</span><span class="o">=</span><span class="n">vg_out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape_out</span><span class="p">),</span>
+            <span class="n">crot</span><span class="o">=</span><span class="n">crot</span><span class="p">,</span>
+            <span class="n">srot</span><span class="o">=</span><span class="n">srot</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">udata</span><span class="o">=</span><span class="n">ug_out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape_out</span><span class="p">),</span>
+        <span class="n">vdata</span><span class="o">=</span><span class="n">vg_out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape_out</span><span class="p">),</span>
+        <span class="n">lat</span><span class="o">=</span><span class="n">rlat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ny_out</span><span class="p">,</span> <span class="n">nx_out</span><span class="p">),</span>
+        <span class="n">lon</span><span class="o">=</span><span class="n">rlon</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ny_out</span><span class="p">,</span> <span class="n">nx_out</span><span class="p">),</span>
+        <span class="n">crot</span><span class="o">=</span><span class="n">crot</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ny_out</span><span class="p">,</span> <span class="n">nx_out</span><span class="p">),</span>
+        <span class="n">srot</span><span class="o">=</span><span class="n">srot</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ny_out</span><span class="p">,</span> <span class="n">nx_out</span><span class="p">),</span>
+        <span class="n">nout</span><span class="o">=</span><span class="n">nout</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="ipv_grid"><a class="viewcode-back" href="../../generated/pywgrib2_xr.ipv_grid.html#pywgrib2_xr.ipv_grid">[docs]</a><span class="k">def</span> <span class="nf">ipv_grid</span><span class="p">(</span><span class="n">udata</span><span class="p">,</span> <span class="n">vdata</span><span class="p">,</span> <span class="n">iptype</span><span class="p">,</span> <span class="n">grid_in</span><span class="p">,</span> <span class="n">grid_out</span><span class="p">,</span> <span class="n">ipopt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Interface to NCEP subroutine `ipolatev`.</span>
+
+<span class="sd">    This function interpolates vector fields from any grid to a grid.</span>
+<span class="sd">    Only horizontal interpolation is performed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    udata : array_like</span>
+<span class="sd">        U-component of input grid.</span>
+<span class="sd">    vdata : array_like</span>
+<span class="sd">        V-component of input grid.</span>
+<span class="sd">    iptype : {&#39;bilinear&#39;, &#39;bicubic&#39;, &#39;neighbour&#39;, &#39;budget&#39;, &#39;spectral&#39;}</span>
+<span class="sd">        Interpolation method.</span>
+<span class="sd">    grid_in : Grid</span>
+<span class="sd">        Input grid grid geometry instance. One of</span>
+<span class="sd">        {GridLatLon, GridRotLatLon, GridMercator, GridPolarStereo, \</span>
+<span class="sd">         GridLambertConformal, GridGaussian}</span>
+<span class="sd">    grid_out : Grid</span>
+<span class="sd">        Output grid grid geometry instance.</span>
+<span class="sd">    ipopt : array_like</span>
+<span class="sd">        Interpolation options. Currently not implemented.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        A dictionary with keys {&#39;udata&#39;, &#39;vdata&#39;, &#39;lat&#39;, &#39;lon&#39;, &#39;nout&#39;}.</span>
+<span class="sd">        Values are interpolated grids, latitudes/longitudes and number</span>
+<span class="sd">        of output grid points.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">IP_LOCK</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ipolatev</span><span class="p">(</span>
+            <span class="n">udata</span><span class="p">,</span>
+            <span class="n">vdata</span><span class="p">,</span>
+            <span class="n">iptype</span><span class="p">,</span>
+            <span class="n">grid_in</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span>
+            <span class="n">grid_in</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span>
+            <span class="n">grid_out</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span>
+            <span class="n">grid_out</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span>
+            <span class="n">ipopt</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ipv_points"><a class="viewcode-back" href="../../generated/pywgrib2_xr.ipv_points.html#pywgrib2_xr.ipv_points">[docs]</a><span class="k">def</span> <span class="nf">ipv_points</span><span class="p">(</span><span class="n">udata</span><span class="p">,</span> <span class="n">vdata</span><span class="p">,</span> <span class="n">iptype</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">windNS</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ipopt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Interface to NCEP subroutine `ipolatev`.</span>
+
+<span class="sd">    This function interpolates vector fields from any grid to a set of points</span>
+<span class="sd">    given by their latitudes and longitudes.</span>
+<span class="sd">    Only horizontal interpolation is performed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    udata : array_like</span>
+<span class="sd">        U-component of input grid.</span>
+<span class="sd">    vdata : array_like</span>
+<span class="sd">        V-component of input grid.</span>
+<span class="sd">    iptype : {&#39;bilinear&#39;, &#39;bicubic&#39;, &#39;neighbour&#39;, &#39;budget&#39;}</span>
+<span class="sd">        Interpolation method.</span>
+<span class="sd">    grid : Grid</span>
+<span class="sd">        Input grid geometry instance. One of</span>
+<span class="sd">        {GridLatLon, GridRotLatLon, GridMercator, GridPolarStereo, \</span>
+<span class="sd">         GridLambertConformal, GridGaussian}</span>
+<span class="sd">    point : Point,</span>
+<span class="sd">        Destination geometry instance.</span>
+<span class="sd">    windNS : bool</span>
+<span class="sd">        Force winds to be in Earth coordinates. Default is False.</span>
+<span class="sd">    ipopt : array_like</span>
+<span class="sd">        Interpolation options.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        A dictionary with keys {&#39;udata&#39;, &#39;vdata&#39;}.</span>
+<span class="sd">        Values are interpolated grids at locations given by &#39;point&#39; argument.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">DTYPE</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">IP_LOCK</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">iptype</span> <span class="o">==</span> <span class="s2">&quot;budget&quot;</span><span class="p">:</span>
+            <span class="c1"># FIXME: define smaller grid containing all points</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">ipolatev</span><span class="p">(</span>
+                <span class="n">udata</span><span class="p">,</span>
+                <span class="n">vdata</span><span class="p">,</span>
+                <span class="n">iptype</span><span class="p">,</span>
+                <span class="n">grid</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span>
+                <span class="n">grid</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span>
+                <span class="n">grid</span><span class="o">.</span><span class="n">gdtnum</span> <span class="o">-</span> <span class="mi">255</span><span class="p">,</span>
+                <span class="n">grid</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span>
+                <span class="n">rlon</span><span class="o">=</span><span class="n">lon</span><span class="p">,</span>
+                <span class="n">rlat</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span>
+                <span class="n">ipopt</span><span class="o">=</span><span class="n">ipopt</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">ipolatev</span><span class="p">(</span>
+                <span class="n">udata</span><span class="p">,</span>
+                <span class="n">vdata</span><span class="p">,</span>
+                <span class="n">iptype</span><span class="p">,</span>
+                <span class="n">grid</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span>
+                <span class="n">grid</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span>
+                <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">rlon</span><span class="o">=</span><span class="n">lon</span><span class="p">,</span>
+                <span class="n">rlat</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span>
+                <span class="n">ipopt</span><span class="o">=</span><span class="n">ipopt</span><span class="p">,</span>
+            <span class="p">)</span>
+    <span class="c1"># FIXME: should be grid?</span>
+    <span class="k">if</span> <span class="n">windNS</span> <span class="ow">and</span> <span class="n">grid</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;GRIB_winds&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;grid&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;udata&quot;</span><span class="p">:</span> <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;crot&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;udata&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;srot&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;vdata&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;vdata&quot;</span><span class="p">:</span> <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;srot&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;udata&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;crot&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;vdata&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;udata&quot;</span><span class="p">:</span> <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;udata&quot;</span><span class="p">],</span> <span class="s2">&quot;vdata&quot;</span><span class="p">:</span> <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;vdata&quot;</span><span class="p">]}</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

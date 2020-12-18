@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.RPNRegister.close
+==============================
+
+.. currentmodule:: pywgrib2_xr
+
+.. automethod:: RPNRegister.close

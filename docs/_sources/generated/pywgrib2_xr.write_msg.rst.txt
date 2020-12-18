@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.write\_msg
+=======================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autofunction:: write_msg

@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Template &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Reading GRIB2 files" href="reading.html" />
+    <link rel="prev" title="Inventory" href="inventory.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="inventory.html">Inventory</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Template</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/template.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="template">
+<h1>Template<a class="headerlink" href="#template" title="Permalink to this headline">¶</a></h1>
+<p>The template defines dataset structure. It holds parameters common to all messages
+within the dataset: data origin (from Section 1), geolocation (Section 3), variable
+names, optional forecast times and vertical dimensions. To make a template, use
+function <a class="reference internal" href="generated/pywgrib2_xr.make_template.html#pywgrib2_xr.make_template" title="pywgrib2_xr.make_template"><code class="xref py py-func docutils literal notranslate"><span class="pre">make_template()</span></code></a>. The first argument is a GRIB2 file or
+a list of files sharing common <strong>reference time</strong>. Other arguments are optional,
+if not specified, all messages present in GRIB2 files will be processed.</p>
+<p><a class="reference internal" href="generated/pywgrib2_xr.make_template.html#pywgrib2_xr.make_template" title="pywgrib2_xr.make_template"><code class="xref py py-func docutils literal notranslate"><span class="pre">make_template()</span></code></a> uses inventory files to get the required metadata.
+If those files do not exist, inventory is created by a call to
+<a class="reference internal" href="generated/pywgrib2_xr.make_inventory.html#pywgrib2_xr.make_inventory" title="pywgrib2_xr.make_inventory"><code class="xref py py-func docutils literal notranslate"><span class="pre">make_inventory()</span></code></a>.</p>
+<p>To select subset of variables, specify one or more boolean functions (predicates)
+accepting inventory item as the single input argument. A message is selected if any
+of the predicates return True. For example, to select temperature and relative
+humidity at 2 m, one could write:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tmp_2m</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">item</span><span class="o">.</span><span class="n">varname</span> <span class="o">==</span> <span class="s1">&#39;TMP&#39;</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">level_str</span> <span class="o">==</span> <span class="s1">&#39;2 m above ground&#39;</span>
+
+<span class="k">def</span> <span class="nf">rh_2m</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">item</span><span class="o">.</span><span class="n">varname</span> <span class="o">==</span> <span class="s1">&#39;RH&#39;</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">level_str</span> <span class="o">==</span> <span class="s1">&#39;2 m above ground&#39;</span>
+</pre></div>
+</div>
+<p>and call the above as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tmpl</span> <span class="o">=</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">make_template</span><span class="p">(</span><span class="n">gribfiles</span><span class="p">,</span> <span class="n">tmp_2m</span><span class="p">,</span> <span class="n">rh_2m</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A shorter version:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tmpl</span> <span class="o">=</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">make_template</span><span class="p">(</span><span class="n">gribfiles</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">varname</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;TMP&#39;</span><span class="p">,</span> <span class="s1">&#39;RH&#39;</span><span class="p">)</span> <span class="ow">and</span>
+                              <span class="n">x</span><span class="o">.</span><span class="n">level_code</span><span class="o">==</span><span class="mi">103</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">level_value</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The list of all available attributes is <a class="reference internal" href="inventory.html#inventory-content"><span class="std std-ref">here</span></a>.</p>
+<p>When a data file contains messages for multiple model outputs,
+<a class="reference internal" href="generated/pywgrib2_xr.make_template.html#pywgrib2_xr.make_template" title="pywgrib2_xr.make_template"><code class="xref py py-func docutils literal notranslate"><span class="pre">make_template()</span></code></a> requires argument <code class="docutils literal notranslate"><span class="pre">reftime</span></code>. The value does
+not matter, as long as it is listed in wgrib2 inventory output.</p>
+<p>To group several levels into 3-dimensional spacial array, pass: <code class="docutils literal notranslate"><span class="pre">vertlevels=levels</span></code></p>
+<p>where <code class="docutils literal notranslate"><span class="pre">levels</span></code> is a string or a list of strings specifying vertical dimension(s)
+to be combined, for example: <code class="docutils literal notranslate"><span class="pre">vertlevels='isobaric'</span></code></p>
+<p>combines pressure levels. Available levels are <code class="docutils literal notranslate"><span class="pre">isobaric</span></code>, <code class="docutils literal notranslate"><span class="pre">height_asl</span></code>,
+<code class="docutils literal notranslate"><span class="pre">height_asl</span></code>, <code class="docutils literal notranslate"><span class="pre">sigma</span></code>, <code class="docutils literal notranslate"><span class="pre">hybrid</span></code>.</p>
+<p>There are more arguments to <a class="reference internal" href="generated/pywgrib2_xr.make_template.html#pywgrib2_xr.make_template" title="pywgrib2_xr.make_template"><code class="xref py py-func docutils literal notranslate"><span class="pre">make_template()</span></code></a>, refer to the doc
+string for explanation.</p>
+<p>To allow variable with the same names in a GRIB2 file, but describing different
+physical quantities to coexist within the same dataset, variable name is made
+by concatenating <code class="docutils literal notranslate"><span class="pre">varname</span></code>, <code class="docutils literal notranslate"><span class="pre">level_str</span></code> and <code class="docutils literal notranslate"><span class="pre">time_str</span></code>, sparated by a dot.
+Blanks are replaced by an underscore.</p>
+<p><code class="docutils literal notranslate"><span class="pre">varname</span></code> is what <strong>wgrib2</strong> terms <cite>extended name</cite>, which can be obtained by passing
+the option <code class="docutils literal notranslate"><span class="pre">-ext_name</span></code> (or <code class="docutils literal notranslate"><span class="pre">-pyinv</span></code>). Consider:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">wgrib2 albers.grb</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2009060500</span><span class="p">:</span><span class="n">HGT</span><span class="p">:</span><span class="mi">200</span> <span class="n">mb</span><span class="p">:</span><span class="mi">330</span> <span class="n">hour</span> <span class="n">fcst</span><span class="p">:</span><span class="n">ens</span> <span class="n">std</span> <span class="n">dev</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">wgrib2 albers.grb -ext_name</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="n">HGT</span><span class="o">.</span><span class="n">ens_std_dev</span>
+</pre></div>
+</div>
+<p>The <cite>level</cite> part is taken verbatim from <code class="docutils literal notranslate"><span class="pre">level_str</span></code>. Without argument
+<code class="docutils literal notranslate"><span class="pre">vertlevels='isobaric'</span></code>, temperature at 500 hPa is coded
+as <code class="docutils literal notranslate"><span class="pre">TMP.500_mb</span></code>. When <code class="docutils literal notranslate"><span class="pre">vertlevels</span></code> is specified, variable name is <code class="docutils literal notranslate"><span class="pre">TMP.isobaric</span></code>.
+Compare:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;nam.t00z.afwahi??.tm00.grib2&#39;</span><span class="p">))</span>
+<span class="n">tmpl</span> <span class="o">=</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">make_template</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">varname</span><span class="o">==</span><span class="s1">&#39;TMP&#39;</span> <span class="ow">and</span>
+                              <span class="n">x</span><span class="o">.</span><span class="n">level_code</span><span class="o">==</span><span class="mi">100</span> <span class="ow">and</span> <span class="mi">90000</span><span class="o">&lt;</span><span class="n">x</span><span class="o">.</span><span class="n">level_value</span><span class="o">&lt;</span><span class="mi">100000</span><span class="p">)</span>
+<span class="n">tmpl</span><span class="o">.</span><span class="n">var_names</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;TMP.925_mb&#39;</span><span class="p">,</span> <span class="s1">&#39;TMP.950_mb&#39;</span><span class="p">,</span> <span class="s1">&#39;TMP.975_mb&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>and:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tmpl</span> <span class="o">=</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">make_template</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">varname</span> <span class="o">==</span> <span class="s1">&#39;TMP&#39;</span> <span class="ow">and</span>
+                              <span class="n">x</span><span class="o">.</span><span class="n">level_code</span><span class="o">==</span><span class="mi">100</span> <span class="ow">and</span> <span class="mi">90000</span><span class="o">&lt;</span><span class="n">x</span><span class="o">.</span><span class="n">level_value</span><span class="o">&lt;</span><span class="mi">100000</span><span class="p">,</span>
+                              <span class="n">vertlevels</span><span class="o">=</span><span class="s1">&#39;isobaric&#39;</span><span class="p">)</span>
+<span class="n">tmpl</span><span class="o">.</span><span class="n">var_names</span>
+<span class="n">tmpl</span><span class="o">.</span><span class="n">var_specs</span><span class="p">[</span><span class="s1">&#39;TMP.isobaric&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">level_coord</span>
+<span class="n">tmpl</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;isobaric1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;TMP.isobaric&#39;</span><span class="p">]</span>
+<span class="s1">&#39;isobaric1&#39;</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">97500</span><span class="p">,</span> <span class="mi">95000</span><span class="p">,</span> <span class="mi">92500</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Level dimension name is always level name with appended ordinal. Adding the ordinal
+allows variables with different number of levels in the same dataset.</p>
+<p>To illustrate processing of forecast time consider accumulated precipitation in
+NAM GRIB2 files:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">for h in 00 03 06 09 12 15 18 24</span>
+<span class="go">do f=nam.t00z.afwahi${h}.tm00.grib2</span>
+<span class="go">echo $f; wgrib2 $f -match APCP</span>
+<span class="go">done</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nam</span><span class="o">.</span><span class="n">t00z</span><span class="o">.</span><span class="n">afwahi00</span><span class="o">.</span><span class="n">tm00</span><span class="o">.</span><span class="n">grib2</span>
+<span class="mi">668</span><span class="p">:</span><span class="mi">18592315</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">0</span><span class="o">-</span><span class="mi">0</span> <span class="n">day</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="n">nam</span><span class="o">.</span><span class="n">t00z</span><span class="o">.</span><span class="n">afwahi03</span><span class="o">.</span><span class="n">tm00</span><span class="o">.</span><span class="n">grib2</span>
+<span class="mi">668</span><span class="p">:</span><span class="mi">19041947</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">0</span><span class="o">-</span><span class="mi">3</span> <span class="n">hour</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="n">nam</span><span class="o">.</span><span class="n">t00z</span><span class="o">.</span><span class="n">afwahi06</span><span class="o">.</span><span class="n">tm00</span><span class="o">.</span><span class="n">grib2</span>
+<span class="mi">668</span><span class="p">:</span><span class="mi">19688872</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">0</span><span class="o">-</span><span class="mi">6</span> <span class="n">hour</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="mi">713</span><span class="p">:</span><span class="mi">21326599</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">3</span><span class="o">-</span><span class="mi">6</span> <span class="n">hour</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="n">nam</span><span class="o">.</span><span class="n">t00z</span><span class="o">.</span><span class="n">afwahi09</span><span class="o">.</span><span class="n">tm00</span><span class="o">.</span><span class="n">grib2</span>
+<span class="mi">668</span><span class="p">:</span><span class="mi">20017699</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span> <span class="n">hour</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="mi">713</span><span class="p">:</span><span class="mi">21642149</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">6</span><span class="o">-</span><span class="mi">9</span> <span class="n">hour</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="n">nam</span><span class="o">.</span><span class="n">t00z</span><span class="o">.</span><span class="n">afwahi12</span><span class="o">.</span><span class="n">tm00</span><span class="o">.</span><span class="n">grib2</span>
+<span class="mi">668</span><span class="p">:</span><span class="mi">20483592</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">0</span><span class="o">-</span><span class="mi">12</span> <span class="n">hour</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="mi">713</span><span class="p">:</span><span class="mi">22152393</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">9</span><span class="o">-</span><span class="mi">12</span> <span class="n">hour</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="n">nam</span><span class="o">.</span><span class="n">t00z</span><span class="o">.</span><span class="n">afwahi15</span><span class="o">.</span><span class="n">tm00</span><span class="o">.</span><span class="n">grib2</span>
+<span class="mi">668</span><span class="p">:</span><span class="mi">20992733</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">12</span><span class="o">-</span><span class="mi">15</span> <span class="n">hour</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="n">nam</span><span class="o">.</span><span class="n">t00z</span><span class="o">.</span><span class="n">afwahi18</span><span class="o">.</span><span class="n">tm00</span><span class="o">.</span><span class="n">grib2</span>
+<span class="mi">668</span><span class="p">:</span><span class="mi">21264515</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">12</span><span class="o">-</span><span class="mi">18</span> <span class="n">hour</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="mi">713</span><span class="p">:</span><span class="mi">23185255</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">15</span><span class="o">-</span><span class="mi">18</span> <span class="n">hour</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="n">nam</span><span class="o">.</span><span class="n">t00z</span><span class="o">.</span><span class="n">afwahi24</span><span class="o">.</span><span class="n">tm00</span><span class="o">.</span><span class="n">grib2</span>
+<span class="mi">668</span><span class="p">:</span><span class="mi">21199001</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">12</span><span class="o">-</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+<span class="mi">713</span><span class="p">:</span><span class="mi">23172832</span><span class="p">:</span><span class="n">d</span><span class="o">=</span><span class="mi">2020060300</span><span class="p">:</span><span class="n">APCP</span><span class="p">:</span><span class="n">surface</span><span class="p">:</span><span class="mi">21</span><span class="o">-</span><span class="mi">24</span> <span class="n">hour</span> <span class="n">acc</span> <span class="n">fcst</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>The periods are 0 days (or hours, or seconds), 3, 6, 9 and 12 hours. Accumulated
+precipitation for those periods must be separate variables. Each of those variables
+will have different forecast time dimension:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tmpl</span> <span class="o">=</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">make_template</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">varname</span> <span class="o">==</span> <span class="s1">&#39;APCP&#39;</span><span class="p">)</span>
+<span class="n">tmpl</span><span class="o">.</span><span class="n">var_names</span>
+<span class="n">tc9</span> <span class="o">=</span> <span class="n">tmpl</span><span class="o">.</span><span class="n">var_specs</span><span class="p">[</span><span class="s1">&#39;APCP.surface.9_hour_acc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">time_coord</span>
+<span class="n">tmpl</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">tc9</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="n">tc6</span> <span class="o">=</span> <span class="n">tmpl</span><span class="o">.</span><span class="n">var_specs</span><span class="p">[</span><span class="s1">&#39;APCP.surface.6_hour_acc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">time_coord</span>
+<span class="n">tmpl</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">tc6</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="n">tc3</span> <span class="o">=</span> <span class="n">tmpl</span><span class="o">.</span><span class="n">var_specs</span><span class="p">[</span><span class="s1">&#39;APCP.surface.3_hour_acc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">time_coord</span>
+<span class="n">tmpl</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">tc3</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;APCP.surface&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;APCP.surface.12_hour_acc&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;APCP.surface.3_hour_acc&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;APCP.surface.6_hour_acc&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;APCP.surface.9_hour_acc&#39;</span><span class="p">]</span>
+
+<span class="n">array</span><span class="p">([</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">32400</span><span class="p">),</span>
+       <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">75600</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+
+<span class="n">array</span><span class="p">([</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">21600</span><span class="p">),</span>
+       <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">64800</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+
+<span class="n">array</span><span class="p">([</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">10800</span><span class="p">),</span>
+       <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">21600</span><span class="p">),</span>
+       <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">32400</span><span class="p">),</span>
+       <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">43200</span><span class="p">),</span>
+       <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">54000</span><span class="p">),</span>
+       <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">64800</span><span class="p">),</span>
+       <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">75600</span><span class="p">),</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)],</span>
+      <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Forecast time dimension name is always <code class="docutils literal notranslate"><span class="pre">timeN</span></code> where <code class="docutils literal notranslate"><span class="pre">N</span></code> is an ordinal.
+<a class="reference internal" href="generated/pywgrib2_xr.make_template.html#pywgrib2_xr.make_template" title="pywgrib2_xr.make_template"><code class="xref py py-func docutils literal notranslate"><span class="pre">make_template()</span></code></a> searches the inventory attribute <code class="docutils literal notranslate"><span class="pre">time_str</span></code>
+for keywords indicating type of statistical processing
+(<a class="reference external" href="https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table4-10.shtml">Table 4.10</a>),
+and, if present, calculates period between <code class="docutils literal notranslate"><span class="pre">start_ft</span></code> and <code class="docutils literal notranslate"><span class="pre">end_ft</span></code>. When the period
+is 0, the time part is null, otherwise is formed from the processing type and the period.
+For example, the string <cite>12-15 hour acc fcst</cite> translates to <cite>3_hour_acc</cite>, while
+<cite>12 hour fcst</cite> is ignored. The time coordinate value is always that of <code class="docutils literal notranslate"><span class="pre">end_ft</span></code>.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reading.html" class="btn btn-neutral float-right" title="Reading GRIB2 files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="inventory.html" class="btn btn-neutral float-left" title="Inventory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

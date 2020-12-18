@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Inventory" href="inventory.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#required-dependencies">Required dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instructions">Instructions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#with-conda">With conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#from-the-source">From the source</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Installation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/installing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation">
+<span id="installing"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="required-dependencies">
+<h2>Required dependencies<a class="headerlink" href="#required-dependencies" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Required</dt><dd><ul>
+<li><p>Python (3.7 or later)</p></li>
+<li><p><a class="reference external" href="http://xarray.pydata.org/">xarray</a></p></li>
+<li><p><a class="reference external" href="http://dask.pydata.org">dask</a></p></li>
+<li><p><a class="reference external" href="https://github.com/python/mypy_extensions">mypy_extensions</a> (only for python-3.7)</p></li>
+<li><p><a class="reference external" href="https://github.com/Blosc/python-blosc">python-blosc</a></p></li>
+<li><p><a class="reference external" href="https://github.com/minrk/wurlitzer">wurlitzer</a></p></li>
+<li><p><a class="reference external" href="https://github.com/yt87/libwgrib2">libwgrib2</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Build</dt><dd><ul>
+<li><p><a class="reference external" href="https://cython.org/">Cython</a></p></li>
+<li><p>gfortran_linux-64 from conda. Recommended when building in conda environment.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Optional, used only by <a class="reference internal" href="pywgrib2.html#pywgrib2"><span class="std std-ref">pywgrib2</span></a> and the test suite.</dt><dd><ul>
+<li><p><a class="reference external" href="https://github.com/Unidata/netcdf4-python">netcdf4</a></p></li>
+<li><p><a class="reference external" href="https://github.com/zarr-developers/zarr-python">zarr</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Testing</dt><dd><ul>
+<li><p><a class="reference external" href="https://github.com/pytest-dev/pytest">pytest</a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/dill/">dill</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Documentation</dt><dd><ul>
+<li><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/">sphinx</a></p></li>
+<li><p><a class="reference external" href="https://github.com/readthedocs/sphinx_rtd_theme">sphinx_rtd_theme</a></p></li>
+<li><p><a class="reference external" href="https://sphinxcontrib-programoutput.readthedocs.io/en/latest/">sphinxcontrib-programoutput</a></p></li>
+<li><p><a class="reference external" href="https://matplotlib.org/">matplotlib</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ecmwf/cfgrib">cfgrib</a></p></li>
+<li><p><a class="reference external" href="https://cf-xarray.readthedocs.io/en/latest/index.html">cf_xarray</a></p></li>
+<li><p><a class="reference external" href="https://unidata.github.io/MetPy/latest/index.html">metpy</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="instructions">
+<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="with-conda">
+<h3>With conda<a class="headerlink" href="#with-conda" title="Permalink to this headline">¶</a></h3>
+<p>From within conda environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">yt87</span> <span class="n">pywgrib2_xr</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="from-the-source">
+<h3>From the source<a class="headerlink" href="#from-the-source" title="Permalink to this headline">¶</a></h3>
+<p>The best way to proceed is to install all required dependencies with conda:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">test</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.8</span> <span class="n">cython</span> <span class="n">gcc_linux</span><span class="o">-</span><span class="mi">64</span> <span class="n">numpy</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">test</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">dask</span> <span class="n">python</span><span class="o">-</span><span class="n">blosc</span> <span class="n">wurlitzer</span> <span class="n">xarray</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">pytest</span> <span class="n">dill</span> <span class="n">netcdf4</span> <span class="n">zarr</span>      <span class="c1"># to run tests</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">yt87</span> <span class="n">libwgrib2</span>
+</pre></div>
+</div>
+<p>Then, from the base of the source directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">develop</span>
+</pre></div>
+</div>
+<p>The conda compiler will find <em>libwgrib2</em> and its header files. Native gcc works
+as well, but one has to set <code class="docutils literal notranslate"><span class="pre">library_dir</span></code> and <code class="docutils literal notranslate"><span class="pre">include_dir</span></code> in <em>setup.cfg</em>.</p>
+<p><strong>pywgrib2_xr</strong> comes with the test suite. To run the tests, execute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pytest</span> <span class="n">tests</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="inventory.html" class="btn btn-neutral float-right" title="Inventory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.MemoryBuffer.set
+=============================
+
+.. currentmodule:: pywgrib2_xr
+
+.. automethod:: MemoryBuffer.set

@@ -1,0 +1,6 @@
+﻿pywgrib2\_xr.ipv\_grid
+======================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autofunction:: ipv_grid

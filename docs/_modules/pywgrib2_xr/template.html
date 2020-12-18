@@ -1,0 +1,654 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pywgrib2_xr.template &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pywgrib2_xr.template</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pywgrib2_xr.template</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">NamedTuple</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Sequence</span><span class="p">,</span>
+    <span class="n">Set</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># For older Pythons</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">mypy_extensions</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">numpy.typing</span> <span class="kn">import</span> <span class="n">ArrayLike</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">ArrayLike</span> <span class="o">=</span> <span class="n">Any</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">dask.base</span> <span class="kn">import</span> <span class="n">tokenize</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">_Variable</span>
+<span class="kn">from</span> <span class="nn">.inventory</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">MetaData</span><span class="p">,</span>
+    <span class="n">item_match</span><span class="p">,</span>
+    <span class="n">load_or_make_inventory</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.grids</span> <span class="kn">import</span> <span class="n">grid_fromgds</span>
+
+<span class="c1"># FIME: remove?</span>
+<span class="c1"># wgrib2 returns C float arrays</span>
+<span class="c1"># DTYPE = np.dtype(&quot;float32&quot;)</span>
+<span class="c1"># From wgrib2 CodeTable_4.10.dat</span>
+<span class="c1"># Spaces are intentional</span>
+<span class="n">TIME_MODS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot; ave &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; acc &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; max &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; min &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; last-first &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; RMS &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; StdDev &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; covar &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; first-last &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; ratio &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; standardized anomaly &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; summation &quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">VertLevel</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">reverse</span><span class="p">:</span> <span class="nb">bool</span>  <span class="c1"># sort order</span>
+    <span class="n">units</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="c1"># Possible 3-D variables</span>
+<span class="n">VERT_LEVELS</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">VertLevel</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">100</span><span class="p">:</span> <span class="n">VertLevel</span><span class="p">(</span><span class="s2">&quot;isobaric&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Pa&quot;</span><span class="p">),</span>
+    <span class="mi">102</span><span class="p">:</span> <span class="n">VertLevel</span><span class="p">(</span><span class="s2">&quot;height_asl&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">),</span>
+    <span class="mi">103</span><span class="p">:</span> <span class="n">VertLevel</span><span class="p">(</span><span class="s2">&quot;height_agl&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">),</span>
+    <span class="mi">104</span><span class="p">:</span> <span class="n">VertLevel</span><span class="p">(</span><span class="s2">&quot;sigma&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+    <span class="mi">105</span><span class="p">:</span> <span class="n">VertLevel</span><span class="p">(</span><span class="s2">&quot;hybrid&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+<span class="p">}</span>
+
+
+<span class="c1"># Used to set dataset attributes</span>
+<span class="k">class</span> <span class="nc">CommonInfo</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="n">reftime</span><span class="p">:</span> <span class="n">datetime</span>
+    <span class="n">centre</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">subcentre</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">gdtnum</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">gdtmpl</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">check_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">MetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">reftime</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reftime</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Reference times differ: </span><span class="si">{!r}</span><span class="s2"> != </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reftime</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">reftime</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">gdtnum</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gdtnum</span> <span class="ow">or</span> <span class="n">item</span><span class="o">.</span><span class="n">gdtmpl</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Grids differ: </span><span class="si">{:d}</span><span class="s2">: </span><span class="si">{!r}</span><span class="s2"> != </span><span class="si">{:d}</span><span class="s2">: </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">gdtmpl</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">VarSpecs</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="n">time_coord</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># forecast time coordinate</span>
+    <span class="n">level_coord</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>  <span class="c1"># level (type from VertLevel) coordinate</span>
+    <span class="n">dims</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>  <span class="c1"># dimension names</span>
+    <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>  <span class="c1"># array shape</span>
+    <span class="n">attrs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>  <span class="c1"># attributes</span>
+
+
+<span class="c1"># Containers used to construct VarSpecs</span>
+<span class="k">class</span> <span class="nc">VarInfo</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+    <span class="n">long_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">units</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">fcst_time</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">timedelta</span><span class="p">]</span>
+    <span class="n">level</span><span class="p">:</span> <span class="n">VertLevel</span>
+    <span class="n">level_value</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">TimeCoord</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">values</span><span class="p">:</span> <span class="n">ArrayLike</span>
+
+
+<span class="k">class</span> <span class="nc">LevelCoord</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="n">level</span><span class="p">:</span> <span class="n">VertLevel</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">values</span><span class="p">:</span> <span class="n">ArrayLike</span>
+
+
+<span class="k">def</span> <span class="nf">item_to_varname</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">MetaData</span><span class="p">,</span> <span class="n">vert_levels</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">VertLevel</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_level</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="c1"># return lvl[&quot;type&quot;] if (lvl := vert_levels.get(item.level_code)) else &quot;&quot;</span>
+        <span class="c1"># For Python &lt; 3.8 and flake8</span>
+        <span class="n">lvl</span> <span class="o">=</span> <span class="n">vert_levels</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">bot_level_code</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">lvl</span><span class="o">.</span><span class="n">type</span> <span class="k">if</span> <span class="n">lvl</span> <span class="k">else</span> <span class="n">item</span><span class="o">.</span><span class="n">level_str</span>
+
+    <span class="k">def</span> <span class="nf">_time</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">td</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">end_ft</span> <span class="o">-</span> <span class="n">item</span><span class="o">.</span><span class="n">start_ft</span>
+        <span class="k">if</span> <span class="n">td</span> <span class="o">&lt;=</span> <span class="n">timedelta</span><span class="p">(</span><span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+        <span class="c1"># skip values like &quot;102 hour fcst&quot;, consider only periods</span>
+        <span class="k">for</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">TIME_MODS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">time_str</span><span class="p">:</span>
+                <span class="n">days</span><span class="p">,</span> <span class="n">hours</span><span class="p">,</span> <span class="n">minutes</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">td</span><span class="o">.</span><span class="n">days</span><span class="p">,</span>
+                    <span class="n">td</span><span class="o">.</span><span class="n">seconds</span> <span class="o">//</span> <span class="mi">3600</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">td</span><span class="o">.</span><span class="n">seconds</span> <span class="o">//</span> <span class="mi">60</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">minutes</span><span class="p">:</span>
+                    <span class="n">minutes</span> <span class="o">+=</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">hours</span>
+                    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:d}</span><span class="s2">_min_</span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">minutes</span><span class="p">,</span> <span class="n">tm</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="k">elif</span> <span class="n">hours</span><span class="p">:</span>
+                    <span class="n">hours</span> <span class="o">+=</span> <span class="mi">24</span> <span class="o">*</span> <span class="n">days</span>
+                    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:d}</span><span class="s2">_hour_</span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">tm</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="k">elif</span> <span class="n">days</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:d}</span><span class="s2">_day_</span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">tm</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">parts</span> <span class="o">=</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">varname</span><span class="p">,</span> <span class="n">_level</span><span class="p">(),</span> <span class="n">_time</span><span class="p">())</span>
+    <span class="k">return</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parts</span> <span class="k">if</span> <span class="n">x</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Template"><a class="viewcode-back" href="../../generated/pywgrib2_xr.Template.html#pywgrib2_xr.Template">[docs]</a><span class="k">class</span> <span class="nc">Template</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Defines dataset structure.</span>
+
+<span class="sd">    This is an opaque class instantiated by :py:func:`make_template`.</span>
+<span class="sd">    It&#39;s purpose is to define Dataset structure and avoid complex merges.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Template.__init__"><a class="viewcode-back" href="../../generated/pywgrib2_xr.Template.html#pywgrib2_xr.Template.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">commoninfo</span><span class="p">:</span> <span class="n">CommonInfo</span><span class="p">,</span>
+        <span class="n">var_info_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VarInfo</span><span class="p">],</span>
+        <span class="n">vert_level_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">VertLevel</span><span class="p">],</span>
+        <span class="n">predicates</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">MetaData</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">predicates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">predicates</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">predicates</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">predicates</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commoninfo</span> <span class="o">=</span> <span class="n">commoninfo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid_fromgds</span><span class="p">(</span><span class="n">commoninfo</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span> <span class="n">commoninfo</span><span class="o">.</span><span class="n">gdtmpl</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">_Variable</span><span class="p">(</span><span class="o">*</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="n">level_dims</span><span class="p">,</span> <span class="n">level_coords</span><span class="p">,</span> <span class="n">level_var2coord</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_level_coords</span><span class="p">(</span>
+            <span class="n">var_info_map</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">level_coords</span><span class="p">)</span>
+        <span class="n">time_dims</span><span class="p">,</span> <span class="n">time_coords</span><span class="p">,</span> <span class="n">time_var2coord</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_time_coords</span><span class="p">(</span><span class="n">var_info_map</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time_coords</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_specs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_var_specs</span><span class="p">(</span>
+            <span class="n">var_info_map</span><span class="p">,</span> <span class="n">time_dims</span><span class="p">,</span> <span class="n">time_var2coord</span><span class="p">,</span> <span class="n">level_dims</span><span class="p">,</span> <span class="n">level_var2coord</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_attrs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item_to_varname</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">item_to_varname</span><span class="p">,</span> <span class="n">vert_levels</span><span class="o">=</span><span class="n">vert_level_map</span><span class="p">)</span>
+
+        <span class="n">predicates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_same_grid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item_match</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">item_match</span><span class="p">,</span> <span class="n">predicates</span><span class="o">=</span><span class="n">predicates</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">summary</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;Coordinates:&quot;</span><span class="p">,</span>
+            <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">),</span>
+            <span class="c1"># &quot;Variable names:&quot;,</span>
+            <span class="c1"># repr(self._var_spec.),</span>
+            <span class="s2">&quot;Variable specs&quot;</span><span class="p">,</span>
+            <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_specs</span><span class="p">),</span>
+            <span class="s2">&quot;Attributes:&quot;</span><span class="p">,</span>
+            <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">),</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">var_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_specs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_build_level_coords</span><span class="p">(</span>
+        <span class="n">var_info_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VarInfo</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">_Variable</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">def</span> <span class="nf">_name</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tokenize</span><span class="p">(</span><span class="o">*</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_sort</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">VarInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LevelCoord</span><span class="p">:</span>
+            <span class="n">vert_level</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="s2">&quot;level&quot;</span><span class="p">]</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="s2">&quot;level_value&quot;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="n">vert_level</span><span class="o">.</span><span class="n">reverse</span><span class="p">)</span>
+            <span class="n">dimname</span> <span class="o">=</span> <span class="n">_name</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">LevelCoord</span><span class="p">(</span><span class="n">vert_level</span><span class="p">,</span> <span class="n">dimname</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_levels</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">LevelCoord</span><span class="p">]:</span>
+            <span class="n">levels</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">_sort</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_info_map</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="s2">&quot;level&quot;</span><span class="p">]}</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([(</span><span class="n">v</span><span class="o">.</span><span class="n">level</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">levels</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:s}{:d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">level</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="n">LevelCoord</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">level</span><span class="p">,</span> <span class="n">names</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="n">v</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">levels</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
+
+        <span class="n">levels</span> <span class="o">=</span> <span class="n">_levels</span><span class="p">()</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">var2coord</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">levels</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">var2coord</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">level</span><span class="o">.</span><span class="n">units</span><span class="p">,</span>
+                <span class="s2">&quot;axis&quot;</span><span class="p">:</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;positive&quot;</span><span class="p">:</span> <span class="s2">&quot;down&quot;</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">level</span><span class="o">.</span><span class="n">reverse</span> <span class="k">else</span> <span class="s2">&quot;up&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">coords</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_Variable</span><span class="p">((</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="n">attrs</span><span class="p">)</span>
+            <span class="n">dims</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dims</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">var2coord</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_build_time_coords</span><span class="p">(</span>
+        <span class="n">var_info_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VarInfo</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">_Variable</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">def</span> <span class="nf">_name</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tokenize</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">seconds</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">v</span><span class="p">])</span>
+
+        <span class="k">def</span> <span class="nf">_sort</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">VarInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TimeCoord</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="s2">&quot;fcst_time&quot;</span><span class="p">])</span>
+            <span class="n">dimname</span> <span class="o">=</span> <span class="n">_name</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">TimeCoord</span><span class="p">(</span><span class="n">dimname</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+
+        <span class="c1"># varname -&gt; TimeCoord</span>
+        <span class="k">def</span> <span class="nf">_times</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TimeCoord</span><span class="p">]:</span>
+            <span class="n">times</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">_sort</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_info_map</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">times</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
+            <span class="c1"># Convert hashes to integers. Sort set to ensure consistent mapping</span>
+            <span class="c1"># Follow Metpy naming: time&lt;N&gt;</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span><span class="p">:</span> <span class="s2">&quot;time</span><span class="si">{:d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">s</span><span class="p">))}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">TimeCoord</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="n">v</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">times</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+        <span class="n">times</span> <span class="o">=</span> <span class="n">_times</span><span class="p">()</span>
+        <span class="c1"># Squeeze only when all time dimensions are == 1.</span>
+        <span class="n">squeeze</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">times</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">var2coord</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;standard_name&quot;</span><span class="p">:</span> <span class="s2">&quot;forecast_period&quot;</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">times</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">var2coord</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">if</span> <span class="n">squeeze</span><span class="p">:</span>
+                <span class="n">coords</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_Variable</span><span class="p">((),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">attrs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">coords</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_Variable</span><span class="p">((</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="n">attrs</span><span class="p">)</span>
+                <span class="n">dims</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dims</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">var2coord</span>
+
+    <span class="k">def</span> <span class="nf">_build_attrs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;Projection&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">cfname</span><span class="p">,</span>
+            <span class="s2">&quot;Originating centre&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">commoninfo</span><span class="o">.</span><span class="n">centre</span><span class="p">,</span>
+            <span class="s2">&quot;Originating subcentre&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">commoninfo</span><span class="o">.</span><span class="n">subcentre</span><span class="p">,</span>
+            <span class="s2">&quot;History&quot;</span><span class="p">:</span> <span class="s2">&quot;Created by pywgrib2_xr-</span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__version__</span><span class="p">),</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">_build_var_specs</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">var_info_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VarInfo</span><span class="p">],</span>
+        <span class="n">time_dims</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">time_var2coord</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">level_dims</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">level_var2coord</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VarSpecs</span><span class="p">]:</span>
+        <span class="k">def</span> <span class="nf">_make_specs</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+            <span class="n">time_coord</span> <span class="o">=</span> <span class="n">time_var2coord</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">time_coord</span> <span class="ow">in</span> <span class="n">time_dims</span><span class="p">:</span>
+                <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_coord</span><span class="p">]</span>
+                <span class="n">shape</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_dims</span><span class="p">[</span><span class="n">time_coord</span><span class="p">]]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dims</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">shape</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="s2">&quot;level&quot;</span><span class="p">]:</span>
+                <span class="n">level_coord</span> <span class="o">=</span> <span class="n">level_var2coord</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                <span class="n">dims</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">level_coord</span><span class="p">)</span>
+                <span class="n">shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">level_dims</span><span class="p">[</span><span class="n">level_coord</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">level_coord</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">dims</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dims</span><span class="p">))</span>
+            <span class="n">shape</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">attrs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">short_name</span><span class="o">=</span><span class="n">k</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">long_name</span><span class="o">=</span><span class="n">v</span><span class="p">[</span><span class="s2">&quot;long_name&quot;</span><span class="p">],</span>
+                <span class="n">units</span><span class="o">=</span><span class="n">v</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">],</span>
+                <span class="n">grid_mapping</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">cfname</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">VarSpecs</span><span class="p">(</span><span class="n">time_coord</span><span class="p">,</span> <span class="n">level_coord</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">_make_specs</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_info_map</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+    <span class="k">def</span> <span class="nf">_same_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">MetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">i</span><span class="o">.</span><span class="n">gdtnum</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">commoninfo</span><span class="o">.</span><span class="n">gdtnum</span> <span class="ow">and</span> <span class="n">i</span><span class="o">.</span><span class="n">gdtmpl</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">commoninfo</span><span class="o">.</span><span class="n">gdtmpl</span></div>
+
+
+<div class="viewcode-block" id="make_template"><a class="viewcode-back" href="../../generated/pywgrib2_xr.make_template.html#pywgrib2_xr.make_template">[docs]</a><span class="k">def</span> <span class="nf">make_template</span><span class="p">(</span>
+    <span class="n">files</span><span class="p">,</span>
+    <span class="o">*</span><span class="n">predicates</span><span class="p">,</span>
+    <span class="n">vertlevels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">reftime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">invdir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates template from GRIB2 files.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    files : str of iterable of str.</span>
+<span class="sd">        List of GRIB files containing messages with unique `reftime`.</span>
+<span class="sd">        For example, files for all or a subset of forecast times.</span>
+<span class="sd">    predicates : callable</span>
+<span class="sd">        Zero or more boolean functions to select desired variables.</span>
+<span class="sd">        A variable is selected if one of predicates returns True.</span>
+<span class="sd">        The default is None, means matches everything.</span>
+<span class="sd">    vertlevels : str or list of str, optional.</span>
+<span class="sd">        One of {&#39;isobaric&#39;, &#39;height_asl&#39;, &#39;height_agl&#39;, &#39;sigma&#39;, &#39;hybrid&#39;}.</span>
+<span class="sd">        Specifies vertical coordinates.</span>
+<span class="sd">        If None (default), all data variables will be 2-D in space.</span>
+<span class="sd">    reftime : str or datetime, optional</span>
+<span class="sd">        Reference time. Default is None. A string must be in the ISO format:</span>
+<span class="sd">        YYYY-mm-ddTHH:MM:SS.</span>
+<span class="sd">        This argument must be specified for files with multiple reference times.</span>
+<span class="sd">    save : bool, optional.</span>
+<span class="sd">        If True, inventory will be saved to a file. File name and location depends on</span>
+<span class="sd">        &#39;invdir&#39;. If &#39;invdir&#39; is given, the inventory file will be a hashed path</span>
+<span class="sd">        of the GRIB file written to &#39;invdir&#39;. Otherwise file name will be that of</span>
+<span class="sd">        the GRIB file, with appended extension ``pyinv``.</span>
+<span class="sd">        The intention is to allow for temporary inventory when GRIB files are on</span>
+<span class="sd">        a read-only medium. Default is False.</span>
+<span class="sd">    invdir : str, optional</span>
+<span class="sd">        Location of inventory files.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Template</span>
+<span class="sd">        Instantiated class defining dataset structure.</span>
+<span class="sd">        None is returned if no messages match the selection criteria.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    The two equivalent functions select temperature at pressure level:</span>
+
+<span class="sd">    &gt;&gt;&gt; lambda x: x.varname == &#39;TMP&#39; and x.bot_level_code == 100 and x.top_level_code = 255</span>
+<span class="sd">    &gt;&gt;&gt; lambda x: x.varname == &#39;TMP&#39; and re.match(r&#39;\\d+ mb&#39;, x.level_str)</span>
+
+<span class="sd">    To select accumulated 3 hour precipitation, define function `match_pcp3`:</span>
+
+<span class="sd">    &gt;&gt;&gt; def match_pcp3(x):</span>
+<span class="sd">    &gt;&gt;&gt;     return x.varname == &#39;APCP&#39; and x.end_ft - x.start_ft == timedelta(hours=3)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">files</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">vertlevels</span><span class="p">:</span>
+        <span class="n">vertlevels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vertlevels</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">vertlevels</span> <span class="o">=</span> <span class="p">[</span><span class="n">vertlevels</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reftime</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">reftime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">reftime</span><span class="p">)</span>
+    <span class="n">vert_level_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">VERT_LEVELS</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">vertlevels</span><span class="p">}</span>
+    <span class="n">var_info_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VarInfo</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">commoninfo</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">inventory</span> <span class="o">=</span> <span class="n">load_or_make_inventory</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="n">invdir</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inventory</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">matched_items</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inventory</span> <span class="k">if</span> <span class="n">item_match</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">predicates</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">reftime</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">matched_items</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">matched_items</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">reftime</span> <span class="o">==</span> <span class="n">reftime</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">matched_items</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">commoninfo</span><span class="p">:</span>
+                <span class="n">commoninfo</span><span class="o">.</span><span class="n">check_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Only regular grids are allowed</span>
+                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">npts</span> <span class="o">!=</span> <span class="n">item</span><span class="o">.</span><span class="n">nx</span> <span class="o">*</span> <span class="n">item</span><span class="o">.</span><span class="n">ny</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Thinned grids are not supported&quot;</span><span class="p">)</span>
+                <span class="n">commoninfo</span> <span class="o">=</span> <span class="n">CommonInfo</span><span class="p">(</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">reftime</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">centre</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">subcentre</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">gdtnum</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">gdtmpl</span>
+                <span class="p">)</span>
+            <span class="n">varname</span> <span class="o">=</span> <span class="n">item_to_varname</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">vert_level_map</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">varname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">var_info_map</span><span class="p">:</span>
+                <span class="n">var_info_map</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;long_name&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">long_name</span><span class="p">,</span>
+                    <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">units</span><span class="p">,</span>
+                    <span class="s2">&quot;fcst_time&quot;</span><span class="p">:</span> <span class="nb">set</span><span class="p">(),</span>
+                    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="n">vert_level_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">bot_level_code</span><span class="p">),</span>
+                    <span class="s2">&quot;level_value&quot;</span><span class="p">:</span> <span class="nb">set</span><span class="p">(),</span>
+                <span class="p">}</span>
+            <span class="c1"># Add time and level values</span>
+            <span class="n">varinfo</span> <span class="o">=</span> <span class="n">var_info_map</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span>  <span class="c1"># a reference</span>
+            <span class="n">varinfo</span><span class="p">[</span><span class="s2">&quot;fcst_time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">end_ft</span> <span class="o">-</span> <span class="n">item</span><span class="o">.</span><span class="n">reftime</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">varinfo</span><span class="p">[</span><span class="s2">&quot;level&quot;</span><span class="p">]:</span>
+                <span class="n">varinfo</span><span class="p">[</span><span class="s2">&quot;level_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">bot_level_value</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">var_info_map</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Template</span><span class="p">(</span><span class="n">commoninfo</span><span class="p">,</span> <span class="n">var_info_map</span><span class="p">,</span> <span class="n">vert_level_map</span><span class="p">,</span> <span class="n">predicates</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

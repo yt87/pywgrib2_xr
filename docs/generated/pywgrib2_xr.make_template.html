@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pywgrib2_xr.make_template &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pywgrib2_xr.utils.localpath" href="pywgrib2_xr.utils.localpath.html" />
+    <link rel="prev" title="pywgrib2_xr.Template" href="pywgrib2_xr.Template.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../template.html">Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reading.html">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whats-new.html">What’s New</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api.html#wgrib2-interface">wgrib2 Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#iplib-interface">iplib Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#dataset">Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#inventory">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#projection">Projection</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#template">Template</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pywgrib2_xr.Template.html">pywgrib2_xr.Template</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pywgrib2_xr.make_template</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#utilities">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api.html">API reference</a> &raquo;</li>
+        
+      <li>pywgrib2_xr.make_template</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/pywgrib2_xr.make_template.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pywgrib2-xr-make-template">
+<h1>pywgrib2_xr.make_template<a class="headerlink" href="#pywgrib2-xr-make-template" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="pywgrib2_xr.make_template">
+<code class="sig-prename descclassname">pywgrib2_xr.</code><code class="sig-name descname">make_template</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">files</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">predicates</span></em>, <em class="sig-param"><span class="n">vertlevels</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">reftime</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">save</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">invdir</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pywgrib2_xr/template.html#make_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pywgrib2_xr.make_template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates template from GRIB2 files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> (<em>str of iterable of str.</em>) – List of GRIB files containing messages with unique <cite>reftime</cite>.
+For example, files for all or a subset of forecast times.</p></li>
+<li><p><strong>predicates</strong> (<em>callable</em>) – Zero or more boolean functions to select desired variables.
+A variable is selected if one of predicates returns True.
+The default is None, means matches everything.</p></li>
+<li><p><strong>vertlevels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><em>list of str</em><em>, </em><em>optional.</em>) – One of {‘isobaric’, ‘height_asl’, ‘height_agl’, ‘sigma’, ‘hybrid’}.
+Specifies vertical coordinates.
+If None (default), all data variables will be 2-D in space.</p></li>
+<li><p><strong>reftime</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><em>datetime</em><em>, </em><em>optional</em>) – Reference time. Default is None. A string must be in the ISO format:
+YYYY-mm-ddTHH:MM:SS.
+This argument must be specified for files with multiple reference times.</p></li>
+<li><p><strong>save</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional.</em>) – If True, inventory will be saved to a file. File name and location depends on
+‘invdir’. If ‘invdir’ is given, the inventory file will be a hashed path
+of the GRIB file written to ‘invdir’. Otherwise file name will be that of
+the GRIB file, with appended extension <code class="docutils literal notranslate"><span class="pre">pyinv</span></code>.
+The intention is to allow for temporary inventory when GRIB files are on
+a read-only medium. Default is False.</p></li>
+<li><p><strong>invdir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Location of inventory files.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Instantiated class defining dataset structure.
+None is returned if no messages match the selection criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pywgrib2_xr.Template.html#pywgrib2_xr.Template" title="pywgrib2_xr.Template">Template</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>The two equivalent functions select temperature at pressure level:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">varname</span> <span class="o">==</span> <span class="s1">&#39;TMP&#39;</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">bot_level_code</span> <span class="o">==</span> <span class="mi">100</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">top_level_code</span> <span class="o">=</span> <span class="mi">255</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">varname</span> <span class="o">==</span> <span class="s1">&#39;TMP&#39;</span> <span class="ow">and</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d+ mb&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">level_str</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To select accumulated 3 hour precipitation, define function <cite>match_pcp3</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">match_pcp3</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">varname</span> <span class="o">==</span> <span class="s1">&#39;APCP&#39;</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">end_ft</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">start_ft</span> <span class="o">==</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pywgrib2_xr.utils.localpath.html" class="btn btn-neutral float-right" title="pywgrib2_xr.utils.localpath" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pywgrib2_xr.Template.html" class="btn btn-neutral float-left" title="pywgrib2_xr.Template" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

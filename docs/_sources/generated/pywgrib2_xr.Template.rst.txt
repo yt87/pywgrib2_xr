@@ -1,0 +1,28 @@
+﻿pywgrib2\_xr.Template
+=====================
+
+.. currentmodule:: pywgrib2_xr
+
+.. autoclass:: Template
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Template.__init__
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Template.var_names
+   
+   

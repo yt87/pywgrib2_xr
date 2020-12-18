@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Reading GRIB2 files &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Plotting Datasets" href="plotting.html" />
+    <link rel="prev" title="Template" href="template.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="inventory.html">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template.html">Template</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Reading GRIB2 files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remapping.html">Remapping Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-buffers.html">Memory Buffers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging-and-exceptions.html">Logging and Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-grib-files.html">Writing GRIB2 Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="whats-new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pywgrib2.html">Script pywgrib2</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pywgrib2_xr</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Reading GRIB2 files</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/reading.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="reading-grib2-files">
+<h1>Reading GRIB2 files<a class="headerlink" href="#reading-grib2-files" title="Permalink to this headline">¶</a></h1>
+<p>The function <a class="reference internal" href="generated/pywgrib2_xr.open_dataset.html#pywgrib2_xr.open_dataset" title="pywgrib2_xr.open_dataset"><code class="xref py py-func docutils literal notranslate"><span class="pre">open_dataset()</span></code></a> creates a dataset from one
+or more files. Mandatory arguments are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>one (string) or more (iterable of strings) GRIB2 files.</p></li>
+<li><p>template created by a call to <a class="reference internal" href="generated/pywgrib2_xr.make_template.html#pywgrib2_xr.make_template" title="pywgrib2_xr.make_template"><code class="xref py py-func docutils literal notranslate"><span class="pre">make_template()</span></code></a>.</p></li>
+<li><p>location of inventory files, if not collocated with data files. If not specified
+and the inventory cannot be found, it will be created.</p></li>
+</ul>
+</div></blockquote>
+<p>Remaining optional arguments: <code class="docutils literal notranslate"><span class="pre">chunks</span></code>, <code class="docutils literal notranslate"><span class="pre">preprocess</span></code>, <code class="docutils literal notranslate"><span class="pre">parallel</span></code> and <code class="docutils literal notranslate"><span class="pre">cache</span></code>
+are the same as for <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.open_mfdataset.html#xarray.open_mfdataset" title="(in xarray v0.16.3.dev0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">xarray.open_mfdataset()</span></code></a>.
+To continue the example from the previous section:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">pywgrib2_xr</span> <span class="k">as</span> <span class="nn">pywgrib2</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;nam.t00z.afwahi??.tm00.grib2&#39;</span><span class="p">))</span>
+<span class="n">tmpl</span> <span class="o">=</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">make_template</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">varname</span> <span class="o">==</span> <span class="s1">&#39;APCP&#39;</span><span class="p">)</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">pywgrib2</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">tmpl</span><span class="p">)</span>
+<span class="n">ds</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="o">&gt;</span>
+<span class="n">Dimensions</span><span class="p">:</span>                   <span class="p">(</span><span class="n">latitude</span><span class="p">:</span> <span class="mi">231</span><span class="p">,</span> <span class="n">longitude</span><span class="p">:</span> <span class="mi">278</span><span class="p">,</span> <span class="n">time1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">time2</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">time3</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">time4</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">time5</span><span class="p">:</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">Coordinates</span><span class="p">:</span>
+  <span class="o">*</span> <span class="n">longitude</span>                 <span class="p">(</span><span class="n">longitude</span><span class="p">)</span> <span class="n">float64</span> <span class="mf">190.0</span> <span class="mf">190.1</span> <span class="o">...</span> <span class="mf">219.8</span> <span class="mf">219.9</span>
+  <span class="o">*</span> <span class="n">latitude</span>                  <span class="p">(</span><span class="n">latitude</span><span class="p">)</span> <span class="n">float64</span> <span class="mf">8.133</span> <span class="mf">8.241</span> <span class="o">...</span> <span class="mf">32.86</span> <span class="mf">32.97</span>
+  <span class="o">*</span> <span class="n">time1</span>                     <span class="p">(</span><span class="n">time1</span><span class="p">)</span> <span class="n">timedelta64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+  <span class="o">*</span> <span class="n">time5</span>                     <span class="p">(</span><span class="n">time5</span><span class="p">)</span> <span class="n">timedelta64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="mi">03</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="o">...</span> <span class="mi">1</span> <span class="n">days</span> <span class="mi">00</span><span class="p">:</span><span class="o">...</span>
+  <span class="o">*</span> <span class="n">time2</span>                     <span class="p">(</span><span class="n">time2</span><span class="p">)</span> <span class="n">timedelta64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="mi">06</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="mi">18</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+  <span class="o">*</span> <span class="n">time3</span>                     <span class="p">(</span><span class="n">time3</span><span class="p">)</span> <span class="n">timedelta64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="mi">09</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="mi">21</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+  <span class="o">*</span> <span class="n">time4</span>                     <span class="p">(</span><span class="n">time4</span><span class="p">)</span> <span class="n">timedelta64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="mi">12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="mi">1</span> <span class="n">days</span>
+    <span class="n">reftime</span>                   <span class="n">datetime64</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span> <span class="o">...</span>
+    <span class="n">latitude_longitude</span>        <span class="n">int64</span> <span class="o">...</span>
+<span class="n">Data</span> <span class="n">variables</span><span class="p">:</span>
+    <span class="n">APCP</span><span class="o">.</span><span class="n">surface</span>              <span class="p">(</span><span class="n">time1</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">)</span> <span class="n">float32</span> <span class="o">...</span>
+    <span class="n">APCP</span><span class="o">.</span><span class="n">surface</span><span class="o">.</span><span class="mi">3</span><span class="n">_hour_acc</span>   <span class="p">(</span><span class="n">time5</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">)</span> <span class="n">float32</span> <span class="o">...</span>
+    <span class="n">APCP</span><span class="o">.</span><span class="n">surface</span><span class="o">.</span><span class="mi">6</span><span class="n">_hour_acc</span>   <span class="p">(</span><span class="n">time2</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">)</span> <span class="n">float32</span> <span class="o">...</span>
+    <span class="n">APCP</span><span class="o">.</span><span class="n">surface</span><span class="o">.</span><span class="mi">9</span><span class="n">_hour_acc</span>   <span class="p">(</span><span class="n">time3</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">)</span> <span class="n">float32</span> <span class="o">...</span>
+    <span class="n">APCP</span><span class="o">.</span><span class="n">surface</span><span class="o">.</span><span class="mi">12</span><span class="n">_hour_acc</span>  <span class="p">(</span><span class="n">time4</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">)</span> <span class="n">float32</span> <span class="o">...</span>
+<span class="n">Attributes</span><span class="p">:</span>
+    <span class="n">Projection</span><span class="p">:</span>             <span class="n">latitude_longitude</span>
+    <span class="n">Originating</span> <span class="n">centre</span><span class="p">:</span>     <span class="mi">7</span> <span class="o">-</span> <span class="n">US</span> <span class="n">National</span> <span class="n">Weather</span> <span class="n">Service</span> <span class="o">-</span> <span class="n">NCEP</span> <span class="p">(</span><span class="n">WMC</span><span class="p">)</span>
+    <span class="n">Originating</span> <span class="n">subcentre</span><span class="p">:</span>  <span class="mi">0</span>
+    <span class="n">History</span><span class="p">:</span>                <span class="n">Created</span> <span class="n">by</span> <span class="n">pywgrib2_xr</span><span class="o">-</span><span class="mf">0.2</span><span class="o">.</span><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The data variables are always in WE:SN order, regardless of the order in GRIB2 file.
+This follows <strong>wgrib2</strong> default behaviour.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="plotting.html" class="btn btn-neutral float-right" title="Plotting Datasets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="template.html" class="btn btn-neutral float-left" title="Template" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019-2020, wgrib2 developers
+      <span class="lastupdated">
+        Last updated on 2020-12-18.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
