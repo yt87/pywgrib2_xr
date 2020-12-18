@@ -19,7 +19,7 @@ build:
   # for more details.
   # noarch: python
 
-  skip: true    # [win]
+  skip: true    # [win or osx]
   number: {{ build_number }}
   # string: {{ [build_number, ('h' + PKG_HASH), environ.get('GIT_DESCRIBE_HASH', '')]|join('_') }}
 
@@ -66,7 +66,7 @@ about:
   home: https://github.com/yt87/pywgrib2_xr
   license: BSD-0-Clause
   license_family: BSD
-  license_file: LICENSE
+  license_file: LICENCE
   summary: wgrib2 Python API
 
 # Uncomment the following if this will be on a forge
