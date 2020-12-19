@@ -32,9 +32,9 @@ Another feature is built-in remapping library iplib_.
 Documentation
 -------------
 
-The documentation is on GitHub pages https://yt87.github.io/pywgrib2_xr/
+The documentation is on GitHub pages https://yt87.github.io/pywgrib2_xr
 
 Licence
 -------
 **pywgrib2** is is released under
-`BSD Zero Clause Licence <https://choosealicense.com/licenses/0bsd>__.
+`BSD Zero Clause Licence https://choosealicense.com/licenses/0bsd
