@@ -1,8 +1,7 @@
 {% set name = "pywgrib2_xr" %}
-# {% set version = environ.get('GIT_DESCRIBE_TAG', 'untagged')|string|replace('-','_') %}
+{% set version = environ.get('GIT_DESCRIBE_TAG', 'untagged')|string|replace('-','_') %}
 # {% set build_number = environ.get('GIT_DESCRIBE_NUMBER', '0') %}
-{% set version = "0.2.2" %}
-{% set build_number = 3 %}
+{% set build_number = 4 %}
 
 package:
   name: {{ name|lower }}
