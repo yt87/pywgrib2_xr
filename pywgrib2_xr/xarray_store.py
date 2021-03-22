@@ -82,19 +82,6 @@ class Wgrib2DataStore(AbstractDataStore):
         free_files(*self.filenames)
 
 
-class _MultiFileCloser:
-    __slots__ = ("file_objs",)
-
-    def __init__(self, file_objs):
-        self.file_objs = file_objs
-
-    def close(self):
-        for f in self.file_objs:
-            f.close()
-        # FIXME: remove this after testing.
-        status_open()
-
-
 def _protect_dataset_variables_inplace(dataset, cache):
     for name, variable in dataset.variables.items():
         if name not in variable.dims:
@@ -137,7 +124,6 @@ def _open_dataset(
             )
             name_prefix = "open_dataset-%s" % token
             ds2 = ds.chunk(chunks, name_prefix=name_prefix, token=token)
-            ds2._file_obj = ds._file_obj
         else:
             ds2 = ds
 
@@ -237,7 +223,7 @@ def open_dataset(
         "cache": cache,
     }
     datasets = [open_(items, **open_kwargs) for items in filesets]
-    file_objs = [getattr_(ds, "_file_obj") for ds in datasets]
+    closers = [getattr_(ds, "_close") for ds in datasets]
 
     if preprocess is not None:
         datasets = [preprocess(ds) for ds in datasets]
@@ -245,7 +231,7 @@ def open_dataset(
     if parallel:
         # calling compute here will return the datasets/file_objs lists,
         # the underlying datasets will still be stored as dask arrays
-        datasets, file_objs = dask.compute(datasets, file_objs)
+        datasets, closers = dask.compute(datasets, closers)
 
     if len(datasets) == 1:
         return datasets[0]
@@ -266,6 +252,12 @@ def open_dataset(
             ds.close()
         raise
 
-    combined._file_obj = _MultiFileCloser(file_objs)
+    def multi_file_closer():
+        for closer in closers:
+            closer()
+
+    combined.set_close(multi_file_closer)
+    # FIXME: remove this after testing.
+    # status_open()
     combined.attrs = datasets[0].attrs
     return combined

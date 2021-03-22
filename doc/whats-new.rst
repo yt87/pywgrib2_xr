@@ -11,3 +11,6 @@ Substantial rewrite for wgrib2-3.0.0.
 v 0.2.2 (14 December 2020)
 Bug fixes. First GitHub release.
 
+v 0.2.3 (22 March 2021)
+Updated to shadow changes to xarray-0.17.0.
+

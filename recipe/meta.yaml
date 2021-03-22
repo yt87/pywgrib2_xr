@@ -1,8 +1,8 @@
 {% set name = "pywgrib2_xr" %}
 # {% set version = environ.get('GIT_DESCRIBE_TAG', 'untagged')|string|replace('-','_') %}
-{% set version = "0.2.2" %}
+{% set version = "0.2.3" %}
 # {% set build_number = environ.get('GIT_DESCRIBE_NUMBER', '0') %}
-{% set build_number = 2 %}
+{% set build_number = 1 %}
 
 package:
   name: {{ name|lower }}
@@ -37,7 +37,7 @@ requirements:
   run:
     - python
     - libwgrib2 >=3.0
-    - xarray >=0.16,<0.17.0
+    - xarray >=0.17
     - dask >=2.11
     - python-blosc >=1.9
     - wurlitzer >=2
