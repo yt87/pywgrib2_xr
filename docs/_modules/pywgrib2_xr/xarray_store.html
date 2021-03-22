@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pywgrib2_xr.xarray_store &mdash; pywgrib2_xr 0.2.2-rc0+15.ge499aed documentation</title>
+  <title>pywgrib2_xr.xarray_store &mdash; pywgrib2_xr 0.2.2+4.g86370f2 documentation</title>
   
 
   
@@ -17,7 +17,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -30,7 +33,6 @@
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -50,7 +52,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> pywgrib2_xr
+            <a href="../../index.html" class="icon icon-home"> pywgrib2_xr
           
 
           
@@ -127,6 +129,8 @@
         <div class="rst-content">
         
           
+
+
 
 
 
@@ -250,19 +254,6 @@
         <span class="n">free_files</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">_MultiFileCloser</span><span class="p">:</span>
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;file_objs&quot;</span><span class="p">,)</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_objs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_objs</span> <span class="o">=</span> <span class="n">file_objs</span>
-
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_objs</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="c1"># FIXME: remove this after testing.</span>
-        <span class="n">status_open</span><span class="p">()</span>
-
-
 <span class="k">def</span> <span class="nf">_protect_dataset_variables_inplace</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">cache</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">variable</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">variable</span><span class="o">.</span><span class="n">dims</span><span class="p">:</span>
@@ -305,7 +296,6 @@
             <span class="p">)</span>
             <span class="n">name_prefix</span> <span class="o">=</span> <span class="s2">&quot;open_dataset-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">token</span>
             <span class="n">ds2</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">chunk</span><span class="p">(</span><span class="n">chunks</span><span class="p">,</span> <span class="n">name_prefix</span><span class="o">=</span><span class="n">name_prefix</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
-            <span class="n">ds2</span><span class="o">.</span><span class="n">_file_obj</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">_file_obj</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ds2</span> <span class="o">=</span> <span class="n">ds</span>
 
@@ -405,7 +395,7 @@
         <span class="s2">&quot;cache&quot;</span><span class="p">:</span> <span class="n">cache</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">open_</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="o">**</span><span class="n">open_kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">filesets</span><span class="p">]</span>
-    <span class="n">file_objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">getattr_</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s2">&quot;_file_obj&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">]</span>
+    <span class="n">closers</span> <span class="o">=</span> <span class="p">[</span><span class="n">getattr_</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s2">&quot;_close&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">preprocess</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">preprocess</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span> <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">]</span>
@@ -413,7 +403,7 @@
     <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
         <span class="c1"># calling compute here will return the datasets/file_objs lists,</span>
         <span class="c1"># the underlying datasets will still be stored as dask arrays</span>
-        <span class="n">datasets</span><span class="p">,</span> <span class="n">file_objs</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">file_objs</span><span class="p">)</span>
+        <span class="n">datasets</span><span class="p">,</span> <span class="n">closers</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">closers</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">datasets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -434,7 +424,13 @@
             <span class="n">ds</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">raise</span>
 
-    <span class="n">combined</span><span class="o">.</span><span class="n">_file_obj</span> <span class="o">=</span> <span class="n">_MultiFileCloser</span><span class="p">(</span><span class="n">file_objs</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">multi_file_closer</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">closer</span> <span class="ow">in</span> <span class="n">closers</span><span class="p">:</span>
+            <span class="n">closer</span><span class="p">()</span>
+
+    <span class="n">combined</span><span class="o">.</span><span class="n">set_close</span><span class="p">(</span><span class="n">multi_file_closer</span><span class="p">)</span>
+    <span class="c1"># FIXME: remove this after testing.</span>
+    <span class="c1"># status_open()</span>
     <span class="n">combined</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span>
     <span class="k">return</span> <span class="n">combined</span></div>
 </pre></div>
@@ -443,16 +439,14 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2019-2020, wgrib2 developers
+        &#169; Copyright 2019-2021, wgrib2 developers.
       <span class="lastupdated">
-        Last updated on 2020-12-18.
+        Last updated on 2021-03-22.
       </span>
 
     </p>
@@ -460,14 +454,13 @@
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
